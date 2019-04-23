@@ -1,6 +1,6 @@
 # VplotR
 
-![VplotR](examples/pdf/GL_neurons_normalized-Vmat-comparison.pdf)
+![VplotR](https://github.com/js2264/VplotR/examples/pdf/V-plot.pdf)
 
 ## Introduction 
 
