@@ -1,6 +1,6 @@
 # VplotR
 
-![VplotR](https://github.com/js2264/VplotR/tree/master/examples/pdf/V-plot.pdf)
+![VplotR](https://raw.githubusercontent.com/js2264/VplotR/tree/master/examples/pdf/Vplot.pdf)
 
 ## Introduction 
 
