@@ -1,6 +1,6 @@
 # Ratac package vignette
 
-Let's define some preliminary variables
+Let's define some preliminary variables:
 
 ```{r}
     `%>%` <- magrittr::`%>%`
@@ -30,11 +30,6 @@ We can read all the .bam files within one folder using the `importBam()` functio
         granges <- bam.list[[TISSUE]]
         return(granges[sample(x = 1:length(granges), size = 10000000, replace = F)])
     } )))
-    # Save data
-    saveRDS(bam.list, file = 'data/bam.list.rds')
-    save(bam.list, file = 'data/bam.list.RData')
-    load('bam.list')
-    #bam.list <- readRDS('data/bam.list.rds')
 ```
 
 ## Check distribution of fragment sizes over a specific set of segments, for each file. 
@@ -272,4 +267,8 @@ This can be easily achieved here using the `plotMetaCoverage()` function.
     ggplot2::ggsave('examples/pdf/ATAC-seq-coverage_proms-coverage.pdf', width = 15, height = 3, g)
 ```
 
+## SessionInfo
 
+```{r}
+    sessionInfo()
+```
