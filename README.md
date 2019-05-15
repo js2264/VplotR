@@ -1,23 +1,32 @@
 # VplotR
 
+**VplotR is still in pre-Alpha and has not been thorouhly tested yet.  
+Documentation will come soon.**
+
 ![VplotR](https://raw.githubusercontent.com/js2264/VplotR/master/examples/pdf/Vplot.png)
 
-## Introduction 
+## Introduction
 
 This R package makes the process of generating "V-plots" straighforward. 
 V-plots have been introduced for the first time in 
 [a Chip-seq paper](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3215028/) from the 
 Henikoff lab, in 2011.  
-Recently, V-plots have been leveraged to highlight nucleosome structure using 
-ATAC-seq data ([here](https://genome.cshlp.org/content/early/2015/08/27/gr.192294.115)). 
-However, the nucleoATAC software is written in Python and unfortunately, its [port
+
+Recently, V-plots have proven to be very instructive to understand the molecular 
+organization of the chromatin. For instance, the [nucleoATAC]((https://genome.cshlp.org/content/early/2015/08/27/gr.192294.115)) package allows the 
+user to map nucleosome occupancy from ATAC-seq data. 
+However, nucleoATAC is written in Python and unfortunately, its [port
 to R](https://github.com/GreenleafLab/NucleoATACR) only allows to generate V-plots
-once the Python pipeline has been ran.  
+once the Python pipeline has been ran. More generally, it does not allow the user 
+to dynamically explore nucleosome patterns at specific locations in the genome.  
+
 VplotR aim is to streamline the process of generating V-plots without having to 
 leave R. It contains functions to quickly feed in .bam and .bw files and methods
 designed to generate V-plots from a variety of different inputs.  
-Vmat is designed around ggplot2 and makes full use of its potential. As such, 
-it is easy to make "grobs" (graphic objects) and combine them to make publication-ready 
+
+Finally, VplotR is designed around [ggplot2](https://ggplot2.tidyverse.org/) 
+and makes full use of its potential. As such, it is easy to make "grobs" 
+(graphic objects) and combine them to make publication-ready 
 figures.  
 
 ## Installation
@@ -29,14 +38,11 @@ VplotR can be ran installed from Github as follow:
     devtools::install_github("js2264/VplotR")
 ```
 
-**VplotR is still in Beta and has not been thorouhly tested yet.  
-Documentation will come soon.**
-
 ## Overview
 
 Firstly a .bam file is read using the `importBam()` function:
 ```{r}
-    bam <- importBam(bam.file)
+    bam <- importBam("path/to/bam/file.bam")
 ```
 
 Then a V-plot of the .bam file over a set of GRanges of interest (`granges`) 
@@ -47,7 +53,7 @@ is generated using the `plotVmat()` function:
     ggplot2::ggsave('vmat.pdf', vmat)
 ```
 
-One can parallelize the generation of multiple V-plots as follow:
+The generation of multiple V-plots can be parallelized as follow:
 
 ```{r}
     params <- list(
@@ -79,5 +85,5 @@ and compare nucleosome enrichment (e.g. flanking nucleosome at promoters). To do
 ```
 
 For more details and additional functions, read the 
-[Introduction vignette](vignettes/Introduction.Rmd).
+[Introduction vignette](vignettes/Introduction.Rmd) (Not available yet).
 

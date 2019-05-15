@@ -23,8 +23,8 @@ importBam <- function(
     
     files, 
     remove.duplicates = T, 
-    paired.reads = F, 
-    filter.lengths = c(0, 0), 
+    paired.reads = T, 
+    filter.lengths = c(50, 10000), 
     quality.cutoff = 10L
     
     ){

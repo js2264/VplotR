@@ -13,9 +13,15 @@
 #' @return A list of tbl, one for each .bam file.
 #' 
 
-getFragmentsDistribution <- function(fragments, list.granges, extend.granges = c(-2000, 2000), limits = c(50, 650)) {
-    if(any(class(list.granges) == 'GRanges'))
+getFragmentsDistribution <- function(fragments, list.granges = NULL, extend.granges = c(-2000, 2000), limits = c(50, 650)) {
+    if (is.null(list.granges)) {
+        list.granges <- list('genome' = chromSizesFromGRanges(fragments))
+        extend.granges <- c(0, 0)
+    }
+    if (any(class(list.granges) == 'GRanges')) {
         list.granges <- list(list.granges)
+        names(list.granges) <- 'granges'
+    }
     list.res <- parallel::mclapply(seq_along(list.granges), function(K) {
         extended.granges <- list.granges[[K]] %>% 
             GenomicRanges::resize(width = IRanges::width(.) - extend.granges[1], fix = 'end') %>%
