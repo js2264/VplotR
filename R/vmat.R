@@ -1,3 +1,5 @@
+# --------- Accessory functions ---------
+
 computeVmat <- function(reads.granges, target.granges, XAXIS.CUTOFF = 350, YAXIS.CUTOFF = 300) {
     `%over%` <- IRanges::`%over%`
     center.targets <- GenomicRanges::GRanges(
@@ -21,11 +23,11 @@ computeVmat <- function(reads.granges, target.granges, XAXIS.CUTOFF = 350, YAXIS
     dists <- factor(as.character(IRanges::start(center.target.per.read) - IRanges::start(center.reads.subset)), levels = -2000:2000)
     widths <- factor(as.character(IRanges::width(granges)), levels = 0:YAXIS.CUTOFF)
     tab <- table(dists, widths)
-    tab <- tab[seq(round(nrow(tab) / 2) - XAXIS.CUTOFF, round(nrow(tab) / 2) + XAXIS.CUTOFF, 1), 1:YAXIS.CUTOFF]
+    tab <- tab[seq(floor(nrow(tab) / 2) - XAXIS.CUTOFF, floor(nrow(tab) / 2) + XAXIS.CUTOFF, 1)[1:(XAXIS.CUTOFF*2)], 1:YAXIS.CUTOFF]
     return(tab)
 }
 
-scaleVmat <- function(Vmat, FUN = 'pctmax') {
+scaleVmat <- function(Vmat, FUN = 'pctsum') {
     if (FUN == 'pctmedian') {
         Vmat <- Vmat/median(Vmat)*100
     } else if (FUN == 'pctsum') {
@@ -36,6 +38,8 @@ scaleVmat <- function(Vmat, FUN = 'pctmax') {
         Vmat <- apply(Vmat, 2, scale)
     } else if (FUN == 'rowZscore') {
         Vmat <- t(apply(Vmat, 1, scale))
+    } else if (FUN == 'Zscore') {
+        Vmat <- scale(Vmat)
     }
     return(Vmat)
 }
@@ -52,6 +56,34 @@ normalizeVmat <- function(Vmat1, background = NULL, scale = TRUE, normFUN = 'pct
         Vmat <- zoo::rollmean(Vmat, roll)
     }
     return(Vmat)
+}
+
+shuffleVmat <- function(Vmat, SEED = 999) {
+    shuffled.Vmat <- c(Vmat)
+    set.seed(SEED)
+    shuffled.Vmat <- shuffled.Vmat[sample(x = 1:length(shuffled.Vmat), size = length(shuffled.Vmat), replace = F)]
+    shuffled.Vmat <- matrix(shuffled.Vmat, nrow = nrow(Vmat), ncol = ncol(Vmat))
+    return(shuffled.Vmat)
+}
+
+getVec <- function(
+    Vmat, 
+    background = NULL, 
+    nuc1 = list(c(100, 150), c(120, 200)), 
+    nuc2 = list(c(350, 400), c(120, 200)), 
+    nuc1_neg = list(c(100, 150), c(0, 100)), 
+    nuc2_neg = list(c(350, 400), c(0, 100))
+    ) {
+    if (is.null(background)) {
+        background <- shuffleVmat(Vmat)
+    }
+    vec <- c(
+        sum(Vmat[nuc1[[1]][1] : nuc1[[1]][2], nuc1[[2]][1] : nuc1[[2]][2]]) + sum(Vmat[nuc2[[1]][1] : nuc2[[1]][2], nuc2[[2]][1] : nuc2[[2]][2]]), 
+        sum(Vmat[nuc1_neg[[1]][1] : nuc1_neg[[1]][2], nuc1_neg[[2]][1] : nuc1_neg[[2]][2]]) + sum(Vmat[nuc2_neg[[1]][1] : nuc2_neg[[1]][2], nuc2_neg[[2]][1] : nuc2_neg[[2]][2]]),
+        sum(background[nuc1[[1]][1] : nuc1[[1]][2], nuc1[[2]][1] : nuc1[[2]][2]]) + sum(background[nuc2[[1]][1] : nuc2[[1]][2], nuc2[[2]][1] : nuc2[[2]][2]]), 
+        sum(background[nuc1_neg[[1]][1] : nuc1_neg[[1]][2], nuc1_neg[[2]][1] : nuc1_neg[[2]][2]]) + sum(background[nuc2_neg[[1]][1] : nuc2_neg[[1]][2], nuc2_neg[[2]][1] : nuc2_neg[[2]][2]])
+    )
+    return(vec)
 }
 
 # --------- PlotVmat function ---------
@@ -79,7 +111,8 @@ plotVmat.default <- function(
     # Replace NA / inf values by 0
     Vmat[is.infinite(Vmat) | is.na(Vmat)] <- 0
     # Extract the Vmat to the specified limits
-    Vmat <- Vmat[(round(nrow(Vmat)/2) + xlim[1]) : (round(nrow(Vmat)/2) + xlim[2]), ylim[1] : ylim[2]]
+    Vmat <- Vmat[(round(nrow(Vmat)/2) + xlim[1]) : (round(nrow(Vmat)/2) + xlim[2]), (ylim[1]+1) : (ylim[2])]
+    row.names(Vmat) <- as.character(xlim[1]:xlim[2])
     # Define breaks and clamp matrix within breaks
     if (is.null(breaks)) {
         Vmat[Vmat > quantile(c(Vmat), probs = seq(0, 1, length.out = 101))[HM.COLOR.CUTOFF+(100-HM.COLOR.CUTOFF)/2]] <- quantile(c(Vmat), probs = seq(0, 1, length.out = 101))[HM.COLOR.CUTOFF+(100-HM.COLOR.CUTOFF)/2]
@@ -122,7 +155,7 @@ plotVmat.GRanges <- function(
     normalize = TRUE,
     Vmat2 = NULL,
     estimate.background = FALSE,
-    normFun = 'pctsum',
+    normFun = 'scale',
     roll = 3,
     return_Vmat = FALSE,
     ...) {
@@ -144,34 +177,6 @@ plotVmat.GRanges <- function(
 }
 
 # ---------- nucleosomeEnrichment function -----------
-
-shuffleVmat <- function(Vmat, SEED = 999) {
-    shuffled.Vmat <- c(Vmat)
-    set.seed(SEED)
-    shuffled.Vmat <- shuffled.Vmat[sample(x = 1:length(shuffled.Vmat), size = length(shuffled.Vmat), replace = F)]
-    shuffled.Vmat <- matrix(shuffled.Vmat, nrow = nrow(Vmat), ncol = ncol(Vmat))
-    return(shuffled.Vmat)
-}
-
-getVec <- function(
-    Vmat, 
-    background = NULL, 
-    nuc1 = list(c(100, 150), c(120, 200)), 
-    nuc2 = list(c(350, 400), c(120, 200)), 
-    nuc1_neg = list(c(100, 150), c(0, 100)), 
-    nuc2_neg = list(c(350, 400), c(0, 100))
-    ) {
-    if (is.null(background)) {
-        background <- shuffleVmat(Vmat)
-    }
-    vec <- c(
-        sum(Vmat[nuc1[[1]][1] : nuc1[[1]][2], nuc1[[2]][1] : nuc1[[2]][2]]) + sum(Vmat[nuc2[[1]][1] : nuc2[[1]][2], nuc2[[2]][1] : nuc2[[2]][2]]), 
-        sum(Vmat[nuc1_neg[[1]][1] : nuc1_neg[[1]][2], nuc1_neg[[2]][1] : nuc1_neg[[2]][2]]) + sum(Vmat[nuc2_neg[[1]][1] : nuc2_neg[[1]][2], nuc2_neg[[2]][1] : nuc2_neg[[2]][2]]),
-        sum(background[nuc1[[1]][1] : nuc1[[1]][2], nuc1[[2]][1] : nuc1[[2]][2]]) + sum(background[nuc2[[1]][1] : nuc2[[1]][2], nuc2[[2]][1] : nuc2[[2]][2]]), 
-        sum(background[nuc1_neg[[1]][1] : nuc1_neg[[1]][2], nuc1_neg[[2]][1] : nuc1_neg[[2]][2]]) + sum(background[nuc2_neg[[1]][1] : nuc2_neg[[1]][2], nuc2_neg[[2]][1] : nuc2_neg[[2]][2]])
-    )
-    return(vec)
-}
 
 nucleosomeEnrichment <- function(x, ...) {
     UseMethod("nucleosomeEnrichment")
