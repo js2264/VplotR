@@ -1,4 +1,63 @@
-shuffleGRanges <- function(granges, opt.shuffle = '-chrom -noOverlapping', excl.itself = T, genome = 'ce11', SEED = 222) {
+setColNames <- function(df, names) {
+    colnames(df) <- names
+    return(df)
+}
+
+#' A function to easily coerce a named list into a long data.frame
+#'
+#' \code{namedListToLongFormat(x)} returns a data.frame in long format, with 
+#' an added 'name' column, containing the names of the input list.  
+#'
+#' @param x A named list vector.
+#' 
+#' @export
+#' @import magrittr
+#' 
+#' @return A long data frame
+
+namedListToLongFormat <- function(x) {
+    lapply(names(x), function(NAME) {
+        L <- x[[NAME]]
+        if (is.null(ncol(L))) {
+            data.frame(value = L, name = rep(NAME, length(L)))
+        } 
+        else {
+            data.frame(L, name = rep(NAME, nrow(L)))
+        }
+    }) %>% do.call(rbind, .)
+}
+
+
+#### ---- GRanges utils ---- ####
+
+deconvolveBidirectionalPromoters <- function(granges) {
+    unid <- granges[GenomicRanges::strand(granges) == '+' | GenomicRanges::strand(granges) == '-']
+    bid <- granges[GenomicRanges::strand(granges) == '*']
+    bid.fwd <- bid
+    GenomicRanges::strand(bid.fwd) <- '+'
+    bid.rev <- bid
+    GenomicRanges::strand(bid.rev) <- '-'
+    granges_shifted <- sort(c(unid, bid.fwd, bid.rev), ignore.strand = T)
+    return(granges_shifted)
+}
+
+AlignToTSS <- function(granges, upstream, downstream) {
+    if (any(GenomicRanges::strand(granges) == '*')) {
+        granges <- deconvolveBidirectionalPromoters(granges)
+    }
+    if (is.null(granges$TSS.fwd)) {
+        granges$TSS.fwd <- IRanges::start(granges)
+        granges$TSS.rev <- IRanges::end(granges)
+    }
+    GenomicRanges::ranges(granges) <- IRanges::IRanges(
+        start = ifelse(as.vector(GenomicRanges::strand(granges)) == '+', (granges$TSS.fwd - upstream), (granges$TSS.rev - downstream + 1)),
+        width = downstream + upstream,
+        names = names(IRanges::ranges(granges))
+    )
+    return(granges)
+}
+
+shuffleGRanges <- function(granges, opt.shuffle = '-chrom -noOverlapping', excl.itself = TRUE, genome = 'ce11', SEED = 222) {
     BEDTOOLS <- Sys.which('bedtools')
     tmp1 <- tempfile()
     tmp2 <- tempfile()
@@ -24,13 +83,13 @@ simplifyGRanges <- function(granges) {
     return(granges)
 }
 
-# -------------- getChromSizes function --------------
+#### ---- getChromSizes function ---- ####
 
 getChromSizes <- function(x, ...) {
     UseMethod("getChromSizes")
 }
 
-getChromSizes.default <- function(genome = c('ce11', 'dm6', 'mm10', 'hs38')) {
+getChromSizes.default <- function(genome = c('ce11', 'dm6', 'mm10', 'hg38')) {
     genome <- switch(genome, 
         'ce11' = BSgenome.Celegans.UCSC.ce11::BSgenome.Celegans.UCSC.ce11, 
         'dm6' = BSgenome.Dmelanogaster.UCSC.dm6::BSgenome.Dmelanogaster.UCSC.dm6,
@@ -55,4 +114,5 @@ getChromSizes.GRanges <- function(granges) {
     names(granges) <- GenomicRanges::seqnames(granges)
     return(granges)
 }
+
 

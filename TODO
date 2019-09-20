@@ -2,3 +2,7 @@
 - Add support for MNAse
 - Add support for ChIP-seq
 - Add documentation for each function
+
+- Look at nucleosome positioning at GATA sites in elt-2-bound promoters
+- Look at nucleosome positioning during an activation event 
+- Look at nucleosome positioning during aging
