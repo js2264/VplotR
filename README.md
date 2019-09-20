@@ -30,7 +30,7 @@ in batches and combine them with other plots to make publication-ready figures.
 
 VplotR can be ran installed from Github as follow:
 
-```{r}
+```r
 install.packages("devtools")
 devtools::install_github("js2264/VplotR")
 library(VplotR)
@@ -41,7 +41,7 @@ library(VplotR)
 Firstly BAM files are read using the `importPEBamFiles()` function and loci of
 interest from a BED file, for instance.
 
-```{r}
+```r
 bam_files <- list.files(folder = 'path/to/bam/files/', pattern = '*.bam')
 bam_list <- importPEBamFiles(
     bam_files, 
@@ -54,13 +54,13 @@ granges <- rtracklayer::import('loci_of_interest.bed')
 Then V-plots of the bam files over the set of loci of interest (`granges`) 
 are generated using the `plotVmat()` function:
 
-```{r}
+```r
 Vplot <- plotVmat(bam_list, granges)
 ```
 
 The generation of multiple V-plots can be parallelized as follow:
 
-```{r}
+```r
 list_params <- list(
     list("bam" = bam1, "granges" = granges1), 
     list("bam" = bam2, "granges" = granges2), 
@@ -76,7 +76,7 @@ plots <- plotVmat(
 Finally, the `nucleosomeEnrichment()` function is useful to statistically quantify 
 and compare nucleosome enrichment (e.g. flanking nucleosome at promoters). To do so:
 
-```{r}
+```r
 nucleosomeEnrichment(
     bam_granges = bam_files[[1]], 
     granges = granges
