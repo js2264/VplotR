@@ -3,7 +3,7 @@
 **VplotR is still in pre-Alpha and has not been thorouhly tested yet.  
 Documentation will come soon.**
 
-![VplotR](https://raw.githubusercontent.com/js2264/VplotR/master/examples/pdf/Vplot.png)
+![VplotR](https://raw.githubusercontent.com/js2264/VplotR/master/examples/png/Comparison_tissue-specific-normalized-Vmats.png)
 
 ## Introduction
 
