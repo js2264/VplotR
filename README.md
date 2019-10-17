@@ -95,7 +95,8 @@ For more details and additional functions, read the
 
 ---
 
-`r sessionInfo()`
+```r
+sessionInfo()
 
 R version 3.5.2 (2018-12-20)
 Platform: x86_64-pc-linux-gnu (64-bit)
@@ -157,3 +158,4 @@ loaded via a namespace (and not attached):
 [63] pkgload_1.0.2                     colorspace_1.4-1
 [65] sessioninfo_1.1.1                 BSgenome.Celegans.UCSC.ce11_1.4.2
 [67] memoise_1.1.0                     usethis_1.4.0
+```
