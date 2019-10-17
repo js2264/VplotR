@@ -1,7 +1,7 @@
 Package: VplotR
 Type: Package
 Title: Useful set of tools to analyse ATAC-seq data
-Version: 0.2.0
+Version: 0.3.0
 Author: Jacques Serizay
 Maintainer: Jacques Serizay <js2264@cam.ac.uk>
 Description: CAUTION: This package is still in Beta phase. This package contains useful functions to analyse ATAC-seq data. The data can be paired-end or single-end. 
@@ -11,4 +11,17 @@ LazyData: true
 RoxygenNote: 6.1.1.9000
 Imports: 
     ggplot2,
-    magrittr
+    magrittr,
+    GenomeInfoDb,
+    GenomicAlignments,
+    GenomicRanges,
+    IRanges,
+    RColorBrewer,
+    Rsamtools,
+    S4Vectors,
+    ggplot2,
+    magrittr,
+    parallel,
+    reshape2,
+    zoo
+

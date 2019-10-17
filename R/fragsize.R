@@ -1,17 +1,20 @@
-#' A function to compute fragments sizes
+#' A function to compute sizes distribution for PE fragments 
 #'
-#' \code{get.distr(bam.list)} returns the number of fragments for each fragment 
-#'   length between \code{limits[1]} and \code{limits[2]} bp. 
-#'
-#' @param fragments Output of import.bam function. 
-#' @param granges A GRanges object. The genomic ranges to which the fragments 
-#'   should overlap in order to be considered when estimating fragment sizes. 
-#' @param extend_granges A numeric vector of length 2. How the granges should
-#'   be extended.
+#' @param fragments GRanges object containing PE fragments. See importPEBamFiles
+#' for more details.
+#' @param granges GRanges. cam be a list of different sets of GRanges.
+#' should overlap in order to be considered when estimating fragment sizes. 
+#' @param extend_granges A numeric vector of length 2. How the GRanges should
+#' be extended.
 #' @param limits A numeric vector of length 2. Only consider fragments within
-#'   this window of sizes.
+#' this window of sizes.
+#' 
 #' @return A list of tbl, one for each .bam file.
 #' 
+#' @import parallel
+#' @import IRanges
+#' @import GenomicRanges
+#' @export
 
 getFragmentsDistribution <- function(fragments, granges_list = NULL, extend_granges = c(-500, 500), limits = c(0, 600)) {
     if (any(class(granges_list) == 'GRanges')) {

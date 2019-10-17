@@ -19,7 +19,7 @@ the `importBamFiles()` function.
 require(magrittr)
 require(GenomicRanges)
 require(ggplot2)
-.sourceDirs('~/shared/bin/R/packages/VplotR/R/')
+require(VplotR)
 ce_seq <- Biostrings::getSeq(BSgenome.Celegans.UCSC.ce11::BSgenome.Celegans.UCSC.ce11)
 ce_REs <- readRDS(
     url(
@@ -115,10 +115,10 @@ the loci of interest);
 ```r
 Vmat <- bam_list[['Neurons']] %>% 
     computeVmat(proms_list[['Neurons_proms']]) %>%
-    normalizeVmat(normFUN = 'pctsum', roll = 3) %>% 
+    normalizeVmat(normFun = 'pctsum', roll = 3) %>% 
     plotVmat(
-    main = 'Neurons-spe. ATAC fragments over Neurons-spe. proms'
-)
+        main = 'Neurons-spe. ATAC fragments over Neurons-spe. proms'
+    )
 ggsave('examples/Vmat_Neurons-over-neurons-REs.pdf')
 # Or do all at once in one function:
 neurons_atac_neurons_proms <- plotVmat(
@@ -154,7 +154,7 @@ Vmat <- bam_list[['Neurons']] %>%
     normalizeVmat(
         background = Vmat_background, 
         scale = TRUE, 
-        normFUN = 'pctsum', 
+        normFun = 'pctsum', 
         roll = 3
     ) %>%
     plotVmat(
@@ -182,7 +182,8 @@ plots <- cowplot::plot_grid(gl_atac_gl_proms_NORM, neurons_atac_neurons_proms_NO
 ggsave('examples/Germline_Neurons_NORMALIZED-Vmat-comparison.pdf', height = 6, width = 12, plots)
 ```
 
-And all together:
+To compute many different Vplots simultaneously, one can pass the two main 
+arguments (bam_granges and granges) to the plotVmat function using a named list. 
 
 ```r 
 list_params <- list(
@@ -201,14 +202,13 @@ plots <- plotVmat(
     list_params, 
     xlim = c(-200, 200), 
     estimate_background = TRUE, 
-    breaks = seq(0, 12, length.out = 60), 
     cores = length(list_params)
 )
 p <- plots + 
     facet_wrap(~Cond., nrow = 2, dir = 'v') + 
     theme(legend.position = 'bottom') +
     theme(panel.spacing = unit(1, "lines"))
-ggsave('examples/Comparison_tissue-specific-normalized-Vmats.pdf', height = 5, width = 15)
+ggsave('examples/Comparison_tissue-specific-normalized-Vmats.pdf', height = 7.2, width = 18)
 ```
 
 ## 3 Real case uses
@@ -216,7 +216,7 @@ ggsave('examples/Comparison_tissue-specific-normalized-Vmats.pdf', height = 5, w
 
 Let's have a look at tissue-specific classes of promoters and the associated
 Vplots, in a "programmatic" approach. 
-We already presented the possibility to give a list of arguments to 
+We already presented the possibility to pass a list of arguments to 
 plotVmat (see section 2.2). This allows a person to plot multiple Vplots at
 once. Another way is to rely on parallelized computations of individual Vmats. 
 Such simpler approach generating a list of plots allows the user to 
@@ -258,7 +258,7 @@ This function is used to quantify the local enrichment of a nucleosome at a
 certain distance from the midpoint of the genomic ranges of interest.
 
 ```r
-list_scores <- lapply(
+list_scores <- parallel::mclapply(
     c("Germline", "Neurons", "Muscle", "Hypod.", "Intest."), 
     function(TISSUE) {
         message('>> ', TISSUE)
@@ -278,7 +278,8 @@ list_scores <- lapply(
             'tissue-spe-proms' = nucenrich_tissue_spe_proms, 
             'ubiq-proms' = nucenrich_ubiq_proms
         ))
-    }
+    }, 
+    mc.cores = 5
 ) %>% setNames(c("Germline", "Neurons", "Muscle", "Hypod.", "Intest."))
 nucenrich_scores <- data.frame(
     tissue = factor(rep(names(list_scores), each = 2), levels = names(list_scores)), 
@@ -299,7 +300,7 @@ p <- ggplot(nucenrich_scores, aes(
     labs(title = 'Flanking nucleosome enrichment score', y = 'Enrichment score', x = 'Tissue-specific data') + 
     theme_bw() + 
     theme(legend.position = 'none')
-ggsave('examples/Comparison_tissue-specific-nucleosome-enrichment2.pdf', height = 5, width = 5)
+ggsave('examples/Comparison_tissue-specific-nucleosome-enrichment.pdf', height = 5, width = 5)
 ```
 
 This confirms what the Vplots suggest: flanking nucleosomes are well enriched 
@@ -322,8 +323,8 @@ We can also use MNase data (only this data comes from mixed tissues) to look at 
 ###     where = GenomicRanges::reduce(GenomicRanges::resize(ce_proms, width = 2000, fix = 'center')), 
 ###     shift_ATAC_fragments = FALSE
 ### ) %>% 
-  setNames(mnase_files %>% basename() %>% gsub('.map_pe\\^rm_chrM\\^rm_blacklist\\^q10.bam', '', .)) %>% 
-  '['(names(.) %>% gsub('YA_mnase_rep-1_|U', '', .) %>% as.numeric() %>% order())
+###     setNames(mnase_files %>% basename() %>% gsub('.map_pe\\^rm_chrM\\^rm_blacklist\\^q10.bam', '', .)) %>% 
+###     '['(names(.) %>% gsub('YA_mnase_rep-1_|U', '', .) %>% as.numeric() %>% order())
 # Or simply: 
 MNase_mixed <- readRDS(
     url(
@@ -352,151 +353,9 @@ p <- plots +
     theme(legend.position = 'bottom') +
     theme(panel.spacing = unit(1, "lines")) + 
     coord_fixed(ratio = 7)
-ggsave('examples/MNase-coverage_proms2.pdf', height = 15, width = 18)
+ggsave('examples/MNase-coverage_proms.pdf', height = 15, width = 18)
 ```
 
 As expected, nucleosomal reads are mapped over flanking nucleosomes, specifically
 around ubiquitous and germline promoters. Arrays of nucleosomes are readily 
 detected at these promoters. 
-
-### 3.4. Make Vplots and footprint plots @ TFs binding sites (using ATAC or MNase)
-
-VplotR has been developed primarily to work with paired-end fragments to look at 
-patterns of accessibility (either from ATAC-seq, MNase-seq or DNase-seq) at
-promoters. However, it can also be used to estimate the binding pattern 
-of a transcription factor at its binding sites.
-
-```r
-.sourceDirs('~/shared/bin/R/packages/memeR/R')
-pfms <- list.files('~/shared/bin/R/packages/memeR/data/pfms/')
-TFs_granges <- mclapply(seq_along(pfms), function(K) {
-    FILE <- pfms[K]
-    TF <- gsub('.pfm', '', FILE)
-    motif <- importMotif(pfm_file = paste0('~/shared/bin/R/packages/memeR/data/pfms/', FILE))
-    g_motif <- scanGenome(motif, genome = 'ce11')
-    message('.. ', TF, ' imported.')
-    return(g_motif)
-}, mc.cores = 41) %>% setNames(gsub('.pfm', '', pfms))
-# ATAC Vmats
-list_params <- lapply(seq_along(TFs_granges), function(K) {
-    TF <- names(TFs_granges)[K]
-    g_motif <- TFs_granges[[TF]]
-    g_motif <- g_motif[order(g_motif$relScore, decreasing = TRUE)]
-    g <- g_motif[g_motif$relScore > 0.85 & strand(g_motif) == '+']
-    if (length(g) > 2000) g <- g[order(g$relScore, decreasing = TRUE)][1:2000]
-    l <- list(
-        bam_list[['mixed']],
-        resize(g, 300, fix = 'center')
-    )
-    return(l)
-}) %>% setNames(names(TFs_granges))
-plots <- plotVmat(
-    list_params,
-    estimate_background = FALSE, 
-    ylim = c(50, 450),
-    xlim = c(-300, 300), 
-    cores = length(TFs_granges)
-) + coord_fixed(1)
-p <- plots + 
-    facet_wrap(~Cond.) + 
-    theme(legend.position = 'bottom') +
-    theme(panel.spacing = unit(1, "lines"))
-ggsave('examples/ATAC-Vmats_TFs-binding-sites.pdf', height = 15, width = 15)
-# ATAC footprint profils
-ATAC_cut_ce <- coverage(c(
-    resize(bam_list[['mixed']], fix = 'start', width = 1),
-    resize(bam_list[['mixed']], fix = 'end', width = 1)
-))
-plots <- plotAggregateCoverage(
-    ATAC_cut_ce, 
-    lapply(list_params, function(L) {L[[2]] %>% '['(strand(.) == '+') %>% resize(300, fix = 'center')}),
-    BIN = 1
-)
-p <- plots + 
-    facet_wrap(~grange) + 
-    theme(legend.position = 'bottom') +
-    theme(panel.spacing = unit(1, "lines")) + 
-    xlim(c(-150, 150)) + 
-    ylim(c(0, 1.5))
-ggsave('examples/ATAC-footprints_TFs-binding-sites.pdf', height = 15, width = 15)
-# MNase Vmats
-pool_mnase <- unlist(GRangesList(MNase_mixed[1:4]))
-list_params <- lapply(seq_along(TFs_granges), function(K) {
-    TF <- names(TFs_granges)[K]
-    g_motif <- TFs_granges[[TF]]
-    g_motif <- g_motif[order(g_motif$relScore, decreasing = TRUE)]
-    g <- g_motif[g_motif$relScore > 0.85 & strand(g_motif) == '+']
-    if (length(g) > 2000) g <- g[order(g$relScore, decreasing = TRUE)][1:2000]
-    l <- list(
-        pool_mnase,
-        resize(g, 300, fix = 'center')
-    )
-    return(l)
-}) %>% setNames(names(TFs_granges))
-plots <- plotVmat(
-    list_params,
-    estimate_background = FALSE, 
-    ylim = c(50, 190),
-    xlim = c(-300, 300), 
-    cores = length(TFs_granges)
-) + coord_fixed(3)
-p <- plots + 
-    facet_wrap(~Cond.) + 
-    theme(legend.position = 'bottom') +
-    theme(panel.spacing = unit(1, "lines"))
-ggsave('examples/MNase-Vmats_TFs-binding-sites.pdf', height = 15, width = 15)
-# MNase footprint profil
-MNase_cut <- coverage(c(
-    resize(c(MNase_mixed[[1]], MNase_mixed[[2]], MNase_mixed[[3]], MNase_mixed[[4]]), fix = 'start', width = 1),
-    resize(c(MNase_mixed[[1]], MNase_mixed[[2]], MNase_mixed[[3]], MNase_mixed[[4]]), fix = 'end', width = 1)
-))
-plots <- plotAggregateCoverage(
-    MNase_cut, 
-    lapply(list_params, function(L) {L[[2]] %>% '['(strand(.) == '+') %>% resize(300, fix = 'center')}),
-    BIN = 1
-)
-p <- plots + 
-    facet_wrap(~grange) + 
-    theme(legend.position = 'bottom') +
-    theme(panel.spacing = unit(1, "lines")) + 
-    xlim(c(-40, 40)) + 
-    ylim(c(0, 2))
-ggsave('examples/MNase-footprints_TFs-binding-sites.pdf', height = 15, width = 15)
-```
-
-### 3.5. Look at CTCF binding sites motifs in human ATAC
-
-VplotR can be used to study TF binding pattern / footprint in any organism.
-Here we focus on CTCF binding in human.
-
-```r
-load('~/20190730_ATAC_hPGCs_Walfred/.bam.list.RData')
-ATAC_cut <- coverage(c(
-    resize(bam.list$ATAC_hPGC, fix = 'start', width = 1),
-    resize(bam.list$ATAC_hPGC, fix = 'end', width = 1)
-))
-CTCF <- importMotif(pfm_file = '~/shared/bin/R/packages/memeR/data/MA0139.1.pfm')
-g_CTCF <- scanGenome(CTCF, genome = 'hg38')
-p <- plotVmat(
-    bam.list$ATAC_hPGC, 
-    resize(g_CTCF[g_CTCF$relScore > 0.90], 300, fix = 'center'),
-    estimate_background = FALSE, 
-    ylim = c(0, 350),
-    xlim = c(-200, 200),
-    stranded = TRUE,
-    main = paste0('ATAC-seq (hPGCs)\nfragments over CTCF binding sites')
-) + coord_fixed(1)
-ggsave('examples/CTCF-binding-motif_Vplot.pdf')
-p <- plotAggregateCoverage(
-    ATAC_cut, 
-    resize(g_CTCF[g_CTCF$relScore > 0.90 & seqnames(g_CTCF) %in% seqlevels(ATAC_cut) & strand(g_CTCF) == '+'], 200, fix = 'center'),
-    BIN = 1
-)
-ggsave('examples/CTCF-binding-motif_footprint.pdf')
-```
-
-## SessionInfo
-
-```r
-sessionInfo()
-```
