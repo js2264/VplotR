@@ -2,27 +2,27 @@
 % Please edit documentation in R/fragsize.R
 \name{getFragmentsDistribution}
 \alias{getFragmentsDistribution}
-\title{A fragsize function to compute fragments sizes}
+\title{A function to compute sizes distribution for PE fragments}
 \usage{
-getFragmentsDistribution(fragments, list.granges,
-  extend.granges = c(-2000, 2000), limits = c(50, 650))
+getFragmentsDistribution(fragments, granges_list = NULL,
+  extend_granges = c(-500, 500), limits = c(0, 600))
 }
 \arguments{
-\item{extend.granges}{A numeric vector of length 2. How the granges should
+\item{fragments}{GRanges object containing PE fragments. See importPEBamFiles
+for more details.}
+
+\item{extend_granges}{A numeric vector of length 2. How the GRanges should
 be extended.}
 
 \item{limits}{A numeric vector of length 2. Only consider fragments within
 this window of sizes.}
 
-\item{bam.list}{Output of import.bam function.}
-
-\item{granges}{A GRanges object. The genomic ranges to which the fragments 
+\item{granges}{GRanges. cam be a list of different sets of GRanges.
 should overlap in order to be considered when estimating fragment sizes.}
 }
 \value{
 A list of tbl, one for each .bam file.
 }
 \description{
-\code{get.distr(bam.list)} returns the number of fragments for each fragment 
-  length between \code{limits[1]} and \code{limits[2]} bp.
+A function to compute sizes distribution for PE fragments
 }

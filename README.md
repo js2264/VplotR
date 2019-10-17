@@ -1,7 +1,6 @@
 # VplotR
 
-**VplotR is still in pre-Alpha and has not been thorouhly tested yet.  
-Documentation will come soon.**
+**VplotR is still in Alpha and has not been thorouhly tested yet.**
 
 ![VplotR](examples/png/Comparison_tissue-specific-normalized-Vmats.png)
 
@@ -42,14 +41,21 @@ Firstly BAM files are read using the `importPEBamFiles()` function and loci of
 interest from a BED file, for instance.
 
 ```r
-bam_files <- list.files(folder = 'path/to/bam/files/', pattern = '*.bam')
-bam_list <- importPEBamFiles(
-    bam_files, 
-    where = GenomicRanges::resize(granges, width = 2000, fix = 'center')), 
-    shift_ATAC_fragments = TRUE
+bam_files <- list.files(
+    path = 'path/to/bam/files/', 
+    pattern = '*.bam', 
+    full.names = TRUE
 )
 granges <- rtracklayer::import('loci_of_interest.bed')
+bam_list <- importPEBamFiles(
+    bam_files, 
+    where = GenomicRanges::resize(granges, width = 2000, fix = 'center'), 
+    shift_ATAC_fragments = TRUE
+)
 ```
+
+*Note: to allow for a background normalization, the `where` argument should be 
+omitted.*
 
 Then V-plots of the bam files over the set of loci of interest (`granges`) 
 are generated using the `plotVmat()` function:
@@ -70,7 +76,7 @@ list_params <- list(
 plots <- plotVmat(
     list_params, 
     cores = length(list_params)
-) + facet_wrap(~Cond., nrow = 2, dir = 'v')
+) + facet_wrap(~Cond.)
 ```
 
 Finally, the `nucleosomeEnrichment()` function is useful to statistically quantify 
