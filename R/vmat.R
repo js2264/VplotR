@@ -138,6 +138,8 @@ shuffleVmat <- function(Vmat, SEED = 999) {
     set.seed(SEED)
     shuffled.Vmat <- shuffled.Vmat[sample(x = 1:length(shuffled.Vmat), size = length(shuffled.Vmat), replace = F)]
     shuffled.Vmat <- matrix(shuffled.Vmat, nrow = nrow(Vmat), ncol = ncol(Vmat))
+    colnames(shuffled.Vmat) <- colnames(Vmat)
+    row.names(shuffled.Vmat) <- row.names(Vmat)
     return(shuffled.Vmat)
 }
 
@@ -211,7 +213,8 @@ plotVmat.default <- function(
         } 
         Vmat[Vmat < min(breaks)] <- min(breaks)
         Vmat[Vmat > max(breaks)] <- max(breaks)
-    } else if (class(Vmat) == 'list') {
+    } 
+    else if (class(Vmat) == 'list') {
         if (is.null(breaks)) {
             probs <- quantile(c(do.call(rbind, Vmat)), probs = seq(0, 1, length.out = 101))
             breaks <- seq(probs[(100-HM.COLOR.CUTOFF)/2], probs[HM.COLOR.CUTOFF+(100-HM.COLOR.CUTOFF)/2], length.out = length(colors)+1)
@@ -227,7 +230,8 @@ plotVmat.default <- function(
     if (class(Vmat) == 'list') {
         colnames(df) <- c('Var1', 'Var2', 'value', 'Cond.')
         df$Cond. <- factor(df$Cond., levels = names(Vmat))
-    } else {
+    } 
+    else {
         colnames(df) <- c('Var1', 'Var2', 'value')
     }
     p <- ggplot2::ggplot(df, ggplot2::aes(Var1, Var2, fill = value))
@@ -476,28 +480,35 @@ nucleosomeEnrichment.default <- function(Vmat, background, ...) {
 nucleosomeEnrichment.GRanges <- function(
     bam_granges, 
     granges, 
+    normalize = TRUE,
+    Vmt2 = NULL,
     estimate_background = TRUE, 
     plus1_nuc_only = FALSE, 
     verbose = TRUE, 
     genome = 'ce11',
+    roll = 1, 
+    normFun = 'pctsum',
     ...
 ) 
 {
+    #
     if (verbose) message("Computing Vmat...")
-    Vmat <- computeVmat(
-        bam_granges, 
-        granges
-    )
+    Vmat <- computeVmat(bam_granges, granges)
+    #
+    if (normalize) {
+        if (verbose) message("Normalizing Vmat...")
+        Vmat <- normalizeVmat(Vmat, background = NULL, scale = TRUE, normFun = normFun, roll = roll)
+    }
+    #
     if (estimate_background) {
         if (verbose) message("Computing background...")
-        background <- computeVmat(
-            bam_granges, 
-            shuffleGRanges(granges, genome = genome)
-        )
-    } 
+        background <- computeVmat(bam_granges, shuffleGRanges(granges, genome = genome))
+    }
     else {
         background = NULL
     }
+    Vmat[is.infinite(Vmat) | is.na(Vmat)] <- 0
+    #
     if (verbose) message("Computing enrichment...")
     res <- computeNucleosomeEnrichmentOverBackground(
         Vmat = Vmat, 
@@ -527,11 +538,12 @@ nucleosomeEnrichment.GRanges <- function(
 computeNucleosomeEnrichmentOverBackground <- function(
     Vmat, 
     background = NULL, 
-    plus1_nuc_only = TRUE, 
-    minus1_nuc = list(c(xmin = -150, xmax = -100), c(ymin = 175, ymax = 270)), 
-    minus1_nuc_neg = list(c(xmin = -150, xmax = -100), c(ymin = 50, ymax = 145)), 
-    plus1_nuc = list(c(xmin = 100, xmax = 150), c(ymin = 175, ymax = 270)), 
-    plus1_nuc_neg = list(c(xmin = 100, xmax = 150), c(ymin = 50, ymax = 145))
+    plus1_nuc_only = FALSE, 
+    minus1_nuc = list(c(xmin = -150, xmax = -50), c(ymin = 165, ymax = 270)), 
+    minus1_nuc_neg = list(c(xmin = -150, xmax = -50), c(ymin = 50, ymax = 145)), 
+    plus1_nuc = list(c(xmin = 60, xmax = 160), c(ymin = 165, ymax = 270)), 
+    plus1_nuc_neg = list(c(xmin = 60, xmax = 160), c(ymin = 50, ymax = 145)),
+    ...
 ) 
 {
     if (is.null(background)) {
@@ -542,24 +554,35 @@ computeNucleosomeEnrichmentOverBackground <- function(
     plus1_nuc_df <- data.frame(xmin = plus1_nuc[[1]][[1]], xmax = plus1_nuc[[1]][[2]], ymin = plus1_nuc[[2]][[1]], ymax = plus1_nuc[[2]][[2]])
     minus1_nuc_neg_df <- data.frame(xmin = minus1_nuc_neg[[1]][[1]], xmax = minus1_nuc_neg[[1]][[2]], ymin = minus1_nuc_neg[[2]][[1]], ymax = minus1_nuc_neg[[2]][[2]])
     plus1_nuc_neg_df <- data.frame(xmin = plus1_nuc_neg[[1]][[1]], xmax = plus1_nuc_neg[[1]][[2]], ymin = plus1_nuc_neg[[2]][[1]], ymax = plus1_nuc_neg[[2]][[2]])
-    df_controls <- data.frame(
-        rbind(minus1_nuc_df, plus1_nuc_df, minus1_nuc_neg_df, plus1_nuc_neg_df), 
-        locus = c('minus1_nuc', 'plus1_nuc', 'minus1_nuc_neg', 'plus1_nuc_neg'), 
-        type = factor(c('nuc', 'nuc', 'neg', 'neg'), levels = c('nuc', 'neg'))
-    )
-    p <- plotVmat(Vmat) + 
-        geom_rect(
-            data = df_controls, 
-            aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, col = type), 
-            inherit.aes=FALSE, 
-            fill = NA
+    if (plus1_nuc_only == TRUE) {
+        df_controls <- data.frame(
+            rbind(plus1_nuc_df, plus1_nuc_neg_df), 
+            locus = c('plus1_nuc', 'plus1_nuc_neg'), 
+            type = factor(c('nuc', 'neg'), levels = c('nuc', 'neg'))
         )
-    q <- plotVmat(background) + 
+    }
+    else {
+        df_controls <- data.frame(
+            rbind(minus1_nuc_df, plus1_nuc_df, minus1_nuc_neg_df, plus1_nuc_neg_df), 
+            locus = c('minus1_nuc', 'plus1_nuc', 'minus1_nuc_neg', 'plus1_nuc_neg'), 
+            type = factor(c('nuc', 'nuc', 'neg', 'neg'), levels = c('nuc', 'neg'))
+        )
+    }
+    p <- plotVmat(Vmat, xlim = c(-200, 200)) + 
         geom_rect(
             data = df_controls, 
             aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, col = type), 
             inherit.aes=FALSE, 
-            fill = NA
+            fill = NA, 
+            size = 2
+        )
+    q <- plotVmat(background, xlim = c(-200, 200)) + 
+        geom_rect(
+            data = df_controls, 
+            aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, col = type), 
+            inherit.aes=FALSE, 
+            fill = NA, 
+            size = 2
         )
     # Shift ranges to center around the "0"
     minus1_nuc <- list(
