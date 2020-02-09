@@ -8,15 +8,17 @@
 #' be extended.
 #' @param limits A numeric vector of length 2. Only consider fragments within
 #' this window of sizes.
+#' @param roll Integer Apply a moving average of this size 
 #' 
 #' @return A list of tbl, one for each .bam file.
 #' 
 #' @import parallel
 #' @import IRanges
 #' @import GenomicRanges
+#' @importFrom zoo rollmean
 #' @export
 
-getFragmentsDistribution <- function(fragments, granges_list = NULL, extend_granges = c(-500, 500), limits = c(0, 600)) {
+getFragmentsDistribution <- function(fragments, granges_list = NULL, extend_granges = c(-500, 500), limits = c(0, 600), roll = 3) {
     if (any(class(granges_list) == 'GRanges')) {
         granges_list <- list(granges_list)
         names(granges_list) <- 'granges'
@@ -30,7 +32,8 @@ getFragmentsDistribution <- function(fragments, granges_list = NULL, extend_gran
             IRanges::width() %>% 
             '['(. >= limits[1] & . <= limits[2]) %>%
             hist(plot = F, breaks = seq(1, limits[2], length.out = limits[2] + 1)) %>% 
-            '$'(counts)
+            '$'(counts) %>% 
+            zoo::rollmean(roll, na.pad = TRUE, 'center')
         res <- data.frame(
             'REs' = factor(names(granges_list))[[K]], 
             'x' = 1:limits[2],

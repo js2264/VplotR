@@ -66,7 +66,7 @@ in each ATAC-seq library, over the different classes of REs.
 # For each bam file, plot its distribution of fragment sizes over the 
 # tissue-specific REs or ubiquitous REs
 sizes <- parallel::mclapply(names(bam_list), function(TISSUE) {
-    getFragmentsDistribution(bam_list[[TISSUE]], proms_list)
+    getFragmentsDistribution(bam_list[[TISSUE]], proms_list, roll = 1)
 }, mc.cores = length(bam_list)) %>%
     setNames(names(bam_list)) %>%
     namedListToLongFormat() %>% 
@@ -74,7 +74,9 @@ sizes <- parallel::mclapply(names(bam_list), function(TISSUE) {
     dplyr::mutate(Promoters = factor(Promoters, levels = names(proms_list))) %>% 
     dplyr::mutate(max_number = unlist(lapply(levels(Sample), function(TISSUE) {
         rep(max(Number[Sample == TISSUE]), sum(Sample == TISSUE))
-    }))) 
+    }))) %>% 
+    dplyr::filter(Sample != 'mixed') %>% 
+    dplyr::filter(Promoters == 'Ubiq._proms' | (gsub('_proms', '', .$Promoters) == .$Sample))
 # Plot results
 p <- ggplot(sizes, aes(x = Fragment_size, y = Number, color = Promoters)) +
     geom_blank(aes(y = max_number)) + 
@@ -86,11 +88,11 @@ p <- ggplot(sizes, aes(x = Fragment_size, y = Number, color = Promoters)) +
         y = '# of fragments',
         color = 'Promoters classes'
     ) + 
-    facet_grid(Sample~Promoters, scales = "free_y") + 
+    facet_wrap(Sample~Promoters, scales = "free") + 
     scale_color_manual(
         values = c('#991919', '#1232D9', '#3B9B46', '#D99B12', '#9e9e9e', '#D912D4')
     )
-ggsave('examples/fragments_size_distribution.pdf', height = 10, width = 20)
+ggsave('examples/fragments_size_distribution3.pdf', height = 10, width = 20)
 ````
 
 We can already notice that there is a lack of second/third/etc. nucleosome 

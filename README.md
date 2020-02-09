@@ -1,33 +1,19 @@
 # VplotR
 
-**VplotR is still in Alpha and has not been thorouhly tested yet.**
+**VplotR is still in pre-release.**
 
 ![VplotR](examples/png/Comparison_tissue-specific-normalized-Vmats.png)
 
 ## Introduction
 
-This R package makes the process of generating "V-plots" straighforward. 
-V-plots have been introduced 
-[for the first time](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3215028/) 
-by the Henikoff lab in 2011.  
-
-Recently, V-plots have proven to be very instructive to understand the molecular 
-organization of the chromatin. For instance, the 
-[nucleoATAC]((https://genome.cshlp.org/content/early/2015/08/27/gr.192294.115)) 
-package relies on cross-correlation of ATAC-seq-derived V-plots to accurately map 
-nucleosome occupancy along the genome.
-
-VplotR aim is to streamline the process of generating V-plots. 
-It contains wrapping functions to import paired-end sequencing bam files and 
-generate V-plots around genomic loci of interest.
-
-VplotR is designed around [ggplot2](https://ggplot2.tidyverse.org/) 
-and makes full use of its potential. As such, it is easy to generate V-plots 
-in batches and combine them with other plots to make publication-ready figures.
+This R package makes the process of generating fragment density plots (also known as "V-plots") straightforward.  
+V-plots have been introduced [for the first time](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3215028/) by the Henikoff lab in 2011. Recently, V-plots have proven to be very instructive to understand the molecular organization of the chromatin. For instance, the [nucleoATAC]((https://genome.cshlp.org/content/early/2015/08/27/gr.192294.115)) package relies on cross-correlation of ATAC-seq fragment density plots to accurately map nucleosome occupancy along the genome.  
+VplotR aim is to streamline the process of generating V-plots. It contains wrapping functions to import paired-end sequencing bam files and generate V-plots around genomic loci of interest.  
+VplotR is designed around [ggplot2](https://ggplot2.tidyverse.org/) and makes full use of its potential. As such, it is easy to generate V-plots in batches and combine them with other plots to make publication-ready figures.  
 
 ## Installation
 
-VplotR can be ran installed from Github as follow:
+VplotR can be installed from Github as follows:
 
 ```r
 install.packages("devtools")
