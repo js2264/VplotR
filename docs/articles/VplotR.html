@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VplotR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
 
@@ -61,9 +61,6 @@
     </li>
   </ul>
 </li>
-<li>
-  <a href="../TODO">News</a>
-</li>
       </ul>
 <ul class="nav navbar-nav navbar-right"></ul>
 </div>
@@ -90,9 +87,8 @@
 
     
     
-<p><strong>VplotR is still in pre-release.</strong></p>
 <div class="figure">
-<img src="examples/png/Comparison_tissue-specific-normalized-Vmats.png" alt="VplotR"><p class="caption">VplotR</p>
+<img src="man/images/Vplots.png" alt="VplotR"><p class="caption">VplotR</p>
 </div>
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
@@ -110,9 +106,9 @@ VplotR is designed around <a href="https://ggplot2.tidyverse.org/">ggplot2</a> a
 <a class="sourceLine" id="cb1-2" title="2">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/reexports.html">install_github</a></span>(<span class="st">"js2264/VplotR"</span>)</a>
 <a class="sourceLine" id="cb1-3" title="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(VplotR)</a></code></pre></div>
 </div>
-<div id="quick-plot" class="section level2">
+<div id="quick-v-plot" class="section level2">
 <h2 class="hasAnchor">
-<a href="#quick-plot" class="anchor"></a>Quick plot</h2>
+<a href="#quick-v-plot" class="anchor"></a>Quick V-plot</h2>
 <p>Firstly BAM files are read using the <code><a href="../reference/importPEBamFiles.html">importPEBamFiles()</a></code> function and loci of interest from a BED file, for instance.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">granges &lt;-<span class="st"> </span>rtracklayer<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/rtracklayer/man/export.html">import</a></span>(<span class="st">'loci_of_interest.bed'</span>)</a>
 <a class="sourceLine" id="cb2-2" title="2">fragments &lt;-<span class="st"> </span><span class="kw"><a href="../reference/importPEBamFiles.html">importPEBamFiles</a></span>(</a>
@@ -188,7 +184,12 @@ VplotR is designed around <a href="https://ggplot2.tidyverse.org/">ggplot2</a> a
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#introduction">Introduction</a></li>
       <li><a href="#installation">Installation</a></li>
-      <li><a href="#quick-plot">Quick plot</a></li>
+      <li>
+<a href="#quick-v-plot">Quick V-plot</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#building-package">Building package</a></li>
+      <li><a href="#session-info">Session Info</a></li>
+      </ul>
+</li>
       </ul>
 </div>
       </div>
