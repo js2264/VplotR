@@ -6,11 +6,11 @@
 internally.}
 \usage{
 computeNucleosomeEnrichmentOverBackground(Vmat, background = NULL,
-  plus1_nuc_only = TRUE, minus1_nuc = list(c(xmin = -150, xmax = -100),
-  c(ymin = 175, ymax = 270)), minus1_nuc_neg = list(c(xmin = -150, xmax =
-  -100), c(ymin = 50, ymax = 145)), plus1_nuc = list(c(xmin = 100, xmax =
-  150), c(ymin = 175, ymax = 270)), plus1_nuc_neg = list(c(xmin = 100,
-  xmax = 150), c(ymin = 50, ymax = 145)))
+  plus1_nuc_only = FALSE, minus1_nuc = list(c(xmin = -150, xmax = -50),
+  c(ymin = 165, ymax = 270)), minus1_nuc_neg = list(c(xmin = -150, xmax =
+  -50), c(ymin = 50, ymax = 145)), plus1_nuc = list(c(xmin = 60, xmax =
+  160), c(ymin = 165, ymax = 270)), plus1_nuc_neg = list(c(xmin = 60,
+  xmax = 160), c(ymin = 50, ymax = 145)), ...)
 }
 \arguments{
 \item{Vmat}{A Vmat computed by nucleosomeEnrichment function}

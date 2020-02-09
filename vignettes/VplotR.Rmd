@@ -1,0 +1,101 @@
+---
+title: "VplotR"
+author: "Jacques Serizay"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{VplotR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>", 
+  eval = FALSE
+)
+```
+
+**VplotR is still in pre-release.**
+
+![VplotR](examples/png/Comparison_tissue-specific-normalized-Vmats.png)
+
+## Introduction
+
+This R package makes the process of generating fragment density plots (also known as "V-plots") straightforward.  
+V-plots have been introduced [for the first time](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3215028/) by the Henikoff lab in 2011. Recently, V-plots have proven to be very instructive to understand the molecular organization of the chromatin. For instance, the [nucleoATAC]((https://genome.cshlp.org/content/early/2015/08/27/gr.192294.115)) package relies on cross-correlation of ATAC-seq fragment density plots to accurately map nucleosome occupancy along the genome.  
+VplotR aim is to streamline the process of generating V-plots. It contains wrapping functions to import paired-end sequencing bam files and generate V-plots around genomic loci of interest.  
+VplotR is designed around [ggplot2](https://ggplot2.tidyverse.org/) and makes full use of its potential. As such, it is easy to generate V-plots in batches and combine them with other plots to make publication-ready figures.  
+
+## Installation
+
+VplotR can be installed from Github as follows:
+
+```r
+install.packages("devtools")
+devtools::install_github("js2264/VplotR")
+library(VplotR)
+```
+
+## Quick V-plot
+
+Firstly BAM files are read using the `importPEBamFiles()` function and loci of interest from a BED file, for instance.
+
+```r
+granges <- rtracklayer::import('loci_of_interest.bed')
+fragments <- importPEBamFiles(
+    'ATAC-seq-mapped-fragments.bam', 
+    where = GenomicRanges::resize(granges, width = 2000, fix = 'center'), 
+    shift_ATAC_fragments = TRUE
+)
+```
+
+*Note: to allow for a background normalization, the `where` argument should be omitted.*
+
+Then V-plot of ATAC-seq fragments (`fragments`) over the loci of interest (`granges`) is generated using the `plotVmat()` function:
+
+```r
+plotVmat(fragments, granges)
+```
+
+The generation of multiple V-plots can be parallelized as follow:
+
+```r
+list_params <- list(
+    "sample_1" = list("bam" = fragments_1, "granges" = granges_1), 
+    "sample_2" = list("bam" = bam_2, "granges" = granges_2), 
+    ..., 
+    "sample_N" = list("bam" = bam_N, "granges" = granges_N)
+)
+plotVmat(
+    list_params, 
+    cores = length(list_params)
+) + ggplot2::facet_wrap(~Cond.)
+```
+
+Finally, the `nucleosomeEnrichment()` function is useful to statistically quantify and compare nucleosome enrichment (e.g. flanking nucleosome at promoters). To do so:
+
+```r
+nuc_enrich <- nucleosomeEnrichment(
+    bam_granges = fragments, 
+    granges = granges
+)
+```
+
+For more details and additional functions, read the Introduction vignette.
+
+### Building package
+
+This package was built by executing the following commands in R: 
+
+```r
+devtools::document()
+devtools::build()
+pkgdown::build_site()
+```
+
+### Session Info
+```{r echo=FALSE, collapse = TRUE, eval = TRUE}
+sessionInfo()
+```
