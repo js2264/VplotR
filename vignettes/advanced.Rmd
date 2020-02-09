@@ -1,72 +1,69 @@
 ---
-title: "Introduction to the VplotR package"
+title: "VplotR advanced functions"
 author: "Jacques Serizay"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction Title}
+  %\VignetteIndexEntry{VplotR advanced functions}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-## 0. Import reads bam files
-
-We can read all the .bam files within one local folder using 
-the `importBamFiles()` function.
-
-```r
-# Import annotated ce11 promoters 
-require(magrittr)
-require(GenomicRanges)
-require(ggplot2)
-require(VplotR)
-ce_seq <- Biostrings::getSeq(BSgenome.Celegans.UCSC.ce11::BSgenome.Celegans.UCSC.ce11)
-ce_REs <- readRDS(
-    url(
-        'http://ahringerlab.com/VplotR/ce11_annotated_REs.rds'
-    )
-) 
-ce_proms <- ce_REs %>% '['(.$is.prom)
-proms_list <- list(
-    "Ubiq._proms" = ce_proms[ce_proms$which.tissues == 'Ubiq.'],
-    "Germline_proms" = ce_proms[ce_proms$which.tissues == 'Germline'],
-    "Neurons_proms" = ce_proms[ce_proms$which.tissues == 'Neurons'],
-    "Muscle_proms" = ce_proms[ce_proms$which.tissues == 'Muscle'],
-    "Hypod._proms" = ce_proms[ce_proms$which.tissues == 'Hypod.'],
-    "Intest._proms" = ce_proms[ce_proms$which.tissues == 'Intest.']
-)
-# Import bam file over annotated promoters, from a local folder. 
-# WARNING: This takes quite a long time for libraries that are deeply 
-# sequenced (> 5M pairs). 
-### bam_files <- paste0(
-###     '~/20190118_ATAC-seq_PE-mapping/_bam-files/', 
-###     c('mixed', 'Gonad', 'Neurons', 'Muscle', 'Hypod.', 'Intest.'), 
-###     '_YA_ATAC_combined.bam'
-### )
-### bam_list <- importPEBamFiles(
-###     bam_files, 
-###     where = GenomicRanges::reduce(GenomicRanges::resize(ce_proms, width = 2000, fix = 'center')), 
-###     shift_ATAC_fragments = TRUE
-### )
-### names(bam_list) <- gsub('_YA_ATAC_combined.bam', '', basename(bam_files))
-# For this vignette, the data has been made available online: 
-bam_list <- readRDS(
-    url(
-        'http://ahringerlab.com/VplotR/ATAC_PE_fragments.rds'
-    )
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>", 
+  eval = FALSE
 )
 ```
 
-## 1. Check distribution of fragment sizes over a specific set of segments
+## 0. Set up the session
 
-Let's have a look at the distribution of fragment sizes 
-in each ATAC-seq library, over the different classes of REs.
+```{r}
+require(tidyverse)
+require(VplotR)
+require(ggplot2)
+```
 
-```r
-# For each bam file, plot its distribution of fragment sizes over the 
-# tissue-specific REs or ubiquitous REs
+## 1. Import reads bam files and genomic loci files
+
+We can import .bam files of interest from a given folder using the `importBamFiles()` function.
+
+```{r eval = FALSE}
+# Import bam file over annotated promoters, from a local folder. 
+# WARNING: This takes quite a long time for libraries that are deeply sequenced
+bam_files <- list.files('~/path/to/_bam-files/')
+bam_list <- importPEBamFiles(
+    bam_files, 
+    shift_ATAC_fragments = TRUE
+)
+names(bam_list) <- bam_files
+```
+
+For this vignette, relevant data is also hosted on the Ahringer server:
+
+```{r}
+# Import ATAC-seq fragments 
+bam_list <- readRDS(url('http://ahringerlab.com/VplotR/ATAC_PE_fragments.rds'))
+lengths(bam_list)
+```
+
+We also need some relevant genomic locations. Let's get different sets of *C. elegans* promoters. 
+
+```{r}
+# Import annotated ce11 promoters 
+proms_list <- readRDS(url('http://ahringerlab.com/VplotR/promoters_Granges.rds'))
+lengths(proms_list)
+```
+
+## 2. Check distribution of fragment sizes over a specific set of segments
+
+Let's have a look at the distribution of fragment sizes in each ATAC-seq library, over the different classes of promoters we have. For this, we can use the `getFragmentsDistribution()` function.
+
+```{r}
+# For each bam file, plot its distribution of fragment sizes over the tissue-specific REs or ubiquitous REs
 sizes <- parallel::mclapply(names(bam_list), function(TISSUE) {
-    getFragmentsDistribution(bam_list[[TISSUE]], proms_list, roll = 1)
+    getFragmentsDistribution(bam_list[[TISSUE]], proms_list, roll = 5)
 }, mc.cores = length(bam_list)) %>%
     setNames(names(bam_list)) %>%
     namedListToLongFormat() %>% 
@@ -78,7 +75,7 @@ sizes <- parallel::mclapply(names(bam_list), function(TISSUE) {
     dplyr::filter(Sample != 'mixed') %>% 
     dplyr::filter(Promoters == 'Ubiq._proms' | (gsub('_proms', '', .$Promoters) == .$Sample))
 # Plot results
-p <- ggplot(sizes, aes(x = Fragment_size, y = Number, color = Promoters)) +
+ggplot(sizes, aes(x = Fragment_size, y = Number, color = Promoters)) +
     geom_blank(aes(y = max_number)) + 
     geom_line() +
     theme_bw() +
@@ -92,16 +89,12 @@ p <- ggplot(sizes, aes(x = Fragment_size, y = Number, color = Promoters)) +
     scale_color_manual(
         values = c('#991919', '#1232D9', '#3B9B46', '#D99B12', '#9e9e9e', '#D912D4')
     )
-ggsave('examples/fragments_size_distribution3.pdf', height = 10, width = 20)
-````
+```
 
-We can already notice that there is a lack of second/third/etc. nucleosome 
-"bump" in somatic-specific ATAC-seq data over somatic REs. 
-However, a more in-depth view of nucleosome binding would be desirable, 
-to better understand the molecular context of promoter organization.
+We can already notice that there is a lack of second/third/etc. nucleosome "bump" in somatic-specific ATAC-seq data over somatic REs. However, a more in-depth view of nucleosome binding would be desirable, to better understand the molecular context of promoter organization.
 
-## 2. Vplots
-### 2.1 Quick Vplot
+## 3. Vplots
+### 3.1 Quick Vplot
 
 Particularly, *where* fragments are mapping is an information as 
 important as *how long* they are. The fragment length distribution plots generated
@@ -139,7 +132,7 @@ plots <- cowplot::plot_grid(gl_atac_gl_proms, neurons_atac_neurons_proms)
 ggsave('examples/Germline_Neurons_Vmat-comparison.pdf', height = 6, width = 12, plots)
 ```
 
-### 2.2 Normalized Vplots
+### 3.2 Normalized Vplots
 
 Ideally, one would take into account the background ATAC-seq fragments to 
 better estimate the molecular context in each condition.
@@ -213,8 +206,8 @@ p <- plots +
 ggsave('examples/Comparison_tissue-specific-normalized-Vmats.pdf', height = 7.2, width = 18)
 ```
 
-## 3 Real case uses
-### 3.1. Real case use #1: Compare nucleosome patterns over tissue-specific promoters or enhancers
+## 4 Real case uses
+### 4.1. Real case use #1: Compare nucleosome patterns over tissue-specific promoters or enhancers
 
 Let's have a look at tissue-specific classes of promoters and the associated
 Vplots, in a "programmatic" approach. 
@@ -253,7 +246,7 @@ It is striking that Germline promoters are characterized by prominent flanking
 nucleosomes, while somatic promoters are not. Ubiquitous promoters, 
 on the other hand, are flanked by nucleosomes in all tissues. 
 
-### 3.2. Real case use #2: Nucleosome enrichment estimation
+### 4.2. Real case use #2: Nucleosome enrichment estimation
 
 We can estimate nucleosome enrichment using the `nucleosomeEnrichment()` function.
 This function is used to quantify the local enrichment of a nucleosome at a 
@@ -309,7 +302,7 @@ This confirms what the Vplots suggest: flanking nucleosomes are well enriched
 at ubiquitous promoters in all tissues. Among tissue-specific promoters, 
 only germline promoters have a significant enrichment of flanking nucleosome. 
 
-### 3.3. Real case use #3: Use MNase-seq data
+### 4   .3. Real case use #3: Use MNase-seq data
 
 We can also use MNase data (only this data comes from mixed tissues) to look at nucleosome patterns. 
 

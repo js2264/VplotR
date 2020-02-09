@@ -5,7 +5,7 @@
 \title{A function to compute sizes distribution for PE fragments}
 \usage{
 getFragmentsDistribution(fragments, granges_list = NULL,
-  extend_granges = c(-500, 500), limits = c(0, 600))
+  extend_granges = c(-500, 500), limits = c(0, 600), roll = 3)
 }
 \arguments{
 \item{fragments}{GRanges object containing PE fragments. See importPEBamFiles
@@ -16,6 +16,8 @@ be extended.}
 
 \item{limits}{A numeric vector of length 2. Only consider fragments within
 this window of sizes.}
+
+\item{roll}{Integer Apply a moving average of this size}
 
 \item{granges}{GRanges. cam be a list of different sets of GRanges.
 should overlap in order to be considered when estimating fragment sizes.}

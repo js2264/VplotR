@@ -1,0 +1,45 @@
+home:
+  title: VplotR package
+  links:
+  - text: Contact the author at
+    href: https://js2264.github.io/
+  - text: Browse source code at
+    href: https://github.com/js2264/VplotR/
+  - text: Read publication at
+    href: https://github.com/js2264/VplotR/blob/master/vignettes/Introduction.md
+
+authors:
+  Jacques Serizay:
+    href: https://https://js2264.github.io/
+
+reference:
+  - title: Plotting fragment density graphs
+    contents:
+    - plotVmat
+    - computeVmat
+    - scaleVmat
+    - normalizeVmat
+    - shuffleVmat
+  - title: Computing flanking nucleosome enrichment scores
+    contents:
+    - nucleosomeEnrichment
+    - computeNucleosomeEnrichmentOverBackground
+  - title: Helpers
+    contents:
+    - importPEBamFiles
+    - shiftATACGranges
+    - getFragmentsDistribution
+
+toc:
+  depth: 3
+
+navbar:
+  components:
+    articles:
+      text: Articles
+      menu:
+      - text: 'In-depth use'
+        href: articles/advanced.html
+    news:
+      text: News
+      href: TODO

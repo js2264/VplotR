@@ -17,11 +17,14 @@ Imports:
     GenomicRanges,
     IRanges,
     RColorBrewer,
+    zoo,
     Rsamtools,
     S4Vectors,
     ggplot2,
     magrittr,
     parallel,
-    reshape2,
-    zoo
-
+    reshape2
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

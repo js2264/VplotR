@@ -5,8 +5,9 @@
 \title{A function to compute nucleosome enrichment over a set of GRanges}
 \usage{
 \method{nucleosomeEnrichment}{GRanges}(bam_granges, granges,
-  estimate_background = TRUE, plus1_nuc_only = FALSE, verbose = TRUE,
-  genome = "ce11", ...)
+  normalize = TRUE, Vmt2 = NULL, estimate_background = TRUE,
+  plus1_nuc_only = FALSE, verbose = TRUE, genome = "ce11",
+  roll = 1, normFun = "pctsum", ...)
 }
 \arguments{
 \item{bam_granges}{GRanges. The paired-end fragments}
