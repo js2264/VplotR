@@ -17,9 +17,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-**VplotR is still in pre-release.**
-
-![VplotR](examples/png/Comparison_tissue-specific-normalized-Vmats.png)
+![VplotR](man/images/Vplots.png)
 
 ## Introduction
 
