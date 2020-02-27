@@ -15,4 +15,4 @@ VplotR package aims to streamline the process of generating V-plots. It contains
 
 The current release of VplotR is v0.4.0. This is the release which has been used in Serizay et al., submitted.  
 
-To read more about VplotR, check out the [Get started](./articles/VplotR.html) vignette.
+To read more about VplotR, check out the [Get started](https://js2264.github.io/VplotR/articles/VplotR.html) vignette.
