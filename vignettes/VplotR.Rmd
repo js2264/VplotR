@@ -30,17 +30,17 @@ VplotR is designed around [ggplot2](https://ggplot2.tidyverse.org/) and makes fu
 
 VplotR can be installed from Github as follows:
 
-```r
+```{r eval = FALSE}
 install.packages("devtools")
 devtools::install_github("js2264/VplotR")
-library(VplotR)
 ```
 
 ## Quick V-plot
 
 Firstly BAM files are read using the `importPEBamFiles()` function and loci of interest from a BED file, for instance.
 
-```r
+```{r eval = TRUE}
+library(VplotR)
 granges <- rtracklayer::import('loci_of_interest.bed')
 fragments <- importPEBamFiles(
     'ATAC-seq-mapped-fragments.bam', 
@@ -53,13 +53,13 @@ fragments <- importPEBamFiles(
 
 Then V-plot of ATAC-seq fragments (`fragments`) over the loci of interest (`granges`) is generated using the `plotVmat()` function:
 
-```r
+```{r eval = TRUE}
 plotVmat(fragments, granges)
 ```
 
 The generation of multiple V-plots can be parallelized as follow:
 
-```r
+```{r eval = TRUE}
 list_params <- list(
     "sample_1" = list("bam" = fragments_1, "granges" = granges_1), 
     "sample_2" = list("bam" = bam_2, "granges" = granges_2), 
@@ -74,7 +74,7 @@ plotVmat(
 
 Finally, the `nucleosomeEnrichment()` function is useful to statistically quantify and compare nucleosome enrichment (e.g. flanking nucleosome at promoters). To do so:
 
-```r
+```{r eval = TRUE}
 nuc_enrich <- nucleosomeEnrichment(
     bam_granges = fragments, 
     granges = granges
@@ -87,13 +87,13 @@ For more details and additional functions, read the Introduction vignette.
 
 This package was built by executing the following commands in R: 
 
-```r
+```{r eval = FALSE}
 devtools::document()
 devtools::build()
 pkgdown::build_site()
 ```
 
 ### Session Info
-```{r echo=FALSE, collapse = TRUE, eval = TRUE}
+```{r echo = FALSE, collapse = TRUE, eval = TRUE}
 sessionInfo()
 ```

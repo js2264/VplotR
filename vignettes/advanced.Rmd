@@ -302,7 +302,7 @@ This confirms what the Vplots suggest: flanking nucleosomes are well enriched
 at ubiquitous promoters in all tissues. Among tissue-specific promoters, 
 only germline promoters have a significant enrichment of flanking nucleosome. 
 
-### 4   .3. Real case use #3: Use MNase-seq data
+### 4.3. Real case use #3: Use MNase-seq data
 
 We can also use MNase data (only this data comes from mixed tissues) to look at nucleosome patterns. 
 
