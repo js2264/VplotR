@@ -1,3 +1,8 @@
+[![](https://travis-ci.org/js2264/VplotR.svg?branch=master)](https://travis-ci.org/js2264/VplotR)
+[![](https://codecov.io/gh/js2264/VplotR/branch/master/graph/badge.svg)](https://codecov.io/github/js2264/VplotR?branch=master)
+[![](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![](https://img.shields.io/github/languages/code-size/js2264/VplotR.svg)](https://github.com/js2264/VplotR)
+
 # VplotR v0.4.0
 
 ![VplotR](man/images/Vplots.png)
@@ -13,6 +18,6 @@ Fragment density plots, also known as "V-plots" have been introduced [for the fi
 ## Focus of VplotR
 VplotR package aims to streamline the process of generating V-plots. It contains functions to import paired-end sequencing bam files and generate V-plots around genomic loci of interest. VplotR is built on [ggplot2](https://ggplot2.tidyverse.org/) and makes full use of its potential. As such, it is easy to generate V-plots in batches and combine them with other plots to make publication-ready figures.  
 
-The current release of VplotR is v0.4.0. This is the release which has been used in Serizay et al., submitted.  
+The stable release of VplotR is v0.4.0. This is the release which has been used in Serizay et al., submitted.  
 
 To read more about VplotR, check out the [Get started](https://js2264.github.io/VplotR/articles/VplotR.html) vignette.

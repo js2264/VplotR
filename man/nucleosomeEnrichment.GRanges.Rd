@@ -5,14 +5,17 @@
 \title{A function to compute nucleosome enrichment over a set of GRanges}
 \usage{
 \method{nucleosomeEnrichment}{GRanges}(bam_granges, granges,
-  normalize = TRUE, Vmt2 = NULL, estimate_background = TRUE,
-  plus1_nuc_only = FALSE, verbose = TRUE, genome = "ce11",
-  roll = 1, normFun = "pctsum", ...)
+  normalize = TRUE, normFun = "sum", universe = NULL,
+  libdepth = NULL, s = 0.999, roll = 3, genome = "ce11",
+  estimate_background = TRUE, plus1_nuc_only = FALSE, verbose = TRUE,
+  ...)
 }
 \arguments{
 \item{bam_granges}{GRanges. The paired-end fragments}
 
 \item{granges}{GRanges. The regions to map the fragments onto}
+
+\item{genome}{a BSgenome object. See getChromSizes for more details}
 
 \item{estimate_background}{Boolean Should the background be estimated automatically?}
 
@@ -20,8 +23,6 @@
 nucleosome?}
 
 \item{verbose}{Boolean}
-
-\item{genome}{a BSgenome object. See getChromSizes for more details}
 }
 \value{
 list

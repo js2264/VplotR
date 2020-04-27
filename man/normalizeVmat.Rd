@@ -4,15 +4,12 @@
 \alias{normalizeVmat}
 \title{A function to normalized a Vmat to a given background.}
 \usage{
-normalizeVmat(Vmat1, background = NULL, scale = TRUE, FUN = `-`,
-  normFun = "pctsum", roll = 1)
+normalizeVmat(Vmat, bam_granges, normFun = c("libdepth", "sum", "max",
+  "quantile", "Zscore"), universe = NULL, libdepth = NULL, s = 0.999,
+  roll = 1)
 }
 \arguments{
-\item{Vmat1}{A Vmat, usually output of computeVmat}
-
-\item{background}{A Vmat computed from a background.}
-
-\item{scale}{Boolean Should the background be removed?}
+\item{Vmat}{A Vmat, usually output of computeVmat}
 
 \item{normFun}{string A Vmat can be scaled relative to its median ('pctmedian'), 
 to its mean ('pctmean'), to its max ('pctmax'). Otherwise it could be zscore-d

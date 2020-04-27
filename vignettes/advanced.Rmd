@@ -52,6 +52,7 @@ We also need some relevant genomic locations. Let's get different sets of *C. el
 
 ```{r}
 # Import annotated ce11 promoters 
+ce_REs <- readRDS(url('http://ahringerlab.com/VplotR/ce11_annotated_REs.rds'))
 proms_list <- readRDS(url('http://ahringerlab.com/VplotR/promoters_Granges.rds'))
 lengths(proms_list)
 ```
@@ -140,41 +141,56 @@ Samples might have an background fragment size higher than others and this
 could affect the appearance of un-normalized Vplots.
 
 ```r
-Vmat_background <- computeVmat(
-    bam_list[['Neurons']], 
-    shuffleGRanges(proms_list[['Neurons_proms']])
-)
-Vmat <- bam_list[['Neurons']] %>% 
-    computeVmat(proms_list[['Neurons_proms']]) %>%
-    normalizeVmat(
-        background = Vmat_background, 
-        scale = TRUE, 
-        normFun = 'pctsum', 
-        roll = 3
-    ) %>%
-    plotVmat(
-        main = 'Neurons-spe. ATAC fragments over Neurons-spe. proms'
+    list_params <- list(
+        "Germline ATAC-seq over Ubiq. proms." = list(bam_list[['Germline']], proms_list[['Ubiq._proms']]),
+        "Germline ATAC-seq over Germline proms." = list(bam_list[['Germline']], proms_list[['Germline_proms']]),
+        "Neurons ATAC-seq over Ubiq. proms." = list(bam_list[['Neurons']], proms_list[['Ubiq._proms']]),
+        "Neurons ATAC-seq over Neurons proms." = list(bam_list[['Neurons']], proms_list[['Neurons_proms']]),
+        "Muscle ATAC-seq over Ubiq. proms." = list(bam_list[['Muscle']], proms_list[['Ubiq._proms']]),
+        "Muscle ATAC-seq over Muscle proms." = list(bam_list[['Muscle']], proms_list[['Muscle_proms']]),
+        "Hypod. ATAC-seq over Ubiq. proms." = list(bam_list[['Hypod.']], proms_list[['Ubiq._proms']]),
+        "Hypod. ATAC-seq over Hypod. proms." = list(bam_list[['Hypod.']], proms_list[['Hypod._proms']]),
+        "Intest. ATAC-seq over Ubiq. proms." = list(bam_list[['Intest.']], proms_list[['Ubiq._proms']]),
+        "Intest. ATAC-seq over Intest. proms." = list(bam_list[['Intest.']], proms_list[['Intest._proms']])
     )
-ggsave('examples/Vmat_Neurons-over-neurons-REs_NORMALIZED.pdf')
-# An easier way to include such background normalization is to use the 
-# argument `estimate_background = TRUE`
-# Scales can also be adjusted using the `breaks` argument.
-neurons_atac_neurons_proms_NORM <- plotVmat(
-    bam_list[['Neurons']], 
-    proms_list[['Neurons_proms']], 
-    estimate_background = TRUE,
-    breaks = seq(0, 12, length.out = 61), 
-    main = 'Neurons-spe. ATAC fragments over Neurons-spe. proms (Norm.)'
-)
-gl_atac_gl_proms_NORM <- plotVmat(
-    bam_list[['Germline']], 
-    proms_list[['Germline_proms']], 
-    estimate_background = TRUE,
-    breaks = seq(0, 12, length.out = 61), 
-    main = 'Germline-spe. ATAC fragments over Germline-spe. proms (Norm.)'
-)
-plots <- cowplot::plot_grid(gl_atac_gl_proms_NORM, neurons_atac_neurons_proms_NORM)
-ggsave('examples/Germline_Neurons_NORMALIZED-Vmat-comparison.pdf', height = 6, width = 12, plots)
+    parallel::mclapply(mc.cores = 5, c('libdepth', 'sum', 'max', 'quantile', 'Zscore'), function(FUN) {
+        plots <- plotVmat(
+            list_params, 
+            xlim = c(-200, 200), 
+            cores = length(list_params),
+            normFun = FUN
+        )
+        p <- plots + 
+            facet_wrap(~Cond., nrow = 2, dir = 'v') + 
+            theme(legend.position = 'bottom') +
+            theme(panel.spacing = unit(1, "lines"))
+        ggsave(paste0('GL_Neurones_', FUN, '.pdf'), height = 7.2, width = 18)
+    })
+    #
+    plots <- plotVmat(
+        list_params, 
+        xlim = c(-200, 200), 
+        cores = length(list_params),
+        normFun = 'libdepth', 
+        universe = ce_REs
+    )
+    p <- plots + 
+        facet_wrap(~Cond., nrow = 2, dir = 'v') + 
+        theme(legend.position = 'bottom') +
+        theme(panel.spacing = unit(1, "lines"))
+    ggsave(paste0('GL_Neurones_libdepth_over-all-REs.pdf'), height = 7.2, width = 18)
+    plots <- plotVmat(
+        list_params, 
+        xlim = c(-200, 200), 
+        cores = length(list_params),
+        normFun = 'libdepth', 
+        universe = ce_REs[ce_REs$is.prom]
+    )
+    p <- plots + 
+        facet_wrap(~Cond., nrow = 2, dir = 'v') + 
+        theme(legend.position = 'bottom') +
+        theme(panel.spacing = unit(1, "lines"))
+    ggsave(paste0('GL_Neurones_libdepth_over-all-proms.pdf'), height = 7.2, width = 18)
 ```
 
 To compute many different Vplots simultaneously, one can pass the two main 
@@ -182,22 +198,22 @@ arguments (bam_granges and granges) to the plotVmat function using a named list.
 
 ```r 
 list_params <- list(
-    "Germline ATAC-seq over Germline proms." = list(bam_list[['Germline']], proms_list[['Germline_proms']]),
     "Germline ATAC-seq over Ubiq. proms." = list(bam_list[['Germline']], proms_list[['Ubiq._proms']]),
-    "Neurons ATAC-seq over Neurons proms." = list(bam_list[['Neurons']], proms_list[['Neurons_proms']]),
+    "Germline ATAC-seq over Germline proms." = list(bam_list[['Germline']], proms_list[['Germline_proms']]),
     "Neurons ATAC-seq over Ubiq. proms." = list(bam_list[['Neurons']], proms_list[['Ubiq._proms']]),
-    "Muscle ATAC-seq over Muscle proms." = list(bam_list[['Muscle']], proms_list[['Muscle_proms']]),
+    "Neurons ATAC-seq over Neurons proms." = list(bam_list[['Neurons']], proms_list[['Neurons_proms']]),
     "Muscle ATAC-seq over Ubiq. proms." = list(bam_list[['Muscle']], proms_list[['Ubiq._proms']]),
-    "Hypod. ATAC-seq over Hypod. proms." = list(bam_list[['Hypod.']], proms_list[['Hypod._proms']]),
+    "Muscle ATAC-seq over Muscle proms." = list(bam_list[['Muscle']], proms_list[['Muscle_proms']]),
     "Hypod. ATAC-seq over Ubiq. proms." = list(bam_list[['Hypod.']], proms_list[['Ubiq._proms']]),
-    "Intest. ATAC-seq over Intest. proms." = list(bam_list[['Intest.']], proms_list[['Intest._proms']]),
-    "Intest. ATAC-seq over Ubiq. proms." = list(bam_list[['Intest.']], proms_list[['Ubiq._proms']])
+    "Hypod. ATAC-seq over Hypod. proms." = list(bam_list[['Hypod.']], proms_list[['Hypod._proms']]),
+    "Intest. ATAC-seq over Ubiq. proms." = list(bam_list[['Intest.']], proms_list[['Ubiq._proms']]),
+    "Intest. ATAC-seq over Intest. proms." = list(bam_list[['Intest.']], proms_list[['Intest._proms']])
 )
 plots <- plotVmat(
     list_params, 
     xlim = c(-200, 200), 
-    estimate_background = TRUE, 
-    cores = length(list_params)
+    cores = length(list_params),
+    normFun = 'sum'
 )
 p <- plots + 
     facet_wrap(~Cond., nrow = 2, dir = 'v') + 
@@ -354,3 +370,63 @@ ggsave('examples/MNase-coverage_proms.pdf', height = 15, width = 18)
 As expected, nucleosomal reads are mapped over flanking nucleosomes, specifically
 around ubiquitous and germline promoters. Arrays of nucleosomes are readily 
 detected at these promoters. 
+
+### 4.4. Compare nucleosome positioning at germline promoters, in WT or gon1gem2 mutants (where the promoters are not open)
+
+```{r}
+    
+    gon1gem2_frags <- importPEBamFiles(
+        '~/20200410_gon1gem2_ATAC/_bam-files/MS43.map_pe^rm_chrM^rm_blacklist^q10.bam', 
+        shift_ATAC_fragments = FALSE
+    ) 
+    list_params <- list(
+        "Germline-proms_WT" = list(bam_list[['Germline']], proms_list[['Germline_proms']]),
+        "Germline-proms_gon1gem2" = list(gon1gem2_frags, proms_list[['Germline_proms']])
+    )
+    #
+    plots <- plotVmat(
+        list_params,
+        xlim = c(-200, 200), 
+        cores = length(list_params),
+        normFun = 'sum'
+    )
+    Vplots <- plots + 
+        facet_wrap(~Cond., nrow = 1, dir = 'v') + 
+        theme(legend.position = 'bottom') +
+        theme(panel.spacing = unit(1, "lines"))
+    ggsave('germline-proms_WT-vs-gon1gem2.pdf', height = 3.6, width = 6)
+    #
+    list_scores <- list(
+        'WT' = nucenrich_tissue_spe_proms <- nucleosomeEnrichment(
+            bam_granges = bam_list[['Germline']], 
+            granges = proms_list[['Germline_proms']], 
+            verbose = TRUE
+        ),
+        'gon1gem2' = nucenrich_ubiq_proms <- nucleosomeEnrichment(
+            bam_granges = gon1gem2_frags, 
+            granges = proms_list[['Germline_proms']], 
+            verbose = TRUE
+        )
+    )
+    nucenrich_scores <- data.frame(
+        tissue = factor(rep(names(list_scores), each = 2), levels = names(list_scores)), 
+        promoters = c('germline', 'germline'), 
+        promoters2 = factor(1, 2)),
+        score = unlist(lapply(list_scores, function(Vmat) Vmat$fisher_test$estimate))
+    ) 
+    p <- ggplot(nucenrich_scores, aes(
+        x = tissue, 
+        y = score, 
+        fill = tissue, 
+        group = is_ubiq
+    )) + 
+        geom_col() + 
+        facet_wrap(~is_ubiq, nrow = 2) + 
+        coord_flip() + 
+        labs(title = 'Flanking nucleosome enrichment score', y = 'Enrichment score', x = 'Tissue-specific data') + 
+        theme_bw() + 
+        theme(legend.position = 'none')
+    ggsave('examples/Comparison_tissue-specific-nucleosome-enrichment.pdf', height = 5, width = 5)
+
+```
+

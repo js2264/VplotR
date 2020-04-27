@@ -17,6 +17,7 @@
 
 computeVmat <- function(reads.granges, target.granges, XAXIS.CUTOFF = 1000, YAXIS.CUTOFF = 1000, stranded = TRUE) {
     `%over%` <- IRanges::`%over%`
+    `%<>%` <- magrittr::`%<>%`
     center.targets <- GenomicRanges::GRanges(
         seqnames = GenomicRanges::seqnames(target.granges), 
         IRanges::IRanges(
@@ -49,73 +50,19 @@ computeVmat <- function(reads.granges, target.granges, XAXIS.CUTOFF = 1000, YAXI
     return(tab)
 }
 
-#' A function to scale a Vmat.
-#'
-#' @param Vmat 
-#' @param FUN string. A Vmat can be scaled relative to its median ('pctmedian'), 
-#' to its mean ('pctmean'), to its max ('pctmax'). Otherwise it could be zscore-d
-#' entirely ('Zscore') or by rows ('rowZscore') or by columns ('colZscore').
-#' 
-#' @return A table object
-#' 
-#' @import S4Vectors
-#' @import GenomicRanges
-#' @import IRanges
-#' @export
-
-scaleVmat <- function(Vmat, FUN = 'pctsum') {
-    if (FUN == 'pctmedian') {
-        Vmat <- Vmat/median(Vmat)*100
-    } else if (FUN == 'pctmean') {
-        Vmat <- Vmat/mean(Vmat)*1000000
-    } else if (FUN == 'pctsum') {
-        Vmat <- Vmat/sum(Vmat)*1000000
-    } else if (FUN == 'pctmax') {
-        Vmat <- Vmat/max(Vmat)*100
-    } else if (FUN == 'colZscore') {
-        Vmat <- apply(Vmat, 2, scale)
-    } else if (FUN == 'rowZscore') {
-        Vmat <- t(apply(Vmat, 1, scale))
-    } else if (FUN == 'Zscore') {
-        Vmat2 <- matrix(scale(c(Vmat)), byrow = FALSE, nrow = nrow(Vmat))
-        colnames(Vmat2) <- colnames(Vmat)
-        row.names(Vmat2) <- row.names(Vmat)
-        Vmat <- Vmat2
-    }
-    return(Vmat)
-}
-
-#' A function to normalized a Vmat to a given background.
-#'
-#' @param Vmat1 A Vmat, usually output of computeVmat
-#' @param background A Vmat computed from a background. 
-#' @param scale Boolean Should the background be removed?
-#' @param normFun string A Vmat can be scaled relative to its median ('pctmedian'), 
-#' to its mean ('pctmean'), to its max ('pctmax'). Otherwise it could be zscore-d
-#' entirely ('Zscore') or by rows ('rowZscore') or by columns ('colZscore').
-#' @param roll integer to use as the window to smooth the Vmat rows by rolling mean
-#' 
-#' @return A normalized Vmat object
-#' 
-#' @import S4Vectors
-#' @import GenomicRanges
-#' @import IRanges
-#' @importFrom zoo rollmean
-#' @export
-
-normalizeVmat <- function(Vmat1, background = NULL, scale = TRUE, FUN = `-`, normFun = 'pctsum', roll = 1) {
-    if (is.null(background))
-        background <- 0
-    if (scale == TRUE) {
-        Vmat <- do.call(FUN, list(Vmat1, background))
-        Vmat <- scaleVmat(Vmat, normFun)
-    }
-    if (roll > 1) {
-        Vmat <- zoo::rollmean(Vmat, roll)
-    }
-    return(Vmat)
-}
-
+# normalizeVmat <- function(Vmat1, background = NULL, scale = TRUE, FUN = `-`, normFun = 'pctsum', roll = 1) {
+#     if (is.null(background))
+#         background <- 0
+#     if (scale == TRUE) {
+#         Vmat <- do.call(FUN, list(Vmat1, background))
+#         Vmat <- scaleVmat(Vmat, normFun)
+#     }
+#     if (roll > 1) {
+#         Vmat <- zoo::rollmean(Vmat, roll)
+#     }
+#     return(Vmat)
+# }
+# 
 #' A function to shuffle a Vmat
 #'
 #' @param Vmat A Vmat, usually output of computeVmat
@@ -293,33 +240,98 @@ plotVmat.GRanges <- function(
     YAXIS.CUTOFF = 1000, 
     stranded = TRUE,
     normalize = TRUE,
-    Vmat2 = NULL,
-    estimate_background = TRUE,
-    background_granges = NULL,
-    normFun = 'pctsum',
+    normFun = 'libdepth',
+    universe = NULL,
+    libdepth = NULL,
+    s = 0.999, 
     roll = 3,
     return_Vmat = FALSE,
     genome = 'ce11',
+    verbose = 1,
     ...
-) 
+)
 {
     # Calculate Vmat
+    if (verbose) message('Computing V-mat') 
     Vmat <- computeVmat(bam_granges, granges, XAXIS.CUTOFF, YAXIS.CUTOFF, stranded)
     # Normalize Vmat using Vmat2
     if (normalize) {
-        if (estimate_background == TRUE & is.null(Vmat2)) {
-            if (is.null(background_granges)) background_granges <- shuffleGRanges(granges, genome = genome)
-            Vmat2 <- computeVmat(bam_granges, background_granges, XAXIS.CUTOFF, YAXIS.CUTOFF)
-        }
-        Vmat <- normalizeVmat(Vmat, background = Vmat2, scale = TRUE, normFun = normFun, roll = roll)
+        if (verbose) message('Normalizing the matrix') 
+        Vmat <- normalizeVmat(Vmat, bam_granges, normFun, universe, libdepth, s, roll)
     }
     # Replace NA / inf values by 0
     Vmat[is.infinite(Vmat) | is.na(Vmat)] <- 0
+    #
     if (return_Vmat == TRUE) {
         return(Vmat)
     } else {
         plotVmat(Vmat, ...)
     }
+}
+
+#' A function to normalized a Vmat to a given background.
+#'
+#' @param Vmat A Vmat, usually output of computeVmat
+#' @param normFun string A Vmat can be scaled relative to its median ('pctmedian'), 
+#' to its mean ('pctmean'), to its max ('pctmax'). Otherwise it could be zscore-d
+#' entirely ('Zscore') or by rows ('rowZscore') or by columns ('colZscore').
+#' @param roll integer to use as the window to smooth the Vmat rows by rolling mean
+#' 
+#' @return A normalized Vmat object
+#' 
+#' @import S4Vectors
+#' @import GenomicRanges
+#' @import IRanges
+#' @importFrom zoo rollmean
+#' @export
+
+normalizeVmat <- function(
+    Vmat, 
+    bam_granges, 
+    normFun = c('libdepth', 'sum', 'max', 'quantile', 'Zscore'),
+    universe = NULL, 
+    libdepth = NULL,
+    s = 0.9, 
+    roll = 1
+)
+{
+    ## Normalize the matrix 
+    if (normFun == 'libdepth') {
+        if (is.numeric(libdepth)) {
+            message('Using provided library depth')
+            Vmat <- Vmat / libdepth
+        }
+        else if (class(universe) == 'GRanges') {
+            message('Estimating library depth based on the universe set of GRanges')
+            libdepth <- sum(computeVmat(bam_granges, universe))
+            Vmat <- Vmat / libdepth * 1000000
+        }
+        else {
+            message('Estimating raw library depth')
+            Vmat <- Vmat / length(bam_granges) * 1000000
+        }
+    } 
+    else if (normFun == 'sum') {
+        Vmat <- Vmat/sum(Vmat)
+    }
+    else if (normFun == 'max') {
+        Vmat <- Vmat/max(Vmat)
+    }
+    else if (normFun == 'quantile') {
+        Vmat <- Vmat/quantile(Vmat, probs = s)
+    }
+    else if (normFun == 'Zscore') {
+        Vmat2 <- matrix(scale(c(Vmat)), byrow = FALSE, nrow = nrow(Vmat))
+        colnames(Vmat2) <- colnames(Vmat)
+        row.names(Vmat2) <- row.names(Vmat)
+        Vmat <- Vmat2
+    }
+    ## Smooth the heatmap
+    if (roll > 1) {
+        message('Smoothing the matrix')
+        Vmat <- zoo::rollmean(Vmat, roll)
+    }
+    return(Vmat)
 }
 
 #' A function to plot a list of Vmats
@@ -360,10 +372,10 @@ plotVmat.list <- function(
     YAXIS.CUTOFF = 1000, 
     stranded = TRUE,
     normalize = TRUE,
-    Vmat2 = NULL,
-    estimate_background = TRUE,
-    background_granges = NULL,
-    normFun = 'pctsum',
+    normFun = 'libdepth',
+    universe = NULL,
+    libdepth = NULL,
+    s = 0.999, 
     roll = 3,
     return_Vmat = FALSE,
     genome = 'ce11',
@@ -378,7 +390,6 @@ plotVmat.list <- function(
             if (verbose) message('- Processing sample ', K, '/', length(list_params)) 
             bam_granges <- list_params[[K]][[1]]
             granges <- list_params[[K]][[2]]
-            if (length(list_params[[K]]) >= 3) {background_granges <- list_params[[K]][[3]]} else {background_granges}
             Vmat <- plotVmat(
                 bam_granges, 
                 granges, 
@@ -386,10 +397,10 @@ plotVmat.list <- function(
                 YAXIS.CUTOFF, 
                 stranded, 
                 normalize, 
-                Vmat2, 
-                estimate_background,
-                background_granges, 
                 normFun, 
+                universe, 
+                libdepth,
+                s,
                 roll, 
                 return_Vmat = TRUE, 
                 genome
@@ -404,7 +415,6 @@ plotVmat.list <- function(
             if (verbose) message('- Processing sample ', K, '/', length(list_params)) 
             bam_granges <- list_params[[K]][[1]]
             granges <- list_params[[K]][[2]]
-            if (length(list_params[[K]]) >= 3) {background_granges <- list_params[[K]][[3]]} else {background_granges}
             Vmat <- plotVmat(
                 bam_granges, 
                 granges, 
@@ -412,10 +422,10 @@ plotVmat.list <- function(
                 YAXIS.CUTOFF, 
                 stranded, 
                 normalize, 
-                Vmat2, 
-                estimate_background,
-                background_granges, 
                 normFun, 
+                universe, 
+                libdepth,
+                s,
                 roll, 
                 return_Vmat = TRUE, 
                 genome
@@ -481,25 +491,22 @@ nucleosomeEnrichment.GRanges <- function(
     bam_granges, 
     granges, 
     normalize = TRUE,
-    Vmt2 = NULL,
-    estimate_background = TRUE, 
+    normFun = 'sum',
+    universe = NULL,
+    libdepth = NULL,
+    s = 0.999, 
+    roll = 3,
+    genome = 'ce11',
+    estimate_background = TRUE,
     plus1_nuc_only = FALSE, 
     verbose = TRUE, 
-    genome = 'ce11',
-    roll = 1, 
-    normFun = 'pctsum',
     ...
 ) 
 {
-    #
+    # Get Vmat
     if (verbose) message("Computing Vmat...")
     Vmat <- computeVmat(bam_granges, granges)
-    #
-    if (normalize) {
-        if (verbose) message("Normalizing Vmat...")
-        Vmat <- normalizeVmat(Vmat, background = NULL, scale = TRUE, normFun = normFun, roll = roll)
-    }
-    #
+    # Get background 
     if (estimate_background) {
         if (verbose) message("Computing background...")
         background <- computeVmat(bam_granges, shuffleGRanges(granges, genome = genome))
@@ -507,7 +514,16 @@ nucleosomeEnrichment.GRanges <- function(
     else {
         background = NULL
     }
+    # Normalize 
+    if (normalize) {
+        if (verbose) message("Normalizing Vmat...")
+        Vmat <- normalizeVmat(Vmat, bam_granges, normFun, universe, libdepth, s, roll)
+        if (verbose) message("Normalizing background...")
+        background <- normalizeVmat(background, bam_granges, normFun, universe, libdepth, s, roll)
+    }
+    # Replace NA / inf values by 0
     Vmat[is.infinite(Vmat) | is.na(Vmat)] <- 0
+    Vmat[is.infinite(background) | is.na(background)] <- 0
     #
     if (verbose) message("Computing enrichment...")
     res <- computeNucleosomeEnrichmentOverBackground(

@@ -1,0 +1,435 @@
+---
+title: "VplotR: a visualization package to generate fragment density plots from high-throughput sequencing data"
+date: "March 2020"
+year: 2017
+author: 
+    - Jacques Serizay^[The Gurdon Institute and Department of Genetics, University of Cambridge, Cambridge, United Kingdom, jacquesserizay@gmail.com]
+    - Julie Ahringer^[The Gurdon Institute and Department of Genetics, University of Cambridge, Cambridge, United Kingdom, ja219@cam.ac.uk]
+output:
+    bookdown::pdf_document2:
+        highlight: tango
+        toc: TRUE
+        number_sections: TRUE
+bibliography: biblio.bib
+link-citations: yes
+fontsize: 12pt
+geometry: paperheight=297mm,paperwidth=210mm,margin=2cm
+---
+
+```{r, include=FALSE}
+options(tinytex.verbose = TRUE)
+library(knitr)
+library(ggplot2)
+library(magrittr)
+if(is_latex_output()) {
+    plot_default <- knit_hooks$get("plot")
+    knit_hooks$set(plot = function(x, options) { 
+        x <- c("\\vspace{15pt}", plot_default(x, options), "\\vspace{15pt}")
+    })
+    source_default <- knit_hooks$get('source')
+    knit_hooks$set(source = function(x, options) {
+      if (!is.null(options$vspaceecho)) {
+        begin <- paste0("\\vspace{", options$vspaceecho, "}")
+        stringr::str_c(begin, source_default(x, options), begin)
+      } else {
+        source_default(x, options)
+      }
+    })
+    opts_chunk$set(vspaceecho='1cm')
+}
+```
+
+# Introduction 
+
+This R package makes the process of generating fragment density plots (also known as "V-plots") straightforward.
+V-plots have been introduced for the first time by the Henikoff lab in 2011 [@Henikoff2011-uu]. 
+More recently, V-plots have proven to be very instructive to understand the local organization of the chromatin at regulatory elements. 
+For instance, the nucleoATAC package relies on cross-correlation of ATAC-seq fragment density plots to accurately map nucleosome occupancy along the genome [@Schep2015-jk].  
+
+VplotR aim is to streamline the process of generating V-plots.
+It contains wrapping functions to import paired-end sequencing bam files and generate V-plots around genomic loci of interest.
+VplotR is designed around ggplot2 and makes full use of its potential [@Wickham2019-pe]. 
+As such, it is easy to generate V-plots in batch and combine them with other plots to make publication-ready figures.  
+
+VplotR is aimed toward investigating ATAC-seq datasets but can be used to plot other types of paired-end sequencing datasets such as DNase-seq or MNase-seq. 
+This vignettes illustrates how VplotR can be leveraged to investigate the local arrangment of nucleosomes around different sets of promoters. 
+
+# Installation
+
+VplotR can be installed as follows: 
+
+```{r eval = FALSE}
+install.packages("devtools")
+devtools::install_github("js2264/VplotR")
+library(VplotR)
+```
+
+# Quick use
+
+A V-plot of ATAC-seq fragments (`fragments`) over loci of interest (`granges`) can be generated using the `plotVmat()` function:
+
+```{r eval = FALSE}
+plotVmat(fragments, granges)
+```
+
+Multiple V-plots can be generated in parallel as follow:
+
+```{r eval = FALSE}
+list_params <- list(
+    "sample_1" = list("bam" = fragments_1, "granges" = granges_1), 
+    "sample_2" = list("bam" = bam_2, "granges" = granges_2), 
+    ..., 
+    "sample_N" = list("bam" = bam_N, "granges" = granges_N)
+)
+plotVmat(
+    list_params, 
+    cores = length(list_params)
+) + ggplot2::facet_wrap(~Cond.)
+```
+
+# Detailed use of VplotR: Positioning of nucleosomes flanking ubiquitous or tissue-specific promoters 
+## Importing data
+
+VplotR use requires several objects. First, genomic loci of interest 
+should be stored in a GRanges object. In this example, we will fetch 
+promoter and enhancer annotations stored on the Ahringer server.  
+
+
+```{r eval = FALSE}
+data(ce_proms)
+proms_list <- list(
+    "Ubiq._proms" = ce_proms[ce_proms$which.tissues == 'Ubiq.'],
+    "Germline_proms" = ce_proms[ce_proms$which.tissues == 'Germline'],
+    "Neurons_proms" = ce_proms[ce_proms$which.tissues == 'Neurons'],
+    "Muscle_proms" = ce_proms[ce_proms$which.tissues == 'Muscle'],
+    "Hypod._proms" = ce_proms[ce_proms$which.tissues == 'Hypod.'],
+    "Intest._proms" = ce_proms[ce_proms$which.tissues == 'Intest.']
+)
+```
+
+Secondly, ATAC-seq bam files can be imported using the `importPEBamFiles()` 
+function.  
+
+```{r eval = FALSE}
+# Do not run
+bam_files <- paste0('~/bam-files/ATAC_', 
+    c('mixed', 'germline', 'neuron', 
+        'muscle', 'hypodermis', 'intestine'
+    ), '.bam'
+)
+bam_list <- importPEBamFiles(
+    bam_files, 
+    where = GenomicRanges::reduce(
+        GenomicRanges::resize(ce_REs, width = 2000, fix = 'center')
+    ), 
+    shift_ATAC_fragments = TRUE
+) %>% setNames(c(
+    'mixed', 'Germline', 'Neurons', 
+    'Muscle', 'Hypod.', 'Intest.'
+))
+# // Do not run
+```
+
+In this vignette, ATAC-seq bam files already imported are fetched from 
+the Ahringer server:
+
+```{r eval = FALSE}
+bam_list <- readRDS(
+    url('https://ahringerlab.com/VplotR/ATAC_PE_fragments.rds')
+)
+```
+
+## Plotting fragment size distribution
+
+VplotR allows investigation of the distribution of fragments relative 
+to the centers of loci of interest by separating them according to 
+their length. Before generating fragment density plots, one might 
+want to visualize the distribution of fragment lengths in a given
+sample. The following command plots the distribution of fragment found in a mixed-tissue ATAC-seq sample and mapping over annotated *C. elegans* promoters:
+
+```{r eval = FALSE}
+sizes <- getFragmentsDistribution(
+    bam_list[['mixed']],
+    ce_proms, 
+    limits = c(0, 1200)
+)
+p_distr <- ggplot(sizes, aes(x = x, y = y), color = '#991919') +
+    geom_line() +
+    theme_bw() +
+    labs(
+        title = 'Fragment size distribution in mixed-tissue ATAC-seq', 
+        x = 'Fragment size',
+        y = '# of fragments'
+    ) +
+    xlim(c(0, 600))
+```
+
+```{r echo = FALSE, fig.width=5, fig.height = 3, fig.align='center', warning=FALSE}
+p_distr
+```
+
+This plot highlights the multi-modal distribution of ATAC-seq fragments found over promoters. However, 
+when splitting the fragments mapping to each set of ubiquitous or tissue-specific promoters, a striking
+difference in fragment length distribution is observed between germline and somatic-tissue-specific promoters. 
+
+```{r eval = FALSE}
+sizes <- parallel::mclapply(mc.cores = 6, 
+    c('mixed', 'Germline', 'Neurons', 'Muscle', 'Hypod.', 'Intest.'), 
+    function(TISSUE) {
+        idx <- paste0(ifelse(TISSUE == 'mixed', 'Ubiq.', TISSUE), '_proms')
+        d <- getFragmentsDistribution(
+            bam_list[[TISSUE]],
+            proms_list[[idx]], 
+            limits = c(0, 1200)
+        )
+        return(data.frame(d, tissue = TISSUE))
+    }
+) %>% do.call(rbind, .)
+p_distr_split <- ggplot(sizes, aes(x = x, y = y), color = '#991919') +
+    geom_line() +
+    theme_bw() +
+    labs(
+        title = 'Fragment size distribution in mixed-tissue
+        and tissue-sepcific ATAC-seq', 
+        x = 'Fragment size',
+        y = '# of fragments'
+    ) +
+    facet_wrap(~tissue, scales = 'free', nrow = 1) + 
+    xlim(c(0, 600))
+```
+
+```{r echo = FALSE, fig.width=8.4, fig.height = 2, fig.align='center', warning=FALSE}
+p_distr_split
+```
+
+## Plotting ATAC-seq fragment density plots
+
+The fragment length distribution plots generated above do not show where shorter or longer ATAC-seq fragments respectively map.
+ATAC-seq fragment density plots, a.k.a. V-plots, can be used to show the distribution of ATAC-seq fragments of variable lengths over a set of 
+regions of interest. In such plot, the horizontal axis represents the position of the fragments relative to the center of 
+the loci of interest, and the vertical axis represents the length of the fragments. The color code symbolizes the density of fragments. 
+
+For example, a V-plot of ATAC-seq fragments over ubiquitous promoters (from a mixed-tissue ATAC-seq sample) can be generated as follows:
+
+```{r eval = FALSE}
+Vplot_ubiq <- bam_list[['mixed']] %>% 
+    computeVmat(proms_list[['Ubiq._proms']]) %>%
+    normalizeVmat(normFun = 'pctsum', roll = 3) %>% 
+    plotVmat(
+        main = 'Mixed-tissues ATAC-seq fragments over ubiquitous promoters'
+    )
+```
+
+The different steps to generate a V-plot over a set of genomic loci can be wrapped in a single call to the `plotVmat()` function:
+
+```{r eval = FALSE}
+Vplot_ubiq <- plotVmat(
+    bam_list[['mixed']], 
+    proms_list[['Ubiq._proms']], 
+    main = 'Mixed-tissues ATAC-seq fragments over ubiquitous promoters' 
+)
+```
+
+```{r echo = FALSE, fig.width=7, fig.height = 5, fig.align='center', warning=FALSE}
+Vplot_ubiq
+```
+
+To compute many different V-plots simultaneously, one can pass the two main 
+arguments (bam_granges and granges) to the plotVmat function using a named list. 
+Let's generate V-plots for each of the five tissue-specific ATAC-seq datasets; 
+for each tissue-specific ATAC-seq dataset, two V-plots will be generated: 
+
+- One for fragments mapping over ubiquitous promoters;
+- One for fragments mapping over the corresponding tissue-specific promoters;
+
+```{r eval = FALSE}
+list_params <- list(
+    "Germline ATAC-seq\nover Ubiq. proms." = list(
+        bam_list[['Germline']], proms_list[['Ubiq._proms']]),
+    "Germline ATAC-seq\nover Germline proms." = list(
+        bam_list[['Germline']], proms_list[['Germline_proms']]),
+    "Neurons ATAC-seq\nover Ubiq. proms." = list(
+        bam_list[['Neurons']], proms_list[['Ubiq._proms']]),
+    "Neurons ATAC-seq\nover Neurons proms." = list(
+        bam_list[['Neurons']], proms_list[['Neurons_proms']]),
+    "Muscle ATAC-seq\nover Ubiq. proms." = list(
+        bam_list[['Muscle']], proms_list[['Ubiq._proms']]),
+    "Muscle ATAC-seq\nover Muscle proms." = list(
+        bam_list[['Muscle']], proms_list[['Muscle_proms']]),
+    "Hypod. ATAC-seq\nover Ubiq. proms." = list(
+        bam_list[['Hypod.']], proms_list[['Ubiq._proms']]),
+    "Hypod. ATAC-seq\nover Hypod. proms." = list(
+        bam_list[['Hypod.']], proms_list[['Hypod._proms']]),
+    "Intest. ATAC-seq\nover Ubiq. proms." = list(
+        bam_list[['Intest.']], proms_list[['Ubiq._proms']]),
+    "Intest. ATAC-seq\nover Intest. proms." = list(
+        bam_list[['Intest.']], proms_list[['Intest._proms']])
+)
+plots <- plotVmat(
+    list_params, 
+    xlim = c(-200, 200), 
+    estimate_background = TRUE, 
+    cores = length(list_params), 
+    normFun = 'quantile', 
+    s = 0.9
+)
+Vplots <- plots + 
+    facet_wrap(~Cond., nrow = 2, dir = 'v') + 
+    theme(legend.position = 'bottom') +
+    theme(panel.spacing = unit(1, "lines"))
+ggsave('ttt2_quantile_s0.9.pdf', width = 20, height = 8)
+
+plots <- plotVmat(
+    list_params, 
+    xlim = c(-200, 200), 
+    estimate_background = TRUE, 
+    cores = length(list_params), 
+    normFun = 'libdepth', 
+    universe = ce_proms
+)
+Vplots <- plots + 
+    facet_wrap(~Cond., nrow = 2, dir = 'v') + 
+    theme(legend.position = 'bottom') +
+    theme(panel.spacing = unit(1, "lines"))
+ggsave('ttt2_libdepth_better-estimate.pdf', width = 20, height = 8)
+```
+
+```{r echo = FALSE, fig.width=8.4, fig.height = 5, fig.align='center', warning=FALSE}
+Vplots
+```
+
+In the five tissue-specific ATAC-seq datasets, ubiquitous promoters are flanked by nucleosomes in all tissues. 
+Germline promoters are also characterized by prominent flanking nucleosomes, while somatic promoters are not. 
+
+## Direct comparison of two V-plots
+
+To better understand the differences in nucleosome organization in different contexts, two V-plots can be directly compared to each other.
+Here, let's compare the nucleosome positioning at neuron-specific promoters (using neuron-specific ATAC-seq data)
+
+```{r eval = FALSE}
+Vmat_neurons <- plotVmat(
+    bam_list[['Neurons']],
+    proms_list[['Neurons_proms']],
+    ylim = c(50, 200),
+    xlim = c(-200, 200), 
+    roll = 3, 
+    cores = 10,
+    return_Vmat = TRUE
+)
+Vmat_germline <- plotVmat(
+    bam_list[['Germline']],
+    proms_list[['Germline_proms']],
+    ylim = c(50, 200),
+    xlim = c(-200, 200), 
+    roll = 3,
+    cores = 10,
+    return_Vmat = TRUE
+)
+Vplot_comp <- cowplot::plot_grid(
+    plotVmat(Vmat_neurons, breaks = c(0, 17)),
+    plotVmat(Vmat_germline, breaks = c(0, 9)), 
+    plotVmat(
+        Vmat_germline - Vmat_neurons, 
+        breaks = c(-5, 5),
+        main = 'Fragment density enrichment\n(Germline vs Neuron-specific promoters)' 
+    ), 
+    ncol = 1
+)
+```
+
+```{r echo = FALSE, fig.width=7, fig.height = 5, fig.align='center', warning=FALSE}
+Vplot_comp
+```
+
+## Nucleosome enrichment score 
+
+The enrichment of flanking nucleosomes around a nucleosome-depleted central region can be estimated from a ATAC-seq fragment density plot using the `nucleosomeEnrichment()` function.
+This function is used to quantify the local enrichment of nucleosomal fragments compared to background noise. 
+Several flanking nucleosome enrichment scores can be computed at once as follows:
+
+```{r eval = FALSE}
+list_scores <- parallel::mclapply(
+    c("Germline", "Neurons", "Muscle", "Hypod.", "Intest."), 
+    function(TISSUE) {
+        message('>> ', TISSUE)
+        nucenrich_tissue_spe_proms <- nucleosomeEnrichment(
+            bam_granges = bam_list[[TISSUE]], 
+            granges = proms_list[[paste0(TISSUE, '_proms')]], 
+            estimate_background = TRUE, 
+            verbose = TRUE
+        )
+        nucenrich_ubiq_proms <- nucleosomeEnrichment(
+            bam_granges = bam_list[[TISSUE]], 
+            granges = proms_list[['Ubiq._proms']], 
+            estimate_background = TRUE, 
+            verbose = TRUE
+        )
+        return(list(
+            'tissue-spe-proms' = nucenrich_tissue_spe_proms, 
+            'ubiq-proms' = nucenrich_ubiq_proms
+        ))
+    }, 
+    mc.cores = 5
+) %>% setNames(c("Germline", "Neurons", "Muscle", "Hypod.", "Intest."))
+```
+
+Once the flanking nucleosome enrichment scores are computed, they can all be plotted together: 
+
+```{r eval = FALSE}
+nucenrich_scores <- data.frame(
+    tissue = factor(
+        rep(names(list_scores), each = 2), 
+        levels = names(list_scores)
+    ), 
+    promoters = c(rbind(
+        paste0(names(list_scores), ' promoters'), rep('Ubiq. promoters', 5)
+    )), 
+    promoters2 = factor(rep(c(0.5, 0.8), 5)),
+    score = unlist(lapply(
+        list_scores, function(Vmat) {
+            c(
+                Vmat[[1]]$fisher_test$estimate, 
+                Vmat[[2]]$fisher_test$estimate
+            )
+        })), 
+    is_ubiq = factor(rep(
+        c('Over tissue-specific promoters', 'Over ubiquitous promoters'), 5), 
+        levels = c('Over ubiquitous promoters', 'Over tissue-specific promoters')
+    )
+)
+nucenrich_plots <- ggplot(nucenrich_scores, aes(
+    x = tissue, 
+    y = score, 
+    fill = tissue, 
+    group = is_ubiq
+)) + 
+    geom_col() + 
+    facet_wrap(~is_ubiq, nrow = 1) + 
+    scale_fill_manual(
+        values = c("#00AEEF", "#00A651", "#F7941D", "#808285", "#E365A6")
+    ) +
+    labs(
+        title = 'Flanking nucleosome enrichment score', 
+        y = 'Enrichment score', 
+        x = 'Tissue-specific data'
+    ) + 
+    theme_bw() + 
+    theme(legend.position = 'none')
+```
+
+```{r echo = FALSE, fig.width=5, fig.height = 5, fig.align='center', warning=FALSE}
+nucenrich_plots
+```
+
+According to these results, flanking nucleosomes are significantly enriched 
+at ubiquitous promoters in nuclei from all tissues. Among tissue-specific promoters, 
+only germline promoters have a significant enrichment of flanking nucleosome. 
+The promoters only active in the soma (*e.g.* neuron-specific promoters) 
+do not show any strong nucleosome enrichment flanking their central NDR.
+
+# Session info
+```{r echo = FALSE}
+sessionInfo()
+```
+
+# References

@@ -6,9 +6,8 @@
 \usage{
 \method{plotVmat}{GRanges}(bam_granges, granges, XAXIS.CUTOFF = 1000,
   YAXIS.CUTOFF = 1000, stranded = TRUE, normalize = TRUE,
-  Vmat2 = NULL, estimate_background = TRUE,
-  background_granges = NULL, normFun = "pctsum", roll = 3,
-  return_Vmat = FALSE, genome = "ce11", ...)
+  normFun = "libdepth", universe = NULL, libdepth = NULL,
+  s = 0.999, roll = 3, return_Vmat = FALSE, genome = "ce11", ...)
 }
 \arguments{
 \item{bam_granges}{GRanges. The paired-end fragments}
@@ -24,12 +23,6 @@ features are flipped}
 
 \item{normalize}{Boolean Should the Vmat be normalized?}
 
-\item{Vmat2}{table A Vmat pre-computed over a background}
-
-\item{estimate_background}{Boolean Should the background be estimated automatically?}
-
-\item{background_granges}{GRanges The genomic loci used to compute the background Vmat}
-
 \item{normFun}{string A Vmat can be scaled relative to its median ('pctmedian'), 
 to its mean ('pctmean'), to its max ('pctmax'). Otherwise it could be zscore-d
 entirely ('Zscore') or by rows ('rowZscore') or by columns ('colZscore').}
@@ -40,6 +33,12 @@ entirely ('Zscore') or by rows ('rowZscore') or by columns ('colZscore').}
 rather than the plot?}
 
 \item{genome}{a BSgenome object. See getChromSizes for more details}
+
+\item{Vmat2}{table A Vmat pre-computed over a background}
+
+\item{estimate_background}{Boolean Should the background be estimated automatically?}
+
+\item{background_granges}{GRanges The genomic loci used to compute the background Vmat}
 }
 \value{
 A Vmat ggplot
