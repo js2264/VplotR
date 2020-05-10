@@ -22,8 +22,6 @@ suppressPackageStartupMessages({
 })
 ```
 
-![](https://raw.githubusercontent.com/js2264/VplotR/master/man/figures/Vplots.png)
-
 ## Importing data
 
 Paired-end .bam files are read using the `importPEBamFiles()` 
@@ -43,12 +41,36 @@ fragments <- importPEBamFiles(
 *Note: to allow for a accurate background normalization, 
 the `where` argument should be omitted.*
 
-Toy datasets are available for this package: 
+Several datasets are available for this package: 
+
+* Sets of tissue-specific ATAC-seq experiments in young adult C. elegans:
+
+```{r, eval = TRUE}
+data(ce11_proms)
+ce11_proms
+ATAC_ce11 <- readRDS(url(
+    'https://ahringerlab.com/VplotR/ATAC_PE_fragments.rds'
+))
+ATAC_ce11
+```
+
+* MNase-seq experiment in yeast and REB1 binding sites:
 
 ```{r, eval = TRUE}
 data(REB1_sacCer3)
+REB1_sacCer3
 MNase_sacCer3 <- readRDS(url(
     'https://ahringerlab.com/VplotR/MNase_sacCer3_Henikoff2011.rds'
+))
+MNase_sacCer3
+```
+
+* ATAC-seq in GM12878 human cells and CTCF binding sites:
+
+```{r, eval = FALSE}
+data(CTCF_hg38)
+ATAC_hg38 <- readRDS(url(
+    'https://ahringerlab.com/VplotR/ATAC_hg38_Chen2018.rds'
 ))
 ```
 
@@ -83,10 +105,61 @@ list_params <- list(
     "MNase\n@ REB1" = list(MNase_sacCer3, REB1_sacCer3), 
     "MNase\n@ random loci" = list(MNase_sacCer3, sampleGRanges(REB1_sacCer3))
 )
-plotVmat(
+p <- plotVmat(
     list_params, 
     cores = 1
 )
+p
+#
+list_params <- list(
+    "Germline ATACseq\n@ Ubiq. proms" = list(
+        ATAC_ce11[['Germline']], 
+        ce11_proms[ce11_proms$which.tissues == 'Ubiq.']
+    ), 
+    "Germline ATACseq\n@ Germline proms" = list(
+        ATAC_ce11[['Germline']], 
+        ce11_proms[ce11_proms$which.tissues == 'Germline']
+    ),
+    "Neuron ATACseq\n@ Ubiq. proms" = list(
+        ATAC_ce11[['Neurons']], 
+        ce11_proms[ce11_proms$which.tissues == 'Ubiq.']
+    ), 
+    "Neuron ATACseq\n@ Neuron proms" = list(
+        ATAC_ce11[['Neurons']], 
+        ce11_proms[ce11_proms$which.tissues == 'Neurons']
+    ),
+    "Muscle ATACseq\n@ Ubiq. proms" = list(
+        ATAC_ce11[['Muscle']], 
+        ce11_proms[ce11_proms$which.tissues == 'Ubiq.']
+    ), 
+    "Muscle ATACseq\n@ Muscle proms" = list(
+        ATAC_ce11[['Muscle']], 
+        ce11_proms[ce11_proms$which.tissues == 'Muscle']
+    ),
+    "Hypod. ATACseq\n@ Ubiq. proms" = list(
+        ATAC_ce11[['Hypod.']], 
+        ce11_proms[ce11_proms$which.tissues == 'Ubiq.']
+    ), 
+    "Hypod. ATACseq\n@ Hypod. proms" = list(
+        ATAC_ce11[['Hypod.']], 
+        ce11_proms[ce11_proms$which.tissues == 'Hypod.']
+    ),
+    "Intest. ATACseq\n@ Ubiq. proms" = list(
+        ATAC_ce11[['Intest.']], 
+        ce11_proms[ce11_proms$which.tissues == 'Ubiq.']
+    ), 
+    "Intest. ATACseq\n@ Intest. proms" = list(
+        ATAC_ce11[['Intest.']], 
+        ce11_proms[ce11_proms$which.tissues == 'Intest.']
+    )
+)
+p <- plotVmat(
+    list_params, 
+    cores = 1,
+    nrow = 2, ncol = 5, 
+    verbose = FALSE
+)
+p
 ```
 
 ## Vplots normalization
@@ -95,30 +168,42 @@ Different normalization approaches are available:
 
 ```{r, eval = TRUE}
 # No normalization 
-plotVmat(
-    MNase_sacCer3,
-    REB1_sacCer3,
+p <- plotVmat(
+    list_params, 
+    cores = 1, 
+    nrow = 2, ncol = 5, 
+    verbose = FALSE,
     normFun = ''
 )
-# Library depth + number of loci of interest 
-plotVmat(
-    MNase_sacCer3,
-    REB1_sacCer3,
+p
+# Library depth + number of loci of interest (default)
+p <- plotVmat(
+    list_params, 
+    cores = 1, 
+    nrow = 2, ncol = 5, 
+    verbose = FALSE,
     normFun = 'libdepth+nloci'
 )
+p
 # Zscore
-plotVmat(
-    MNase_sacCer3,
-    REB1_sacCer3,
+p <- plotVmat(
+    list_params, 
+    cores = 1, 
+    nrow = 2, ncol = 5, 
+    verbose = FALSE,
     normFun = 'zscore'
 )
+p
 # Quantiles
-plotVmat(
-    MNase_sacCer3,
-    REB1_sacCer3,
+p <- plotVmat(
+    list_params, 
+    cores = 1, 
+    nrow = 2, ncol = 5, 
+    verbose = FALSE,
     normFun = 'quantile', 
     s = 0.99
 )
+p
 ```
 
 ## Footprints
@@ -127,16 +212,14 @@ VplotR also implements a function to profile the footprint from MNase or
 ATAC-seq over sets of genomic loci. For instance, CTCF is known for its 
 ~40-bp large footprint at its binding loci. 
 
-```{r, eval = TRUE}
-data(CTCF_hg38)
-ATAC_hg38 <- readRDS(url(
-    'https://ahringerlab.com/VplotR/ATAC_hg38_Chen2018.rds'
-))
+```{r, eval = FALSE}
 plotFootprint(
     ATAC_hg38,
     CTCF_hg38
 )
 ```
+
+![](https://raw.githubusercontent.com/js2264/VplotR/master/man/figures/CTCF_ATAC_hg38_Chen2018_footprint.png)
 
 ## Nucleosome enrichment quantification 
 
@@ -145,21 +228,17 @@ quantify and compare enrichment of flanking nucleosomes at promoters
 in ATAC-seq datasets.
 
 ```{r eval = TRUE}
-data(ce11_proms)
 germline_proms <- ce11_proms[ce11_proms$which.tissues == "Germline"]
 muscle_proms <- ce11_proms[ce11_proms$which.tissues == "Muscle"]
-ATAC_ce11 <- readRDS(url(
-    'https://ahringerlab.com/VplotR/ATAC_PE_fragments.rds'
-))[["mixed"]]
 #
 nuc_enrich_germline <- nucleosomeEnrichment(
-    ATAC_ce11,
+    ATAC_ce11[['mixed']],
     germline_proms
 )
 nuc_enrich_germline$fisher_test
 nuc_enrich_germline$plot
 nuc_enrich_muscle <- nucleosomeEnrichment(
-    ATAC_ce11,
+    ATAC_ce11[['mixed']],
     muscle_proms
 )
 nuc_enrich_muscle$fisher_test
@@ -167,7 +246,7 @@ nuc_enrich_muscle$plot
 ```
 
 ### Session Info
-```{r echo = FALSE, collapse = TRUE, eval = TRUE}
+```{r echo = TRUE, collapse = TRUE, eval = TRUE}
 sessionInfo()
 ```
 

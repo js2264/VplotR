@@ -6,8 +6,6 @@
 
 # VplotR <img src="man/figures/logo.png" align="right" alt="" />
 
-![](https://raw.githubusercontent.com/js2264/VplotR/master/man/figures/Vplots.png)
-
 ## Introduction
 
 This R package makes the process of generating fragment density plots 
@@ -32,7 +30,7 @@ publication-ready figures.
 
 VplotR can be installed from Github as follows:
 
-```{r eval = FALSE}
+```r
 install.packages("devtools")
 devtools::install_github("js2264/VplotR")
 ```
