@@ -85,7 +85,7 @@ list_params <- list(
 )
 plotVmat(
     list_params, 
-    cores = 2
+    cores = 1
 )
 ```
 
