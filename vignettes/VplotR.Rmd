@@ -22,102 +22,70 @@ suppressPackageStartupMessages({
 })
 ```
 
-![VplotR](man/images/Vplots.png)
+![](https://raw.githubusercontent.com/js2264/VplotR/master/man/figures/Vplots.png)
 
 ## Importing data
 
-Firstly BAM files are read using the `importPEBamFiles()` function and 
-loci of interest from a BED file, for instance.
+Paired-end .bam files are read using the `importPEBamFiles()` 
+function as follows:
 
 ```{r eval = FALSE}
 library(VplotR)
-granges <- rtracklayer::import('loci_of_interest.bed')
+data(ce11_proms)
+ce11_proms
 fragments <- importPEBamFiles(
     'ATAC-seq-mapped-fragments.bam', 
-    where = GenomicRanges::resize(granges, width = 2000, fix = 'center'), 
+    where = ce11_proms, 
     shift_ATAC_fragments = TRUE
 )
 ```
 
-*Note: to allow for a background normalization, 
+*Note: to allow for a accurate background normalization, 
 the `where` argument should be omitted.*
 
 Toy datasets are available for this package: 
 
 ```{r, eval = TRUE}
-data(ce11_proms)
-granges <- ce11_proms[ce11_proms$which.tissues == "Ubiq."]
-fragments <- readRDS(url(
-    'https://ahringerlab.com/VplotR/ATAC_PE_fragments.rds'
+data(REB1_sacCer3)
+MNase_sacCer3 <- readRDS(url(
+    'https://ahringerlab.com/VplotR/MNase_sacCer3_Henikoff2011.rds'
 ))
-fragments <- fragments[["mixed"]]
 ```
 
 ## Fragment size distribution
 
- V-plots readily reveal the different patterns of fragment 
-density, but a preliminary control is checking the distribution of fragment
-sizes, regardless of their location relative to genomic loci. 
-The getFragmentsDistribution() is useful to check this distribution.
+A preliminary control to check the distribution of fragment
+sizes (regardless of their location relative to genomic loci) can be 
+performed using the `getFragmentsDistribution()` function.
 
 ```{r, eval = TRUE}
-d <- getFragmentsDistribution(
-    fragments, 
-    list(
-        'Ubiq.' = ce11_proms[ce11_proms$which.tissues == 'Ubiq.'],
-        'Germline' = ce11_proms[ce11_proms$which.tissues == 'Germline'],
-        'Muscle' = ce11_proms[ce11_proms$which.tissues == 'Muscle']
-    )
+df <- getFragmentsDistribution(
+    MNase_sacCer3, 
+    REB1_sacCer3
 )
-ggplot(d, aes(x = x, y = y)) + 
-    geom_line() +
-    facet_wrap(~class, scales = 'free')
+ggplot(df, aes(x = x, y = y)) + geom_line()
 ```
 
-## Quick Vplot(s)
+## Vplot(s)
 
-Once data is imported, a V-plot of fragments (`fragments`) 
-over the loci of interest (`granges`) is generated 
-using the `plotVmat()` function:
+Once data is imported, a V-plot of paired-end fragments over loci of 
+interest is generated using the `plotVmat()` function:
 
-```{r}
-plotVmat(fragments, granges)
+```{r, eval = TRUE}
+plotVmat(MNase_sacCer3, REB1_sacCer3)
 ```
 
-The generation of multiple V-plots can be parallelized as follows:
+The generation of multiple V-plots can be parallelized using a list of 
+parameters:
 
-```{r eval = FALSE}
+```{r, eval = TRUE}
 list_params <- list(
-    "sample_1" = list(fragments_1, granges_1), 
-    "sample_2" = list(fragments_2, granges_2), 
-    ..., 
-    "sample_N" = list(fragments_N, granges_N)
+    "MNase\n@ REB1" = list(MNase_sacCer3, REB1_sacCer3), 
+    "MNase\n@ random loci" = list(MNase_sacCer3, sampleGRanges(REB1_sacCer3))
 )
 plotVmat(
     list_params, 
-    cores = length(list_params)
-)
-```
-
-With the example datasets: 
-
-```{r, eval = TRUE}
-granges <- list(
-    "Ubiq." = ce11_proms[ce11_proms$which.tissues == "Ubiq."], 
-    "Germline" = ce11_proms[ce11_proms$which.tissues == "Germline"],
-    "Muscle" = ce11_proms[ce11_proms$which.tissues == "Muscle"]
-)
-list_params <- list(
-    "mixed ATAC-seq\n@ Ubiq. proms" = 
-        list(fragments, granges[["Ubiq."]]), 
-    "mixed ATAC-seq\n@ Germline proms" = 
-        list(fragments, granges[["Germline"]]), 
-    "mixed ATAC-seq\n@ Muscle proms" = 
-        list(fragments, granges[["Muscle"]])
-)
-plotVmat(
-    list_params, 
-    cores = 1
+    cores = 2
 )
 ```
 
@@ -126,60 +94,77 @@ plotVmat(
 Different normalization approaches are available: 
 
 ```{r, eval = TRUE}
-granges <- ce11_proms[ce11_proms$which.tissues == "Ubiq."]
 # No normalization 
 plotVmat(
-    fragments,
-    granges,
+    MNase_sacCer3,
+    REB1_sacCer3,
     normFun = ''
 )
 # Library depth + number of loci of interest 
 plotVmat(
-    fragments,
-    granges,
+    MNase_sacCer3,
+    REB1_sacCer3,
     normFun = 'libdepth+nloci'
 )
 # Zscore
 plotVmat(
-    fragments,
-    granges,
+    MNase_sacCer3,
+    REB1_sacCer3,
     normFun = 'zscore'
 )
 # Quantiles
 plotVmat(
-    fragments,
-    granges,
+    MNase_sacCer3,
+    REB1_sacCer3,
     normFun = 'quantile', 
     s = 0.99
 )
 ```
 
+## Footprints
+
+VplotR also implements a function to profile the footprint from MNase or 
+ATAC-seq over sets of genomic loci. For instance, CTCF is known for its 
+~40-bp large footprint at its binding loci. 
+
+```{r, eval = TRUE}
+data(CTCF_hg38)
+ATAC_hg38 <- readRDS(url(
+    'https://ahringerlab.com/VplotR/ATAC_hg38_Chen2018.rds'
+))
+plotFootprint(
+    ATAC_hg38,
+    CTCF_hg38
+)
+```
+
 ## Nucleosome enrichment quantification 
 
-Finally, the `nucleosomeEnrichment()` function is useful to statistically 
-quantify and compare nucleosome enrichment (e.g. flanking nucleosome 
-at promoters) from ATAC-seq datasets. To do so:
+Finally, the `nucleosomeEnrichment()` function is useful to
+quantify and compare enrichment of flanking nucleosomes at promoters 
+in ATAC-seq datasets.
 
 ```{r eval = TRUE}
 data(ce11_proms)
-granges <- ce11_proms[ce11_proms$which.tissues == "Ubiq."]
-fragments <- readRDS(url(
+germline_proms <- ce11_proms[ce11_proms$which.tissues == "Germline"]
+muscle_proms <- ce11_proms[ce11_proms$which.tissues == "Muscle"]
+ATAC_ce11 <- readRDS(url(
     'https://ahringerlab.com/VplotR/ATAC_PE_fragments.rds'
-))
-fragments <- fragments[["mixed"]]
+))[["mixed"]]
 #
-set.seed(42) 
-nuc_enrich <- nucleosomeEnrichment(
-    fragments,
-    ce11_proms[ce11_proms$which.tissues == 'Ubiq.']
+nuc_enrich_germline <- nucleosomeEnrichment(
+    ATAC_ce11,
+    germline_proms
 )
-nuc_enrich$fisher_test
-nuc_enrich$plot
+nuc_enrich_germline$fisher_test
+nuc_enrich_germline$plot
+nuc_enrich_muscle <- nucleosomeEnrichment(
+    ATAC_ce11,
+    muscle_proms
+)
+nuc_enrich_muscle$fisher_test
+nuc_enrich_muscle$plot
 ```
-
-## Footprints
-
-TBC
 
 ### Session Info
 ```{r echo = FALSE, collapse = TRUE, eval = TRUE}

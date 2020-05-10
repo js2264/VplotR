@@ -133,12 +133,12 @@ computeNucleosomeEnrichmentOverBackground <- function(
     Vmat, 
     background = NULL, 
     plus1_nuc_only = FALSE, 
-    minus1_nuc = list(c(xmin = -140, xmax = -60), c(ymin = 165, ymax = 270)), 
+    minus1_nuc = list(c(xmin = -160, xmax = -80), c(ymin = 165, ymax = 260)), 
     minus1_nuc_neg = list(
-        c(xmin = -140, xmax = -60), c(ymin = 60, ymax = 145)
+        c(xmin = -160, xmax = -80), c(ymin = 60, ymax = 145)
     ), 
-    plus1_nuc = list(c(xmin = 60, xmax = 140), c(ymin = 165, ymax = 270)), 
-    plus1_nuc_neg = list(c(xmin = 60, xmax = 140), c(ymin = 50, ymax = 145)),
+    plus1_nuc = list(c(xmin = 80, xmax = 160), c(ymin = 165, ymax = 260)), 
+    plus1_nuc_neg = list(c(xmin = 80, xmax = 160), c(ymin = 50, ymax = 145)),
     ...
 ) 
 {
