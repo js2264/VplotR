@@ -9,7 +9,9 @@
 #' @examples
 #' data(bam_test)
 #' data(ce11_proms)
-#' nucleosomeEnrichment(bam_test, ce11_proms)
+#' n <- nucleosomeEnrichment(bam_test, ce11_proms)
+#' n$fisher_test
+#' n$plot
 
 nucleosomeEnrichment <- function(x, ...) {
     UseMethod("nucleosomeEnrichment")
@@ -41,7 +43,9 @@ nucleosomeEnrichment <- function(x, ...) {
 #'     normFun = '',
 #'     return_Vmat = TRUE
 #' )
-#' nucleosomeEnrichment(V, V_bg)
+#' n <- nucleosomeEnrichment(V, V_bg)
+#' n$fisher_test
+#' n$plot
 
 nucleosomeEnrichment.Vmat <- function(
     x, 
@@ -73,7 +77,9 @@ nucleosomeEnrichment.Vmat <- function(
 #' @examples
 #' data(bam_test)
 #' data(ce11_proms)
-#' nucleosomeEnrichment(bam_test, ce11_proms)
+#' n <- nucleosomeEnrichment(bam_test, ce11_proms)
+#' n$fisher_test
+#' n$plot
 
 nucleosomeEnrichment.GRanges <- function(
     x, 
