@@ -378,7 +378,8 @@ plotVmat.list <- function(
             normFun, 
             s,
             roll, 
-            return_Vmat = TRUE
+            return_Vmat = TRUE, 
+            verbose = FALSE
         )
         # Replace NA / inf values by 0
         Vmat[is.infinite(Vmat) | is.na(Vmat)] <- 0
