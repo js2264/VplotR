@@ -21,3 +21,38 @@ VplotR package aims to streamline the process of generating V-plots. It contains
 The stable release of VplotR is v0.4.0. This is the release which has been used in Serizay et al., submitted.  
 
 To read more about VplotR, check out the [Get started](https://js2264.github.io/VplotR/articles/VplotR.html) vignette.
+
+
+
+
+
+
+
+## Introduction
+
+This R package makes the process of generating fragment density plots 
+(also known as "V-plots") straightforward.  
+V-plots have been introduced 
+[for the first time](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3215028/) 
+by the Henikoff lab in 2011. Recently, V-plots have proven to be very 
+instructive to understand the molecular organization of the chromatin. 
+For instance, the 
+[nucleoATAC]((https://genome.cshlp.org/content/early/2015/08/27/gr.192294.115))
+package relies on cross-correlation of ATAC-seq fragment density plots to 
+accurately map nucleosome occupancy along the genome.  
+VplotR aim is to streamline the process of generating V-plots. It contains 
+wrapping functions to import paired-end sequencing bam files and generate 
+V-plots around genomic loci of interest.  
+VplotR is designed around [ggplot2](https://ggplot2.tidyverse.org/) and 
+makes full use of its potential. As such, it is easy to generate V-plots 
+in batches and combine them with other plots to make 
+publication-ready figures.  
+
+## Installation
+
+VplotR can be installed from Github as follows:
+
+```{r eval = FALSE}
+install.packages("devtools")
+devtools::install_github("js2264/VplotR")
+```

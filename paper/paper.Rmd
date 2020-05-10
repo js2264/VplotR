@@ -268,21 +268,19 @@ list_params <- list(
 plots <- plotVmat(
     list_params, 
     xlim = c(-200, 200), 
-    estimate_background = TRUE, 
     cores = length(list_params), 
-    normFun = 'quantile', 
-    s = 0.9
+    normFun = 'quantile',
+    s = 0.99
 )
 Vplots <- plots + 
     facet_wrap(~Cond., nrow = 2, dir = 'v') + 
     theme(legend.position = 'bottom') +
     theme(panel.spacing = unit(1, "lines"))
-ggsave('ttt2_quantile_s0.9.pdf', width = 20, height = 8)
+ggsave('ttt3_s0.99.pdf', width = 20, height = 8)
 
 plots <- plotVmat(
     list_params, 
     xlim = c(-200, 200), 
-    estimate_background = TRUE, 
     cores = length(list_params), 
     normFun = 'libdepth', 
     universe = ce_proms

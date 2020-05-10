@@ -1,8 +1,17 @@
 language: r
-r: bioc-devel
 cache: packages
 warnings_are_errors: false
 notifications:
-    email:
-        on_success: change
-        on_failure: change
+  email:
+    on_success: change
+    on_failure: change
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+      sudo: true
+      r: bioc-devel
+      after_success: Rscript -e 'covr::codecov()'
+#   - os: osx
+#     r: bioc-devel
+#     disable_homebrew: true

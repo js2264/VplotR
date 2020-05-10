@@ -1,16 +1,20 @@
 Package: VplotR
 Type: Package
-Title: Useful set of tools to analyze ATAC-seq data
-Version: 0.4.0
-Author: Jacques Serizay
-Maintainer: Jacques Serizay <js2264@cam.ac.uk>
-Description: This package contains useful functions to analyze ATAC-seq data.
-License: GNU v3
+Title: Set of tools to analyze ATAC-seq data
+Version: 0.4.2
+Date: 2020-05-03
 Encoding: UTF-8
-LazyData: true
-RoxygenNote: 6.1.1.9000
+Author: Jacques Serizay
+Maintainer: Jacques Serizay <jacquesserizay@gmail.com>
+Description: This package contains useful functions to analyze ATAC-seq data.
+URL: https://github.com/js2264/VplotR
+BugReports: https://github.com/js2264/VplotR/issues
+RoxygenNote: 7.1.0
+Depends:
+    R (>= 3.5)
 Imports: 
     ggplot2,
+    cowplot,
     magrittr,
     GenomeInfoDb,
     GenomicAlignments,
@@ -20,11 +24,21 @@ Imports:
     zoo,
     Rsamtools,
     S4Vectors,
-    ggplot2,
-    magrittr,
     parallel,
-    reshape2
+    reshape2,
+    methods, 
+    graphics,
+    stats
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat
 VignetteBuilder: knitr
+biocViews:
+    NucleosomePositioning,
+    Coverage,
+    Sequencing, 
+    BiologicalQuestion, 
+    ATACSeq, 
+    Alignment
+License: GPL-3 + file LICENSE

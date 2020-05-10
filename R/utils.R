@@ -1,219 +1,273 @@
-#' A function to easily set column names for a data.frame
-#'
-#' \code{setColNames(df, names)} returns a data.frame with new column names.
-#' This function can be convinently used in the tidyverse. 
-#'
-#' @param df A data frame.
-#' @param names A character vector, length(names) == ncol(df).
-
-#' @return A data frame with new column names
+#' A function to re-align a GRanges object to TSSs
 #' 
-#' @export
-
-setColNames <- function(df, names) {
-    colnames(df) <- names
-    return(df)
-}
-
-#' A function to easily coerce a named list into a long data.frame
+#' This function re-aligns ranges (typically regulatory elements)
+#' to a set of coordinates, either the TSS column or the
+#' TSS.fwd and TSS.rev columns. If none are found, the function
+#' assumes the ranges are promoters and that the end or the ranges
+#' are the TSSs. 
 #'
-#' \code{namedListToLongFormat(x)} returns a data.frame in long format, with 
-#' an added 'name' column, containing the names of the input list.  
-#'
-#' @param x A named list vector.
-#' 
-#' @return A long data frame
-#' 
-#' @import magrittr
-#' @export
-
-namedListToLongFormat <- function(x) {
-    lapply(names(x), function(NAME) {
-        L <- x[[NAME]]
-        if (is.null(ncol(L))) {
-            data.frame(value = L, name = rep(NAME, length(L)))
-        } 
-        else {
-            data.frame(L, name = rep(NAME, nrow(L)))
-        }
-    }) %>% do.call(rbind, .)
-}
-
-#' A function to duplicate unstranded GRanges into '+' and '-' GRanges 
-#'
-#'
-#' @param granges A GRanges object.
-#' @param names A character vector, length(names) == ncol(df).
-#' 
-#' @return A data frame with new column names
-#' 
-#' @import GenomicRanges
-#' @export
-
-deconvolveBidirectionalPromoters <- function(granges) {
-    unid <- granges[GenomicRanges::strand(granges) == '+' | GenomicRanges::strand(granges) == '-']
-    bid <- granges[GenomicRanges::strand(granges) == '*']
-    bid.fwd <- bid
-    GenomicRanges::strand(bid.fwd) <- '+'
-    bid.rev <- bid
-    GenomicRanges::strand(bid.rev) <- '-'
-    granges_shifted <- sort(c(unid, bid.fwd, bid.rev), ignore.strand = T)
-    return(granges_shifted)
-}
-
-#' A function to re-align GRanges to their TSS
-#'
-#' @param granges A GRanges object with a TSS column or TSS.rev and TSS.fwd columns
-#' @param upstream How many bases upstream of the TSS?
-#' @param downstream How many bases downstream of the TSS?
-#' 
-#' @return GRanges aligned to the TSS column or to TSS.rev and TSS.fwd columns
+#' @param granges A stranded GRanges object with a TSS column 
+#' or TSS.rev and TSS.fwd columns
+#' @param upstream How many bases upstream of the TSS should the GRanges
+#' object by extended by? [Default: 0]
+#' @param downstream How many bases downstream of the TSS should the GRanges
+#' object by extended by? [Default: 1]
+#' @return GRanges aligned to the TSS column or to TSS.rev 
+#' and TSS.fwd columns, and extended by upstream/downstream bp. 
 #' 
 #' @import GenomicRanges
 #' @import IRanges
 #' @export
+#' 
+#' @examples
+#' data(ce11_proms)
+#' ce11_proms
+#' alignToTSS(ce11_proms)
 
-alignToTSS <- function(granges, upstream, downstream) {
+alignToTSS <- function(granges, upstream = 0, downstream = 1) {
     if (any(GenomicRanges::strand(granges) == '*')) {
         granges <- deconvolveBidirectionalPromoters(granges)
     }
     if (!is.null(granges$TSS)) {
         GenomicRanges::ranges(granges) <- IRanges::IRanges(
-            start = ifelse(as.vector(GenomicRanges::strand(granges)) == '+', (granges$TSS - upstream), (granges$TSS - downstream + 1)),
+            start = ifelse(
+                as.vector(GenomicRanges::strand(granges)) == '+',
+                (granges$TSS - upstream), 
+                (granges$TSS - downstream + 1)
+            ),
             width = downstream + upstream,
             names = names(IRanges::ranges(granges))
         )
     }
     else if (!is.null(granges$TSS.fwd) & !is.null(granges$TSS.rev)) {
         GenomicRanges::ranges(granges) <- IRanges::IRanges(
-            start = ifelse(as.vector(GenomicRanges::strand(granges)) == '+', (granges$TSS.fwd - upstream), (granges$TSS.rev - downstream + 1)),
+            start = ifelse(
+                as.vector(GenomicRanges::strand(granges)) == '+', 
+                (granges$TSS.fwd - upstream), 
+                (granges$TSS.rev - downstream + 1)
+            ),
             width = downstream + upstream,
             names = names(IRanges::ranges(granges))
         )
     }
     else {
-        stop("No TSS column found. Aborting.")
-    }
-    return(granges)
-}
-
-#' A function to shuffle GRanges along a given genome
-#' Internaly, this function relies on bedTools shuffle, so the bedTools
-#' suite has to be installed on the workstation. 
-#'
-#' @param granges A GRanges object to shuffle
-#' @param genome a BSgenome object. See getChromSizes for more details
-#' @param opt.shuffle string of options (in single quotes) to pass to bedtools shuffle
-#' @param exclude_itself Boolean. Should the shuffled GRanges overlap the input GRanges or not? 
-#' @param SEED Integer. Make shuffling reproducible
-#' 
-#' @return a GRanges object with shuffled ranges
-#' 
-#' @import magrittr
-#' @import GenomicRanges
-#' @import IRanges
-#' @export
-
-shuffleGRanges <- function(granges, genome = NULL, opt.shuffle = '-chrom -noOverlapping', exclude_itself = TRUE, SEED = 222) {
-    BEDTOOLS <- Sys.which('bedtools')
-    tmp1 <- tempfile()
-    tmp2 <- tempfile()
-    tmp3 <- tempfile()
-    tmp4 <- tempfile()
-    if (is.null(genome)) genome <- granges
-    getChromSizes(genome) %>% 
-        as.data.frame() %>% 
-        '['(c('seqnames', 'end')) %>% 
-        write.table(tmp1, sep = '\t', col.names = F, row.names = F, quote = F)
-    rtracklayer::export.bed(simplifyGRanges(granges), con = tmp2)
-    if (exclude_itself) {
-        excl.granges <- simplifyGRanges(granges)
-        rtracklayer::export.bed(excl.granges, con = tmp3)
-        system(sprintf("%s shuffle %s -excl %s -seed %i -i %s -g %s | sort -k1,1 -k2.2n > %s", BEDTOOLS, opt.shuffle, tmp3, SEED, tmp2, tmp1, tmp4))
-    } else {
-        system(sprintf("%s shuffle %s -seed %i  -i %s -g %s | sort -k1,1 -k2.2n > %s", BEDTOOLS, opt.shuffle, SEED, tmp2, tmp1, tmp4))
-    }
-    t <- rtracklayer::import.bed(tmp4)
-    system(sprintf('rm %s %s %s %s', tmp2, tmp4, tmp3, tmp1))
-    return(sort(t))
-}
-
-#' A function to remove metadata columns
-#'
-#' @param granges A GRanges object 
-#' 
-#' @return GRanges without any metadata columns
-#' 
-#' @import GenomicRanges
-#' @export
-
-simplifyGRanges <- function(granges) {
-    GenomicRanges::mcols(granges) <- NULL
-    return(granges)
-}
-
-#### ---- getChromSizes function ---- ####
-
-#' A function to get / estimate the size of chromosomes for the input genome
-#' 
-#' @return GRanges of whole chromosomes for the input genome
-#' 
-#' @export
-
-getChromSizes <- function(x, ...) {
-    UseMethod("getChromSizes")
-}
-
-#' A function to get the size of chromosomes for the input genome
-#' 
-#' @param genome a BSgenome object
-#' 
-#' @return GRanges of whole chromosomes for the input genome
-#' 
-#' @import magrittr
-#' @import GenomicRanges
-#' @import GenomeInfoDb
-#' @export
-
-getChromSizes.default <- function(genome = c('ce11', 'dm6', 'mm10', 'hg38', 'sacCer3', 'danRer10')) {
-    if (is.character(genome)) {
-        genome <- switch(genome, 
-            'ce11' = BSgenome.Celegans.UCSC.ce11::BSgenome.Celegans.UCSC.ce11, 
-            'dm6' = BSgenome.Dmelanogaster.UCSC.dm6::BSgenome.Dmelanogaster.UCSC.dm6,
-            'mm10' = BSgenome.Mmusculus.UCSC.mm10::BSgenome.Mmusculus.UCSC.mm10, 
-            'hg38' = BSgenome.Hsapiens.UCSC.hg38::BSgenome.Hsapiens.UCSC.hg38, 
-            'sacCer3' = BSgenome.Scerevisiae.UCSC.sacCer3::BSgenome.Scerevisiae.UCSC.sacCer3,
-            'danRer10' = BSgenome.Drerio.UCSC.danRer10::BSgenome.Drerio.UCSC.danRer10
+        TSSs <- GenomicRanges::start(
+            GenomicRanges::resize(granges, fix = 'end', width = 1)
+        )
+        GenomicRanges::ranges(granges) <- IRanges::IRanges(
+            start = ifelse(
+                as.vector(GenomicRanges::strand(granges)) == '+', 
+                (TSSs - upstream), 
+                (TSSs - downstream + 1)
+            ),
+            width = downstream + upstream,
+            names = names(IRanges::ranges(granges))
         )
     }
-    chrom.sizes <- GenomeInfoDb::seqinfo(genome) %>% GenomicRanges::GRanges()
-    return(chrom.sizes)
-}
-
-#' A function to estimate the size of chromosomes for the input genome
-#' 
-#' @param genome a GRanges object
-#' 
-#' @return GRanges of whole chromosomes for the input genome
-#' 
-#' @import magrittr
-#' @import GenomicRanges
-#' @import IRanges
-#' @export
-
-getChromSizes.GRanges <- function(granges) {
-    message("Approximating chromosome sizes based on the coverage of the input GRanges object...")
-    chrs <- levels(GenomicRanges::seqnames(granges))
-    starts <- rep(1, length(chrs))
-    ends <- sapply(chrs, function(chr) {
-        granges[GenomicRanges::seqnames(granges) == chr] %>% 
-            sort() %>% 
-            tail(1) %>% 
-            IRanges::end()
-    })
-    granges <- GenomicRanges::GRanges(seqnames = chrs, ranges = IRanges::IRanges(starts, width = ends))
-    names(granges) <- GenomicRanges::seqnames(granges)
     return(granges)
 }
 
+#' A function to duplicate bi-directional GRanges
+#' 
+#' This function splits bi-directional ranges into + and - 
+#' stranded ranges. It duplicates the ranges which are '*'.
+#'
+#' @param granges A stranded GRanges object 
+#' @return GRanges with only '+' and '-' strands. GRanges with '*' strand 
+#' have been duplicated and split into forward and reverse strands.
+#' 
+#' @import GenomicRanges
+#' @export
+#' 
+#' @examples
+#' data(ce11_all_REs)
+#' library(GenomicRanges)
+#' proms <- ce11_all_REs[grepl('prom', ce11_all_REs$regulatory_class)]
+#' proms
+#' table(strand(proms))
+#' proms <- deconvolveBidirectionalPromoters(proms)
+#' proms
+#' table(strand(proms))
+
+deconvolveBidirectionalPromoters <- function(granges) {
+    filt <- GenomicRanges::strand(granges) == '+' | 
+        GenomicRanges::strand(granges) == '-'
+    unid <- granges[filt]
+    bid <- granges[GenomicRanges::strand(granges) == '*']
+    bid.fwd <- bid
+    GenomicRanges::strand(bid.fwd) <- '+'
+    bid.rev <- bid
+    GenomicRanges::strand(bid.rev) <- '-'
+    granges_shifted <- sort(c(unid, bid.fwd, bid.rev), ignore.strand = TRUE)
+    return(granges_shifted)
+}
+
+#' A function to sample GRanges from GRanges
+#'
+#' This function takes a given GRanges and returns another GRanges 
+#' object. The new GRanges has the same number of ranges and the same
+#' chromosome, width and strand distributions than the original 
+#' GRanges. 
+#'
+#' @param x GRanges object
+#' @param n Integer, number of sampled GRanges
+#' @param width Integer, width of sampled GRanges
+#' @param exclude Boolean, should the original GRanges be excluded?
+#' @param avoid_overlap Boolean, should the 
+#' sampled GRanges not be overlapping?
+#' @return A GRanges object of length n
+#' 
+#' @export
+#' 
+#' @examples
+#' data(ce11_proms)
+#' sampleGRanges(ce11_proms, 100)
+
+sampleGRanges <- function(
+    x, 
+    n = NULL, 
+    width = NULL,
+    exclude = FALSE, 
+    avoid_overlap = FALSE
+)
+{
+    UseMethod("sampleGRanges")
+}
+
+#' A function to sample GRanges within GRanges
+#'
+#' This function takes a given GRanges and returns another GRanges 
+#' object. The new GRanges has the same number of ranges and the same
+#' chromosome, width and strand distributions than the original 
+#' GRanges. 
+#'
+#' @param x GRanges object
+#' @param n Integer, number of sampled GRanges
+#' @param width Integer, width of sampled GRanges
+#' @param exclude Boolean, should the original GRanges be excluded?
+#' @param avoid_overlap Boolean, should the sampled GRanges 
+#' not be overlapping?
+#' @return A GRanges object of length n
+#' 
+#' @importFrom methods as
+#' @import GenomicRanges
+#' @import IRanges
+#' @import GenomeInfoDb
+#' @export
+#' 
+#' @examples
+#' data(ce11_proms)
+#' sampleGRanges(ce11_proms, 100)
+
+sampleGRanges.GRanges <- function(
+    x, 
+    n = NULL, 
+    width = NULL, 
+    exclude = FALSE, 
+    avoid_overlap = FALSE
+)
+{
+    granges <- x
+    maxed_granges <- GenomicRanges::GRanges(
+        levels(GenomicRanges::seqnames(granges)), 
+        IRanges::IRanges(
+            1, 
+            width = lengths(GenomicRanges::coverage(granges))
+        )
+    )
+    if (is.null(n)) n <- length(x)
+    N <- 2*n 
+    g <- GRanges()
+    #
+    while (length(g) < n) {
+        # Sample chrs based on their size
+        chrs <- unlist(lapply(
+            seq_along(IRanges::width(maxed_granges)), 
+            function(K) {
+                rep(
+                    as.character(GenomicRanges::seqnames(maxed_granges)[K]), 
+                    GenomicRanges::end(maxed_granges)[K]
+                )
+            }
+        ))
+        chrs <- sample(chrs, N)
+        chrs <- as.character(sort(factor(
+            chrs, 
+            levels = levels(GenomicRanges::seqnames(maxed_granges))
+        )))
+        # For each chr, get random positions within this chr.
+        pos <- unlist(lapply(
+            unique(chrs), 
+            function(chr) {
+                sample(
+                    lengths(GenomicRanges::coverage(granges)[chr]), 
+                    table(chrs)[chr]
+                )
+            }
+        ))
+        # For each chr, get random strands within this chr.
+        strands <- unlist(RleList(lapply(
+            unique(chrs), 
+            function(chr) {
+                sample(
+                    as.vector(GenomicRanges::strand(
+                        granges[GenomicRanges::seqnames(granges) == chr]
+                    )), 
+                    table(chrs)[chr], 
+                    replace = TRUE
+                )
+            }
+        )))
+        # For each chr, get widths within this chr.
+        if (is.null(width)) {
+            widths <- as.vector(unlist(RleList(lapply(
+                unique(chrs), 
+                function(chr) {
+                    sample(
+                        IRanges::width(
+                            granges[GenomicRanges::seqnames(granges) == chr]
+                        ), 
+                        table(chrs)[chr], 
+                        replace = TRUE
+                    )
+                }
+            ))))
+        } 
+        else {
+            widths <- width
+        }
+        # Build a GRanges object 
+        suppressWarnings({
+            g2 <- GenomicRanges::GRanges(
+                chrs, 
+                IRanges::IRanges(pos, width = widths),
+                strand = strands, 
+                seqinfo = GenomeInfoDb::seqinfo(granges)
+            )
+            GenomeInfoDb::seqlengths(g2) <- lengths(maxed_granges)
+        })
+        if (avoid_overlap) {
+            g2 <- reduce(g2)
+        }
+        # Remove regions overlapping with initial GRanges
+        if (exclude) {
+            g2 <- g2[!(IRanges::`%over%`(g2, granges))]
+        }
+        # Remove the extended granges not embedded within the initial granges
+        g2 <- IRanges::subsetByOverlaps(
+            g2, 
+            maxed_granges, 
+            type = 'within'
+        )
+        # g2 <- GenomicRanges::trim(g2)
+        if (length(unique(widths)) == 1) {
+            g2 <- g2[GenomicRanges::width(g2) == unique(widths)]
+        }
+        g <- c(g, g2)
+    }
+    g <- g[sample(seq_len(length(g)), n)]
+    g <- sort(g)
+    seqlengths(g) <- NA
+    return(g)
+}
 

@@ -5,38 +5,57 @@ home:
     href: https://js2264.github.io/
   - text: Browse source code at
     href: https://github.com/js2264/VplotR/
-  - text: Read publication at
-    href: https://github.com/js2264/VplotR/blob/master/vignettes/Introduction.md
+  - text: Read vignette at
+    href: https://github.com/js2264/VplotR/blob/master/vignettes/VplotR.Rmd
 
 authors:
   Jacques Serizay:
-    href: https://https://js2264.github.io/
+    href: https://js2264.github.io/
+
+template:
+  params:
+    bootswatch: sandstone
 
 reference:
-  - title: Plotting fragment density graphs
-    contents:
-    - plotVmat
-    - computeVmat
-    - scaleVmat
-    - normalizeVmat
-    - shuffleVmat
-  - title: Computing flanking nucleosome enrichment scores
-    contents:
-    - nucleosomeEnrichment
-    - computeNucleosomeEnrichmentOverBackground
-  - title: Helpers
-    contents:
-    - importPEBamFiles
-    - shiftATACGranges
-    - getFragmentsDistribution
+- title: Fragment density plots
+- contents:
+  - computeVmat
+  - normalizeVmat
+  - shuffleVmat
+- title: Nucleosome enrichment scores
+- contents:
+  - nucleosomeEnrichment
+  - nucleosomeEnrichment.GRanges
+  - nucleosomeEnrichment.Vmat
+- title: Plotting functions
+- contents:
+  - plotFootprint
+  - plotVmat
+  - plotVmat.default
+  - plotVmat.Vmat
+  - plotVmat.VmatList
+  - plotVmat.list
+  - plotVmat.GRanges
+- title: Utilities
+- contents:
+  - getFragmentsDistribution
+  - importPEBamFiles
+  - shiftATACGranges
+  - alignToTSS
+  - deconvolveBidirectionalPromoters
+  - sampleGRanges
+  - sampleGRanges.GRanges
+- title: Data
+- contents:
+  - ce11_all_REs
+  - ce11_proms
+  - CTCF_hg38
+  - REB1_sacCer3
+  - bam_test
+- title: Internal functions
+- contents: 
+  - getCuts
+  - computeNucleosomeEnrichmentOverBackground
 
 toc:
   depth: 3
-
-navbar:
-  components:
-    articles:
-      text: Articles
-      menu:
-      - text: 'In-depth use'
-        href: articles/advanced.html

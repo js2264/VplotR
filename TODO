@@ -1,21 +1,4 @@
-- Add data examples
-- Add support for MNAse
-- Add support for ChIP-seq
-- Add documentation for each function
+- Treat strands separately in computeVmat
+- Make computeVmat faster (parallelize)
 
-- Look at nucleosome positioning at GATA sites in elt-2-bound promoters
-- Look at nucleosome positioning during an activation event 
-- Look at nucleosome positioning during aging
-
----
-
-Normalization:
-
-3 different ways to normalize the data: 
-
-1. Only by library depth
-2. By library depth estimated at relevant loci
-3. By %
-
-Remove background normalization
 

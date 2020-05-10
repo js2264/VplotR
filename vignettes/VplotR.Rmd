@@ -4,42 +4,32 @@ author: "Jacques Serizay"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{VplotR}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+    %\VignetteIndexEntry{VplotR}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include = FALSE}
+```{r, eval = TRUE, echo=FALSE, results="hide", warning=FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>", 
-  eval = FALSE
+    collapse = TRUE,
+    comment = "#>"
 )
+suppressPackageStartupMessages({
+    library(GenomicRanges)
+    library(ggplot2)
+    library(magrittr)
+    library(VplotR)
+})
 ```
 
 ![VplotR](man/images/Vplots.png)
 
-## Introduction
+## Importing data
 
-This R package makes the process of generating fragment density plots (also known as "V-plots") straightforward.  
-V-plots have been introduced [for the first time](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3215028/) by the Henikoff lab in 2011. Recently, V-plots have proven to be very instructive to understand the molecular organization of the chromatin. For instance, the [nucleoATAC]((https://genome.cshlp.org/content/early/2015/08/27/gr.192294.115)) package relies on cross-correlation of ATAC-seq fragment density plots to accurately map nucleosome occupancy along the genome.  
-VplotR aim is to streamline the process of generating V-plots. It contains wrapping functions to import paired-end sequencing bam files and generate V-plots around genomic loci of interest.  
-VplotR is designed around [ggplot2](https://ggplot2.tidyverse.org/) and makes full use of its potential. As such, it is easy to generate V-plots in batches and combine them with other plots to make publication-ready figures.  
-
-## Installation
-
-VplotR can be installed from Github as follows:
+Firstly BAM files are read using the `importPEBamFiles()` function and 
+loci of interest from a BED file, for instance.
 
 ```{r eval = FALSE}
-install.packages("devtools")
-devtools::install_github("js2264/VplotR")
-```
-
-## Quick V-plot
-
-Firstly BAM files are read using the `importPEBamFiles()` function and loci of interest from a BED file, for instance.
-
-```{r eval = TRUE}
 library(VplotR)
 granges <- rtracklayer::import('loci_of_interest.bed')
 fragments <- importPEBamFiles(
@@ -49,51 +39,150 @@ fragments <- importPEBamFiles(
 )
 ```
 
-*Note: to allow for a background normalization, the `where` argument should be omitted.*
+*Note: to allow for a background normalization, 
+the `where` argument should be omitted.*
 
-Then V-plot of ATAC-seq fragments (`fragments`) over the loci of interest (`granges`) is generated using the `plotVmat()` function:
+Toy datasets are available for this package: 
 
-```{r eval = TRUE}
+```{r, eval = TRUE}
+data(ce11_proms)
+granges <- ce11_proms[ce11_proms$which.tissues == "Ubiq."]
+fragments <- readRDS(url(
+    'https://ahringerlab.com/VplotR/ATAC_PE_fragments.rds'
+))
+fragments <- fragments[["mixed"]]
+```
+
+## Fragment size distribution
+
+ V-plots readily reveal the different patterns of fragment 
+density, but a preliminary control is checking the distribution of fragment
+sizes, regardless of their location relative to genomic loci. 
+The getFragmentsDistribution() is useful to check this distribution.
+
+```{r, eval = TRUE}
+d <- getFragmentsDistribution(
+    fragments, 
+    list(
+        'Ubiq.' = ce11_proms[ce11_proms$which.tissues == 'Ubiq.'],
+        'Germline' = ce11_proms[ce11_proms$which.tissues == 'Germline'],
+        'Muscle' = ce11_proms[ce11_proms$which.tissues == 'Muscle']
+    )
+)
+ggplot(d, aes(x = x, y = y)) + 
+    geom_line() +
+    facet_wrap(~class, scales = 'free')
+```
+
+## Quick Vplot(s)
+
+Once data is imported, a V-plot of fragments (`fragments`) 
+over the loci of interest (`granges`) is generated 
+using the `plotVmat()` function:
+
+```{r}
 plotVmat(fragments, granges)
 ```
 
-The generation of multiple V-plots can be parallelized as follow:
+The generation of multiple V-plots can be parallelized as follows:
 
-```{r eval = TRUE}
+```{r eval = FALSE}
 list_params <- list(
-    "sample_1" = list("bam" = fragments_1, "granges" = granges_1), 
-    "sample_2" = list("bam" = bam_2, "granges" = granges_2), 
+    "sample_1" = list(fragments_1, granges_1), 
+    "sample_2" = list(fragments_2, granges_2), 
     ..., 
-    "sample_N" = list("bam" = bam_N, "granges" = granges_N)
+    "sample_N" = list(fragments_N, granges_N)
 )
 plotVmat(
     list_params, 
     cores = length(list_params)
-) + ggplot2::facet_wrap(~Cond.)
-```
-
-Finally, the `nucleosomeEnrichment()` function is useful to statistically quantify and compare nucleosome enrichment (e.g. flanking nucleosome at promoters). To do so:
-
-```{r eval = TRUE}
-nuc_enrich <- nucleosomeEnrichment(
-    bam_granges = fragments, 
-    granges = granges
 )
 ```
 
-For more details and additional functions, read the Introduction vignette.
+With the example datasets: 
 
-### Building package
-
-This package was built by executing the following commands in R: 
-
-```{r eval = FALSE}
-devtools::document()
-devtools::build()
-pkgdown::build_site()
+```{r, eval = TRUE}
+granges <- list(
+    "Ubiq." = ce11_proms[ce11_proms$which.tissues == "Ubiq."], 
+    "Germline" = ce11_proms[ce11_proms$which.tissues == "Germline"],
+    "Muscle" = ce11_proms[ce11_proms$which.tissues == "Muscle"]
+)
+list_params <- list(
+    "mixed ATAC-seq\n@ Ubiq. proms" = 
+        list(fragments, granges[["Ubiq."]]), 
+    "mixed ATAC-seq\n@ Germline proms" = 
+        list(fragments, granges[["Germline"]]), 
+    "mixed ATAC-seq\n@ Muscle proms" = 
+        list(fragments, granges[["Muscle"]])
+)
+plotVmat(
+    list_params, 
+    cores = 1
+)
 ```
+
+## Vplots normalization
+
+Different normalization approaches are available: 
+
+```{r, eval = TRUE}
+granges <- ce11_proms[ce11_proms$which.tissues == "Ubiq."]
+# No normalization 
+plotVmat(
+    fragments,
+    granges,
+    normFun = ''
+)
+# Library depth + number of loci of interest 
+plotVmat(
+    fragments,
+    granges,
+    normFun = 'libdepth+nloci'
+)
+# Zscore
+plotVmat(
+    fragments,
+    granges,
+    normFun = 'zscore'
+)
+# Quantiles
+plotVmat(
+    fragments,
+    granges,
+    normFun = 'quantile', 
+    s = 0.99
+)
+```
+
+## Nucleosome enrichment quantification 
+
+Finally, the `nucleosomeEnrichment()` function is useful to statistically 
+quantify and compare nucleosome enrichment (e.g. flanking nucleosome 
+at promoters) from ATAC-seq datasets. To do so:
+
+```{r eval = TRUE}
+data(ce11_proms)
+granges <- ce11_proms[ce11_proms$which.tissues == "Ubiq."]
+fragments <- readRDS(url(
+    'https://ahringerlab.com/VplotR/ATAC_PE_fragments.rds'
+))
+fragments <- fragments[["mixed"]]
+#
+set.seed(42) 
+nuc_enrich <- nucleosomeEnrichment(
+    fragments,
+    ce11_proms[ce11_proms$which.tissues == 'Ubiq.']
+)
+nuc_enrich$fisher_test
+nuc_enrich$plot
+```
+
+## Footprints
+
+TBC
 
 ### Session Info
 ```{r echo = FALSE, collapse = TRUE, eval = TRUE}
 sessionInfo()
 ```
+

@@ -4,39 +4,59 @@
 \alias{plotVmat.default}
 \title{A function to plot a computed Vmat}
 \usage{
-\method{plotVmat}{default}(Vmat, pdf = NULL, HM.COLOR.CUTOFF = 90,
-  colors = c(colorRampPalette(rev(RColorBrewer::brewer.pal("Spectral", n
-  = 10))[1:5])(30),
-  colorRampPalette(rev(RColorBrewer::brewer.pal("Spectral", n =
-  10))[6:10])(30)), breaks = NULL, xlim = c(-250, 250), ylim = c(50,
-  300), main = "", xlab = "Distance from center of elements",
-  ylab = "Fragment length", ...)
+\method{plotVmat}{default}(
+  x,
+  hm = 90,
+  colors = COLORSCALE_VMAT,
+  breaks = NULL,
+  xlim = c(-250, 250),
+  ylim = c(50, 300),
+  main = "",
+  xlab = "Distance from center of elements",
+  ylab = "Fragment length",
+  ...
+)
 }
 \arguments{
-\item{Vmat}{A computed Vmat (should be normalized)}
+\item{x}{A computed Vmat (ideally, should be normalized)}
 
-\item{pdf}{string save the plot in a pdf}
-
-\item{HM.COLOR.CUTOFF}{Integer should be between 0 and 100. Used to automatically
-scale the range of colors (ebst to keep between 90 and 100)}
+\item{hm}{Integer, should be between 0 and 100. 
+Used to automatically
+scale the range of colors (best to 
+keep between 90 and 100)}
 
 \item{colors}{a vector of colors}
 
-\item{breaks}{a vector of breaks. length(breaks) == length(colors) + 1}
+\item{breaks}{a vector of breaks. 
+length(breaks) ==  length(colors) + 1}
 
-\item{xlim}{vector of two integers  x limits}
+\item{xlim}{vector of two integers, x limits}
 
-\item{ylim}{vector of two integers y limits}
+\item{ylim}{vector of two integers, y limits}
 
-\item{main}{string Title of the plot}
+\item{main}{character, title of the plot}
 
-\item{xlab}{string x-axis label}
+\item{xlab}{character, x-axis label}
 
-\item{ylab}{string y-axis label}
+\item{ylab}{character, y-axis label}
+
+\item{...}{additional parameters}
 }
 \value{
 A Vmat ggplot
 }
 \description{
-A function to plot a computed Vmat
+The default plotVmat method generates a ggplot representing a 
+heatmap of fragment density.
+}
+\examples{
+data(bam_test)
+data(ce11_proms)
+V <- plotVmat(
+    bam_test,
+    ce11_proms,
+    normFun = 'libdepth+nloci', 
+    return_Vmat = TRUE
+)
+plotVmat(V)
 }

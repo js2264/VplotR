@@ -2,24 +2,28 @@
 % Please edit documentation in R/bamutils.R
 \name{importPEBamFiles}
 \alias{importPEBamFiles}
-\title{A function to import paired end bam files as GRanges. Can be quite lengthy 
-for .bam files with 5+ millions fragments.}
+\title{A function to import paired end bam files as GRanges}
 \usage{
-importPEBamFiles(files, where = NULL, max_insert_size = 1000,
-  shift_ATAC_fragments = FALSE, verbose = TRUE)
+importPEBamFiles(
+  files,
+  where = NULL,
+  max_insert_size = 1000,
+  shift_ATAC_fragments = FALSE,
+  verbose = TRUE
+)
 }
 \arguments{
-\item{files}{A character vector. Each element of the vector is the path 
+\item{files}{character vector, each element of the vector is the path 
 of an individual .bam file.}
 
-\item{where}{GRanges. Only import the fragments mapping to the input GRanges
-(can fasten the import process a lot). 
-  (mapping to the same coordinates) be removed?}
+\item{where}{GRanges, only import the fragments mapping to the 
+input GRanges (can fasten the import process a lot).}
 
-\item{max_insert_size}{Integer Filter out fragments larger than this size.}
+\item{max_insert_size}{Integer, filter out fragments larger 
+than this size.}
 
-\item{shift_ATAC_fragments}{If the fragments come from ATAC-seq, one might
-want to shift the extremities by +5 / -4 bp.}
+\item{shift_ATAC_fragments}{Boolean, if the fragments come 
+from ATAC-seq, one might want to shift the extremities by +5 / -4 bp.}
 
 \item{verbose}{Boolean}
 }
@@ -27,6 +31,7 @@ want to shift the extremities by +5 / -4 bp.}
 A GRanges object containing fragments from the input .bam file.
 }
 \description{
-A function to import paired end bam files as GRanges. Can be quite lengthy 
-for .bam files with 5+ millions fragments.
+This function takes bam file paths and read them into GRanges 
+objects.
+Note: Can be quite lengthy for .bam files with 5+ millions fragments.
 }

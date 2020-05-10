@@ -2,29 +2,49 @@
 % Please edit documentation in R/fragsize.R
 \name{getFragmentsDistribution}
 \alias{getFragmentsDistribution}
-\title{A function to compute sizes distribution for PE fragments}
+\title{A function to compute sizes distribution for paired-end fragments}
 \usage{
-getFragmentsDistribution(fragments, granges_list = NULL,
-  extend_granges = c(-500, 500), limits = c(0, 600), roll = 3)
+getFragmentsDistribution(
+  fragments,
+  granges_list = NULL,
+  extend_granges = c(-500, 500),
+  limits = c(0, 600),
+  roll = 3,
+  cores = 1
+)
 }
 \arguments{
-\item{fragments}{GRanges object containing PE fragments. See importPEBamFiles
-for more details.}
+\item{fragments}{GRanges object containing paired-end fragments.
+See importPEBamFiles for more details on how to create such object.}
 
-\item{extend_granges}{A numeric vector of length 2. How the GRanges should
-be extended.}
+\item{granges_list}{GRanges, can be a list of different sets of GRanges.}
 
-\item{limits}{A numeric vector of length 2. Only consider fragments within
-this window of sizes.}
+\item{extend_granges}{numeric vector of length 2, how the GRanges 
+should be extended.}
 
-\item{roll}{Integer Apply a moving average of this size}
+\item{limits}{numeric vector of length 2, only consider 
+fragments within this window of sizes.}
 
-\item{granges}{GRanges. cam be a list of different sets of GRanges.
-should overlap in order to be considered when estimating fragment sizes.}
+\item{roll}{Integer, apply a moving average of this size}
+
+\item{cores}{Integer, number of threads used to compute 
+fragment size distribution}
 }
 \value{
 A list of tbl, one for each .bam file.
 }
 \description{
-A function to compute sizes distribution for PE fragments
+This function takes fragments and compute the distribution of their
+sizes over a set or multiple sets of GRanges.
+}
+\examples{
+data(bam_test)
+data(ce11_proms)
+df <- getFragmentsDistribution(
+    bam_test, 
+    ce11_proms,
+    extend_granges = c(-500, 500)
+)
+head(df)
+which.max(df$y)
 }

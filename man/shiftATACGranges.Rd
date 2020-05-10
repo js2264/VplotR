@@ -2,24 +2,25 @@
 % Please edit documentation in R/bamutils.R
 \name{shiftATACGranges}
 \alias{shiftATACGranges}
-\title{A function to shift GRanges fragments by 5/-4. This is useful when dealing
-with fragments coming from ATAC-seq.}
+\title{A function to shift GRanges fragments by 5/-4. This is useful 
+when dealing with fragments coming from ATAC-seq.}
 \usage{
 shiftATACGranges(g, pos_shift = 5, neg_shift = 4)
 }
 \arguments{
 \item{g}{GRanges of ATAC-seq fragments}
 
-\item{pos_shift}{Integer. How many bases should fragments on direct strand
-be shifted by?}
+\item{pos_shift}{Integer. How many bases should fragments on 
+direct strand be shifted by?}
 
-\item{neg_shift}{Integer. How many bases should fragments on negative strand
-be shifted by?}
+\item{neg_shift}{Integer. How many bases should fragments on 
+negative strand be shifted by?}
 }
 \value{
-A GRanges object containing fragments from the input .bam file.
+A GRanges object containing fragments from the input 
+.bam file.
 }
 \description{
-A function to shift GRanges fragments by 5/-4. This is useful when dealing
-with fragments coming from ATAC-seq.
+A function to shift GRanges fragments by 5/-4. This is useful 
+when dealing with fragments coming from ATAC-seq.
 }

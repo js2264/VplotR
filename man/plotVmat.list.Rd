@@ -2,50 +2,83 @@
 % Please edit documentation in R/vmat.R
 \name{plotVmat.list}
 \alias{plotVmat.list}
-\title{A function to plot a list of Vmats}
+\title{A function to compute (and plot) several Vmats.}
 \usage{
-\method{plotVmat}{list}(list_params, cores = 1, XAXIS.CUTOFF = 1000,
-  YAXIS.CUTOFF = 1000, stranded = TRUE, normalize = TRUE,
-  normFun = "libdepth", universe = NULL, libdepth = NULL,
-  s = 0.999, roll = 3, return_Vmat = FALSE, genome = "ce11",
-  verbose = TRUE, ...)
+\method{plotVmat}{list}(
+  x,
+  cores = 1,
+  nrow = NULL,
+  ncol = NULL,
+  xlims = c(-250, 250),
+  ylims = c(50, 300),
+  normFun = "libdepth+nloci",
+  s = 0.95,
+  roll = 3,
+  return_Vmat = FALSE,
+  verbose = 1,
+  ...
+)
 }
 \arguments{
-\item{list_params}{list Each element of the list should be a list, containing
-the bam_granges as the first sub-element and the granges as the 
-second sub-element. Can accept the background_granges as a third sub-element.}
+\item{x}{list Each element of the list should be a list containing
+paired-end fragments and GRanges of interest.}
 
-\item{XAXIS.CUTOFF}{single integer. The x limits (-/+) of the computed Vmat}
+\item{cores}{Integer, number of cores to parallelize the plots}
 
-\item{YAXIS.CUTOFF}{single integer. The y upper limit of the computed Vmat}
+\item{nrow}{Integer, how many rows in facet?}
 
-\item{stranded}{Boolean. Should the Vmat be stranded? If TRUE, negative-strand 
-features are flipped}
+\item{ncol}{Integer, how many cols in facet?}
 
-\item{normalize}{Boolean Should the Vmat be normalized?}
+\item{xlims}{x limits of the computed Vmat}
 
-\item{normFun}{string A Vmat can be scaled relative to its median ('pctmedian'), 
-to its mean ('pctmean'), to its max ('pctmax'). Otherwise it could be zscore-d
-entirely ('Zscore') or by rows ('rowZscore') or by columns ('colZscore').}
+\item{ylims}{y limits of the computed Vmat}
 
-\item{roll}{integer to use as the window to smooth the Vmat rows by rolling mean}
+\item{normFun}{character. A Vmat should be scaled either by:
+\itemize{
+    \item 'libdepth+nloci', e.g. the library depth and the number of 
+    loci used to compute the Vmat;
+    \item zscore, if relative patterns of fragment density 
+    are more important than density per se;
+    \item Alternatively, the Vmat can be scaled to % ('pct'), to 
+    a chosen quantile ('quantile') or to the max Vmat value ('max').
+}}
 
-\item{return_Vmat}{Boolean. Should the function return the computed Vmat 
-rather than the plot?}
+\item{s}{A float indicating which quantile to use if 'quantile'
+normalization is chosen}
 
-\item{genome}{a BSgenome object. See getChromSizes for more details}
+\item{roll}{integer, to use as the window to smooth the Vmat rows 
+by rolling mean.}
+
+\item{return_Vmat}{Boolean, should the function return the computed 
+Vmat rather than the plot?}
 
 \item{verbose}{Boolean}
 
-\item{Vmat2}{table A Vmat pre-computed over a background}
-
-\item{estimate_background}{Boolean Should the background be estimated automatically?}
-
-\item{background_granges}{GRanges The genomic loci used to compute the background Vmat}
+\item{...}{additional parameters}
 }
 \value{
 A list of Vmat ggplots
 }
 \description{
-A function to plot a list of Vmats
+The plotVmat.GRanges() method computes and normalizes multiple Vmats
+before passing them to plotVmat.VmatList() method.
+}
+\examples{
+data(bam_test)
+data(ce11_proms)
+list_params <- list(
+    'germline' = list(
+        bam_test,
+        ce11_proms[ce11_proms$which.tissues == 'Germline']
+    ),
+    'muscle' = list(
+        bam_test,
+        ce11_proms[ce11_proms$which.tissues == 'Muscle']
+    )
+)
+V <- plotVmat(
+    list_params,
+    normFun = 'libdepth+nloci', 
+    roll = 5
+)
 }

@@ -1,48 +1,85 @@
-#' A function to compute sizes distribution for PE fragments 
-#'
-#' @param fragments GRanges object containing PE fragments. See importPEBamFiles
-#' for more details.
-#' @param granges GRanges. cam be a list of different sets of GRanges.
-#' should overlap in order to be considered when estimating fragment sizes. 
-#' @param extend_granges A numeric vector of length 2. How the GRanges should
-#' be extended.
-#' @param limits A numeric vector of length 2. Only consider fragments within
-#' this window of sizes.
-#' @param roll Integer Apply a moving average of this size 
+#' A function to compute sizes distribution for paired-end fragments 
 #' 
+#' This function takes fragments and compute the distribution of their
+#' sizes over a set or multiple sets of GRanges. 
+#'
+#' @param fragments GRanges object containing paired-end fragments.
+#' See importPEBamFiles for more details on how to create such object.
+#' @param granges_list GRanges, can be a list of different sets of GRanges.
+#' @param extend_granges numeric vector of length 2, how the GRanges 
+#' should be extended.
+#' @param limits numeric vector of length 2, only consider 
+#' fragments within this window of sizes.
+#' @param roll Integer, apply a moving average of this size 
+#' @param cores Integer, number of threads used to compute 
+#' fragment size distribution
 #' @return A list of tbl, one for each .bam file.
 #' 
+#' @import magrittr
 #' @import parallel
 #' @import IRanges
 #' @import GenomicRanges
 #' @importFrom zoo rollmean
+#' @importFrom methods is
+#' @importFrom graphics hist
 #' @export
+#' 
+#' @examples
+#' data(bam_test)
+#' data(ce11_proms)
+#' df <- getFragmentsDistribution(
+#'     bam_test, 
+#'     ce11_proms,
+#'     extend_granges = c(-500, 500)
+#' )
+#' head(df)
+#' which.max(df$y)
 
-getFragmentsDistribution <- function(fragments, granges_list = NULL, extend_granges = c(-500, 500), limits = c(0, 600), roll = 3) {
-    if (any(class(granges_list) == 'GRanges')) {
+getFragmentsDistribution <- function(
+    fragments, 
+    granges_list = NULL, 
+    extend_granges = c(-500, 500), 
+    limits = c(0, 600), 
+    roll = 3, 
+    cores = 1
+) 
+{
+    `%>%` <- magrittr::`%>%` 
+    if (methods::is(granges_list, 'GRanges')) {
         granges_list <- list(granges_list)
         names(granges_list) <- 'granges'
     }
     df_res <- parallel::mclapply(seq_along(granges_list), function(K) {
         extended_granges <- granges_list[[K]] %>% 
-            GenomicRanges::resize(width = IRanges::width(.) - extend_granges[1], fix = 'end') %>%
-            GenomicRanges::resize(width = IRanges::width(.) - extend_granges[1] + extend_granges[2], fix = 'start')
-        counts <- fragments %>% 
+            GenomicRanges::resize(
+                width = IRanges::width(.) - extend_granges[1], 
+                fix = 'end'
+            ) %>%
+            GenomicRanges::resize(
+                width = IRanges::width(.) - 
+                    extend_granges[1] + 
+                    extend_granges[2],
+                fix = 'start'
+            )
+        counts <- fragments %>%
             IRanges::subsetByOverlaps(extended_granges) %>% 
             IRanges::width() %>% 
             '['(. >= limits[1] & . <= limits[2]) %>%
-            hist(plot = F, breaks = seq(1, limits[2], length.out = limits[2] + 1)) %>% 
+            graphics::hist(
+                plot = FALSE, 
+                breaks = seq(1, limits[2], length.out = limits[2] + 1)
+            ) %>% 
             '$'(counts) %>% 
             zoo::rollmean(roll, na.pad = TRUE, 'center')
         res <- data.frame(
-            'REs' = factor(names(granges_list))[[K]], 
-            'x' = 1:limits[2],
+            'class' = factor(names(granges_list))[[K]], 
+            'x' = seq_len(limits[2]),
             'y' = counts
         )
         return(res)
-    }, mc.cores = length(granges_list)) %>% 
-        setNames(names(granges_list)) %>% 
-        namedListToLongFormat()
+    }, mc.cores = cores)
+    #
+    df_res <- do.call(rbind, df_res)
     return(df_res)
 }
 

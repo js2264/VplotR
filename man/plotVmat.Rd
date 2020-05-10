@@ -2,13 +2,27 @@
 % Please edit documentation in R/vmat.R
 \name{plotVmat}
 \alias{plotVmat}
-\title{A function to plot a Vmat}
+\title{A function to generate a Vplot}
 \usage{
 plotVmat(x, ...)
+}
+\arguments{
+\item{x}{GRanges or list or Vmat}
+
+\item{...}{additional parameters}
 }
 \value{
 A Vmat ggplot
 }
 \description{
-A function to plot a Vmat
+See individual methods for further detail
+}
+\examples{
+data(bam_test)
+data(ce11_proms)
+V <- plotVmat(
+    bam_test,
+    ce11_proms,
+    normFun = 'libdepth+nloci'
+)
 }

@@ -1,2 +1,13 @@
+^data-raw$
+^README\.Rmd$
+^LICENSE\.md$
 ^docs$
-^_pkgdown\.yml$
+^paper$
+^pkgdown$
+^\.git$
+^\.travis\.yml$
+^codecov\.yml$
+^README\.md$
+^\.gitignore$
+^TODO$
+^CONDUCT$
