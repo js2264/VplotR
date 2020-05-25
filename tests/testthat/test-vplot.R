@@ -32,25 +32,23 @@ test_that("import bam", {
 
 test_that("quick vplot", {
     expect_equal({
-        bam_list <- readRDS(
-            url('http://ahringerlab.com/VplotR/ATAC_PE_fragments.rds')
-        )
+        data(bam_test)
         data(ce11_proms)
         # Size distr
         d <- getFragmentsDistribution(
-            bam_list[['Muscle']], 
+            bam_test, 
             list(
                 'Ub' = ce11_proms[ce11_proms$which.tissues == 'Ubiq.'],
                 'M' = ce11_proms[ce11_proms$which.tissues == 'Muscle']
             )
         )
         d <- getFragmentsDistribution(
-            bam_list[['Muscle']], 
+            bam_test, 
             ce11_proms[ce11_proms$which.tissues == 'Muscle']
         )
         # Test combined Vplot
         V <- plotVmat(
-            bam_list[['Germline']][seq_len(1000000)],
+            bam_test,
             ce11_proms[ce11_proms$which.tissues == 'Ubiq.'],
             normFun = 'libdepth+nloci',
             return_Vmat = TRUE
@@ -59,22 +57,22 @@ test_that("quick vplot", {
         p1 <- plotVmat(V)
         ggsave('tmp.pdf')
         p2 <- plotVmat(
-            bam_list[['mixed']][seq_len(1000000)],
+            bam_test,
             ce11_proms[ce11_proms$which.tissues == 'Ubiq.'],
             normFun = 'quantile'
         )
         ggsave('tmp.pdf')
         p2 <- plotVmat(
-            bam_list[['mixed']][seq_len(1000000)],
+            bam_test,
             ce11_proms[ce11_proms$which.tissues == 'Ubiq.'],
             normFun = 'zscore'
         )
         ggsave('tmp.pdf')
         list_params <- list(
-            "Germline ATAC-seq over Ubiq. proms." = list(bam_list[['Germline']][seq_len(1000000)], ce11_proms[ce11_proms$which.tissues == 'Ubiq.']),
-            "Germline ATAC-seq over Germline proms." = list(bam_list[['Germline']][seq_len(1000000)], ce11_proms[ce11_proms$which.tissues == 'Germline']),
-            "Neurons ATAC-seq over Ubiq. proms." = list(bam_list[['Neurons']][seq_len(1000000)], ce11_proms[ce11_proms$which.tissues == 'Ubiq.']),
-            "Neurons ATAC-seq over Neurons proms." = list(bam_list[['Neurons']][seq_len(1000000)], ce11_proms[ce11_proms$which.tissues == 'Neurons'])
+            "Germline ATAC-seq over Ubiq. proms." = list(bam_test, ce11_proms[ce11_proms$which.tissues == 'Ubiq.']),
+            "Germline ATAC-seq over Germline proms." = list(bam_test, ce11_proms[ce11_proms$which.tissues == 'Germline']),
+            "Neurons ATAC-seq over Ubiq. proms." = list(bam_test, ce11_proms[ce11_proms$which.tissues == 'Ubiq.']),
+            "Neurons ATAC-seq over Neurons proms." = list(bam_test, ce11_proms[ce11_proms$which.tissues == 'Neurons'])
         )
         p3 <- plotVmat(
             list_params, 
@@ -96,16 +94,16 @@ test_that("quick vplot", {
         #
         ce_TSSs <- alignToTSS(ce11_proms, 200, 200)
         list_params <- list(
-            "Germline ATAC-seq over Ubiq. proms." = list(bam_list[['Germline']][seq_len(1000000)], ce_TSSs[ce_TSSs$which.tissues == 'Ubiq.']),
-            "Germline ATAC-seq over Germline proms." = list(bam_list[['Germline']][seq_len(1000000)], ce_TSSs[ce_TSSs$which.tissues == 'Germline']),
-            "Neurons ATAC-seq over Ubiq. proms." = list(bam_list[['Neurons']][seq_len(1000000)], ce_TSSs[ce_TSSs$which.tissues == 'Ubiq.']),
-            "Neurons ATAC-seq over Neurons proms." = list(bam_list[['Neurons']][seq_len(1000000)], ce_TSSs[ce_TSSs$which.tissues == 'Neurons']),
-            "Muscle ATAC-seq over Ubiq. proms." = list(bam_list[['Muscle']][seq_len(1000000)], ce_TSSs[ce_TSSs$which.tissues == 'Ubiq.']),
-            "Muscle ATAC-seq over Muscle proms." = list(bam_list[['Muscle']][seq_len(1000000)], ce_TSSs[ce_TSSs$which.tissues == 'Muscle']),
-            "Hypod. ATAC-seq over Ubiq. proms." = list(bam_list[['Hypod.']][seq_len(1000000)], ce_TSSs[ce_TSSs$which.tissues == 'Ubiq.']),
-            "Hypod. ATAC-seq over Hypod. proms." = list(bam_list[['Hypod.']][seq_len(1000000)], ce_TSSs[ce_TSSs$which.tissues == 'Hypod.']),
-            "Intest. ATAC-seq over Ubiq. proms." = list(bam_list[['Intest.']][seq_len(1000000)], ce_TSSs[ce_TSSs$which.tissues == 'Ubiq.']),
-            "Intest. ATAC-seq over Intest. proms." = list(bam_list[['Intest.']][seq_len(1000000)], ce_TSSs[ce_TSSs$which.tissues == 'Intest.'])
+            "Germline ATAC-seq over Ubiq. proms." = list(bam_test, ce_TSSs[ce_TSSs$which.tissues == 'Ubiq.']),
+            "Germline ATAC-seq over Germline proms." = list(bam_test, ce_TSSs[ce_TSSs$which.tissues == 'Germline']),
+            "Neurons ATAC-seq over Ubiq. proms." = list(bam_test, ce_TSSs[ce_TSSs$which.tissues == 'Ubiq.']),
+            "Neurons ATAC-seq over Neurons proms." = list(bam_test, ce_TSSs[ce_TSSs$which.tissues == 'Neurons']),
+            "Muscle ATAC-seq over Ubiq. proms." = list(bam_test, ce_TSSs[ce_TSSs$which.tissues == 'Ubiq.']),
+            "Muscle ATAC-seq over Muscle proms." = list(bam_test, ce_TSSs[ce_TSSs$which.tissues == 'Muscle']),
+            "Hypod. ATAC-seq over Ubiq. proms." = list(bam_test, ce_TSSs[ce_TSSs$which.tissues == 'Ubiq.']),
+            "Hypod. ATAC-seq over Hypod. proms." = list(bam_test, ce_TSSs[ce_TSSs$which.tissues == 'Hypod.']),
+            "Intest. ATAC-seq over Ubiq. proms." = list(bam_test, ce_TSSs[ce_TSSs$which.tissues == 'Ubiq.']),
+            "Intest. ATAC-seq over Intest. proms." = list(bam_test, ce_TSSs[ce_TSSs$which.tissues == 'Intest.'])
         )
         plots <- plotVmat(
             list_params, 
@@ -117,7 +115,7 @@ test_that("quick vplot", {
         ggsave('tmp.pdf', height = 7.2, width = 18)
         #
         p <- plotFootprint(
-            bam_list[['Germline']][seq_len(1000000)],
+            bam_test,
             ce11_proms[ce11_proms$which.tissues == 'Ubiq.'], 
         )
         ggsave('tmp.pdf')

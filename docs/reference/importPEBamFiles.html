@@ -82,7 +82,7 @@ Note: Can be quite lengthy for .bam files with 5+ millions fragments." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VplotR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -137,9 +137,11 @@ Note: Can be quite lengthy for .bam files with 5+ millions fragments.</p>
 
     <pre class="usage"><span class='fu'>importPEBamFiles</span>(
   <span class='no'>files</span>,
+  <span class='kw'>genome</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>where</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>max_insert_size</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
   <span class='kw'>shift_ATAC_fragments</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fl'>10</span>,
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )</pre>
 
@@ -150,6 +152,11 @@ Note: Can be quite lengthy for .bam files with 5+ millions fragments.</p>
       <th>files</th>
       <td><p>character vector, each element of the vector is the path 
 of an individual .bam file.</p></td>
+    </tr>
+    <tr>
+      <th>genome</th>
+      <td><p>character, genome ID (e.g. sacCer3, ce11, dm6, danRer10,
+mm10 or hg38).</p></td>
     </tr>
     <tr>
       <th>where</th>
@@ -165,6 +172,10 @@ than this size.</p></td>
       <th>shift_ATAC_fragments</th>
       <td><p>Boolean, if the fragments come 
 from ATAC-seq, one might want to shift the extremities by +5 / -4 bp.</p></td>
+    </tr>
+    <tr>
+      <th>cores</th>
+      <td><p>Integer, number of cores to use when indexing bam files</p></td>
     </tr>
     <tr>
       <th>verbose</th>

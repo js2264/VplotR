@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">VplotR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -88,8 +88,7 @@
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
-<p>This R package makes the process of generating fragment density plots (also known as “V-plots”) straightforward.<br>
-V-plots have been introduced <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3215028/">for the first time</a> by the Henikoff lab in 2011. Recently, V-plots have proven to be very instructive to understand the molecular organization of the chromatin. For instance, the <a href="(https://genome.cshlp.org/content/early/2015/08/27/gr.192294.115)">nucleoATAC</a> package relies on cross-correlation of ATAC-seq fragment density plots to accurately map nucleosome occupancy along the genome.<br>
+<p>This R package makes the process of generating fragment density plots (also known as “V-plots”) straightforward. V-plots have been introduced <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3215028/">for the first time</a> by the Henikoff lab in 2011. Recently, V-plots have proven to be very instructive to understand the molecular organization of the chromatin. For instance, the <a href="https://genome.cshlp.org/content/early/2015/08/27/gr.192294.115">nucleoATAC</a> package relies on cross-correlation of ATAC-seq fragment density plots to accurately map nucleosome occupancy along the genome.<br>
 VplotR aim is to streamline the process of generating V-plots. It contains wrapping functions to import paired-end sequencing bam files and generate V-plots around genomic loci of interest.<br>
 VplotR is designed around <a href="https://ggplot2.tidyverse.org/">ggplot2</a> and makes full use of its potential. As such, it is easy to generate V-plots in batches and combine them with other plots to make publication-ready figures.</p>
 </div>
@@ -103,7 +102,7 @@ VplotR is designed around <a href="https://ggplot2.tidyverse.org/">ggplot2</a> a
 <div id="main-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#main-functions" class="anchor"></a>Main functions</h2>
-<p>The main user-level functions of VplotR are <code><a href="reference/importPEBamFiles.html">importPEBamFiles()</a></code>, <code><a href="reference/getFragmentsDistribution.html">getFragmentsDistribution()</a></code>, <code><a href="reference/plotVmat.html">plotVmat()</a></code>, <code><a href="reference/nucleosomeEnrichment.html">nucleosomeEnrichment()</a></code> and <code><a href="reference/plotFootprint.html">plotFootprint()</a></code>.</p>
+<p>The main user-level functions of VplotR are <code><a href="reference/importPEBamFiles.html">importPEBamFiles()</a></code>, <code><a href="reference/getFragmentsDistribution.html">getFragmentsDistribution()</a></code>, <code><a href="reference/plotVmat.html">plotVmat()</a></code> and <code><a href="reference/plotFootprint.html">plotFootprint()</a></code>.</p>
 <ul>
 <li>
 <code><a href="reference/importPEBamFiles.html">importPEBamFiles()</a></code> imports fragments from a paired-end .bam file in R;</li>
@@ -111,8 +110,6 @@ VplotR is designed around <a href="https://ggplot2.tidyverse.org/">ggplot2</a> a
 <code><a href="reference/getFragmentsDistribution.html">getFragmentsDistribution()</a></code> computes the distribution of fragment sizes over sets of genomic ranges;</li>
 <li>
 <code><a href="reference/plotVmat.html">plotVmat()</a></code> is used to compute fragment density and generate V-plots;</li>
-<li>
-<code><a href="reference/nucleosomeEnrichment.html">nucleosomeEnrichment()</a></code> calculates the enrichment of nucleosomal fragments over control fragments;</li>
 <li>
 <code><a href="reference/plotFootprint.html">plotFootprint()</a></code> generates the MNase-seq or ATAC-seq footprint at a set of genomic ranges.</li>
 </ul>

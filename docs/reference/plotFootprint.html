@@ -81,7 +81,7 @@ extremities) and plot the footprint profile over a set of GRanges." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VplotR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -136,8 +136,9 @@ extremities) and plot the footprint profile over a set of GRanges.</p>
     <pre class="usage"><span class='fu'>plotFootprint</span>(
   <span class='no'>frags</span>,
   <span class='no'>targets</span>,
+  <span class='kw'>split_strand</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>plot_central</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>50</span>, <span class='fl'>50</span>),
+  <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>75</span>, <span class='fl'>75</span>),
   <span class='kw'>bin</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>1</span>
 )</pre>
@@ -152,6 +153,10 @@ extremities) and plot the footprint profile over a set of GRanges.</p>
     <tr>
       <th>targets</th>
       <td><p>GRanges, the loci to map the fragments onto</p></td>
+    </tr>
+    <tr>
+      <th>split_strand</th>
+      <td><p>Boolean, should the + and - strand be splitted?</p></td>
     </tr>
     <tr>
       <th>plot_central</th>
@@ -178,7 +183,9 @@ extremities) and plot the footprint profile over a set of GRanges.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>bam_test</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>ce11_proms</span>)
-<span class='fu'>plotFootprint</span>(<span class='no'>bam_test</span>, <span class='no'>ce11_proms</span>)</div><div class='output co'>#&gt; <span class='message'>- Getting cuts</span></div><div class='output co'>#&gt; <span class='message'>- Getting cut coverage</span></div><div class='output co'>#&gt; <span class='message'>- Getting cut coverage / target</span></div><div class='output co'>#&gt; <span class='message'>- Reformatting data into matrix</span></div><div class='output co'>#&gt; <span class='message'>- Plotting footprint</span></div><div class='img'><img src='plotFootprint-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'>plotFootprint</span>(<span class='no'>bam_test</span>, <span class='no'>ce11_proms</span>)</div><div class='output co'>#&gt; <span class='message'>- Getting cuts</span></div><div class='output co'>#&gt; <span class='message'>- Getting cut coverage</span></div><div class='output co'>#&gt; <span class='message'>- Getting cut coverage / target</span></div><div class='output co'>#&gt; <span class='message'>Note: method with signature ‘list_OR_List#GenomicRanges#ANY’ chosen for function ‘[’,</span>
+#&gt; <span class='message'> target signature ‘SimpleRleList#GRanges#missing’.</span>
+#&gt; <span class='message'> "List#ANY#ANY" would also be valid</span></div><div class='output co'>#&gt; <span class='message'>- Reformatting data into matrix</span></div><div class='output co'>#&gt; <span class='message'>- Plotting footprint</span></div><div class='img'><img src='plotFootprint-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

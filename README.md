@@ -9,13 +9,12 @@
 ## Introduction
 
 This R package makes the process of generating fragment density plots 
-(also known as "V-plots") straightforward.  
-V-plots have been introduced 
+(also known as "V-plots") straightforward. V-plots have been introduced 
 [for the first time](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3215028/) 
 by the Henikoff lab in 2011. Recently, V-plots have proven to be very 
 instructive to understand the molecular organization of the chromatin. 
 For instance, the 
-[nucleoATAC]((https://genome.cshlp.org/content/early/2015/08/27/gr.192294.115))
+[nucleoATAC](https://genome.cshlp.org/content/early/2015/08/27/gr.192294.115)
 package relies on cross-correlation of ATAC-seq fragment density plots to 
 accurately map nucleosome occupancy along the genome.  
 VplotR aim is to streamline the process of generating V-plots. It contains 
@@ -38,15 +37,12 @@ devtools::install_github("js2264/VplotR")
 ## Main functions 
 
 The main user-level functions of VplotR are `importPEBamFiles()`,
-`getFragmentsDistribution()`, `plotVmat()`, `nucleosomeEnrichment()`
-and `plotFootprint()`. 
+`getFragmentsDistribution()`, `plotVmat()` and `plotFootprint()`. 
 
 * `importPEBamFiles()` imports fragments from a paired-end .bam file in R;
 * `getFragmentsDistribution()` computes the distribution of fragment sizes
   over sets of genomic ranges;
 * `plotVmat()` is used to compute fragment density and generate V-plots;
-* `nucleosomeEnrichment()` calculates the enrichment of nucleosomal 
-  fragments over control fragments;
 * `plotFootprint()` generates the MNase-seq or ATAC-seq footprint at a 
   set of genomic ranges.
 

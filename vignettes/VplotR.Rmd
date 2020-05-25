@@ -38,8 +38,10 @@ fragments <- importPEBamFiles(
 )
 ```
 
-*Note: to allow for a accurate background normalization, 
-the `where` argument should be omitted.*
+*Note: to allow for an accurate background normalization, 
+the `where` argument should be omitted. If no background normalization 
+is needed, the `where` aargument can be used to fasten the import of 
+bam fragments.*
 
 Several datasets are available for this package: 
 
@@ -88,7 +90,7 @@ df <- getFragmentsDistribution(
     MNase_sacCer3[['SRR3193262']], 
     REB1_sacCer3
 )
-ggplot(df, aes(x = x, y = y)) + geom_line()
+ggplot(df, aes(x = x, y = y)) + geom_line() + theme_ggplot2()
 ```
 
 ## Vplot(s)
@@ -233,25 +235,17 @@ p
 ## Nucleosome enrichment quantification 
 
 Finally, the `nucleosomeEnrichment()` function is useful to
-quantify and compare enrichment of flanking nucleosomes at promoters 
+quantify the enrichment of flanking nucleosomes at promoters 
 in ATAC-seq datasets.
 
 ```{r eval = TRUE}
 germline_proms <- ce11_proms[ce11_proms$which.tissues == "Germline"]
-muscle_proms <- ce11_proms[ce11_proms$which.tissues == "Muscle"]
-#
 nuc_enrich_germline <- nucleosomeEnrichment(
     ATAC_ce11[['mixed']],
     germline_proms
 )
 nuc_enrich_germline$fisher_test
 nuc_enrich_germline$plot
-nuc_enrich_muscle <- nucleosomeEnrichment(
-    ATAC_ce11[['mixed']],
-    muscle_proms
-)
-nuc_enrich_muscle$fisher_test
-nuc_enrich_muscle$plot
 ```
 
 ### Session Info

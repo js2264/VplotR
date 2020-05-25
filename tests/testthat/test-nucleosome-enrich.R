@@ -2,19 +2,16 @@ context("test-nucleosome-enrich")
 
 test_that("nucleosome-enrich works", {
     expect_equal({
-        bam_list <- readRDS(
-            url('http://ahringerlab.com/VplotR/ATAC_PE_fragments.rds')
-        )
+        data(bam_test)
         data(ce11_proms)
         # 
-        frags <- bam_list[['mixed']]
+        frags <- bam_test
         V <- plotVmat(
             frags,
             ce11_proms[ce11_proms$which.tissues == 'Ubiq.'], 
             normFun = '',
             return_Vmat = TRUE
         )
-        set.seed(42)
         V_bg <-  plotVmat(
             frags,
             sampleGRanges(ce11_proms[ce11_proms$which.tissues == 'Ubiq.'], n = 100000), 
@@ -23,7 +20,6 @@ test_that("nucleosome-enrich works", {
         )
         nuc2 <- nucleosomeEnrichment(V, V_bg)
         #
-        set.seed(42)
         nuc3 <- nucleosomeEnrichment(
             frags,
             ce11_proms[ce11_proms$which.tissues == 'Ubiq.']

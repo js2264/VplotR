@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ce11_all_REs — ce11_all_REs • VplotR</title>
+<title>seqinfos — seqinfos • VplotR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,10 +46,8 @@
 
 
 
-<meta property="og:title" content="ce11_all_REs — ce11_all_REs" />
-<meta property="og:description" content="Regulatory elements annotated in C. elegans (ce11) according to Serizay et 
-al. 2020, &quot;Tissue-specific profiling reveals distinctive regulatory 
-architectures for ubiquitous, germline and somatic genes&quot;, BiorXiv." />
+<meta property="og:title" content="seqinfos — seqinfos" />
+<meta property="og:description" content="Chrom sizes fom different genomes" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -124,76 +122,125 @@ architectures for ubiquitous, germline and somatic genes&quot;, BiorXiv." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>ce11_all_REs</h1>
+    <h1>seqinfos</h1>
     <small class="dont-index">Source: <a href='https://github.com/js2264/VplotR/blob/master/R/data.R'><code>R/data.R</code></a></small>
-    <div class="hidden name"><code>ce11_all_REs.Rd</code></div>
+    <div class="hidden name"><code>seqinfos.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Regulatory elements annotated in C. elegans (ce11) according to Serizay et 
-al. 2020, "Tissue-specific profiling reveals distinctive regulatory 
-architectures for ubiquitous, germline and somatic genes", BiorXiv.</p>
+    <p>Chrom sizes fom different genomes</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>ce11_all_REs</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>seqinfos</span>)</pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>GRanges</p>
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
-
-    <p><a href='https://doi.org/10.1101/2020.02.20.958579'>BiorXiv</a></p>
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
-    <p>Serizay et al. 2020, 
-"Tissue-specific profiling reveals distinctive regulatory 
-architectures for ubiquitous, germline and somatic genes", BiorXiv.
-(<a href='https://doi.org/10.1101/2020.02.20.958579'>DOI</a>)</p>
+    <p>An object of class <code>"Seqinfo"</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>ce11_all_REs</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='no'>ce11_all_REs</span>$<span class='no'>regulatory_class</span>)</div><div class='output co'>#&gt; 
-#&gt;        fwd-promoter        rev-promoter   bidirect-promoter   putative_enhancer 
-#&gt;                6616                6480                2181               20271 
-#&gt; unassigned_promoter pseudogene_promoter      non-coding_RNA       other_element 
-#&gt;                2244                 326                 831                8565 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='no'>ce11_all_REs</span>$<span class='no'>which.tissues</span>)</div><div class='output co'>#&gt; 
-#&gt;                               Germline                                Neurons 
-#&gt;                                   2184                                   2728 
-#&gt;                                 Muscle                                 Hypod. 
-#&gt;                                   2962                                   3468 
-#&gt;                                Intest.                       Germline_Neurons 
-#&gt;                                   2852                                    104 
-#&gt;                        Germline_Muscle                        Germline_Hypod. 
-#&gt;                                    169                                     64 
-#&gt;                       Germline_Intest.                         Neurons_Muscle 
-#&gt;                                     52                                   1145 
-#&gt;                         Neurons_Hypod.                        Neurons_Intest. 
-#&gt;                                    102                                     78 
-#&gt;                          Muscle_Hypod.                         Muscle_Intest. 
-#&gt;                                    411                                    178 
-#&gt;                         Hypod._Intest.                Germline_Neurons_Muscle 
-#&gt;                                    812                                     56 
-#&gt;                Germline_Neurons_Hypod.               Germline_Neurons_Intest. 
-#&gt;                                      7                                     12 
-#&gt;                 Germline_Muscle_Hypod.                Germline_Muscle_Intest. 
-#&gt;                                     27                                     61 
-#&gt;                Germline_Hypod._Intest.                  Neurons_Muscle_Hypod. 
-#&gt;                                     24                                    187 
-#&gt;                 Neurons_Muscle_Intest.                 Neurons_Hypod._Intest. 
-#&gt;                                    208                                     66 
-#&gt;                  Muscle_Hypod._Intest.         Germline_Neurons_Muscle_Hypod. 
-#&gt;                                    511                                     81 
-#&gt;        Germline_Neurons_Muscle_Intest.        Germline_Neurons_Hypod._Intest. 
-#&gt;                                     69                                     21 
-#&gt;         Germline_Muscle_Hypod._Intest.          Neurons_Muscle_Hypod._Intest. 
-#&gt;                                    186                                      0 
-#&gt; Germline_Neurons_Muscle_Hypod._Intest.                                   Soma 
-#&gt;                                      0                                    956 
-#&gt;                                  Ubiq.                           Ubiq.-Biased 
-#&gt;                                   2918                                   2506 
-#&gt;                           Unclassified                                    Low 
-#&gt;                                  20478                                   1831 </div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>seqinfos</span>)
+<span class='no'>seqinfos</span></div><div class='output co'>#&gt; $sacCer3
+#&gt; GRanges object with 17 ranges and 0 metadata columns:
+#&gt;        seqnames    ranges strand
+#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
+#&gt;    [1]     chrI  1-230218      *
+#&gt;    [2]    chrII  1-813184      *
+#&gt;    [3]   chrIII  1-316620      *
+#&gt;    [4]    chrIV 1-1531933      *
+#&gt;    [5]     chrV  1-576874      *
+#&gt;    ...      ...       ...    ...
+#&gt;   [13]  chrXIII  1-924431      *
+#&gt;   [14]   chrXIV  1-784333      *
+#&gt;   [15]    chrXV 1-1091291      *
+#&gt;   [16]   chrXVI  1-948066      *
+#&gt;   [17]     chrM   1-85779      *
+#&gt;   -------
+#&gt;   seqinfo: 17 sequences from an unspecified genome; no seqlengths
+#&gt; 
+#&gt; $ce11
+#&gt; GRanges object with 7 ranges and 0 metadata columns:
+#&gt;       seqnames     ranges strand
+#&gt;          &lt;Rle&gt;  &lt;IRanges&gt;  &lt;Rle&gt;
+#&gt;   [1]     chrI 1-15072434      *
+#&gt;   [2]    chrII 1-15279421      *
+#&gt;   [3]   chrIII 1-13783801      *
+#&gt;   [4]    chrIV 1-17493829      *
+#&gt;   [5]     chrV 1-20924180      *
+#&gt;   [6]     chrX 1-17718942      *
+#&gt;   [7]     chrM    1-13794      *
+#&gt;   -------
+#&gt;   seqinfo: 7 sequences from an unspecified genome; no seqlengths
+#&gt; 
+#&gt; $dm6
+#&gt; GRanges object with 8 ranges and 0 metadata columns:
+#&gt;       seqnames     ranges strand
+#&gt;          &lt;Rle&gt;  &lt;IRanges&gt;  &lt;Rle&gt;
+#&gt;   [1]    chr2L 1-23513712      *
+#&gt;   [2]    chr2R 1-25286936      *
+#&gt;   [3]    chr3L 1-28110227      *
+#&gt;   [4]    chr3R 1-32079331      *
+#&gt;   [5]     chr4  1-1348131      *
+#&gt;   [6]     chrX 1-23542271      *
+#&gt;   [7]     chrY  1-3667352      *
+#&gt;   [8]     chrM    1-19524      *
+#&gt;   -------
+#&gt;   seqinfo: 8 sequences from an unspecified genome; no seqlengths
+#&gt; 
+#&gt; $danRer10
+#&gt; GRanges object with 26 ranges and 0 metadata columns:
+#&gt;        seqnames     ranges strand
+#&gt;           &lt;Rle&gt;  &lt;IRanges&gt;  &lt;Rle&gt;
+#&gt;    [1]     chr1 1-58871917      *
+#&gt;    [2]     chr2 1-59543403      *
+#&gt;    [3]     chr3 1-62385949      *
+#&gt;    [4]     chr4 1-76625712      *
+#&gt;    [5]     chr5 1-71715914      *
+#&gt;    ...      ...        ...    ...
+#&gt;   [22]    chr22 1-39226288      *
+#&gt;   [23]    chr23 1-46272358      *
+#&gt;   [24]    chr24 1-42251103      *
+#&gt;   [25]    chr25 1-36898761      *
+#&gt;   [26]     chrM    1-16596      *
+#&gt;   -------
+#&gt;   seqinfo: 26 sequences from an unspecified genome; no seqlengths
+#&gt; 
+#&gt; $mm10
+#&gt; GRanges object with 22 ranges and 0 metadata columns:
+#&gt;        seqnames      ranges strand
+#&gt;           &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt;
+#&gt;    [1]     chr1 1-195471971      *
+#&gt;    [2]     chr2 1-182113224      *
+#&gt;    [3]     chr3 1-160039680      *
+#&gt;    [4]     chr4 1-156508116      *
+#&gt;    [5]     chr5 1-151834684      *
+#&gt;    ...      ...         ...    ...
+#&gt;   [18]    chr18  1-90702639      *
+#&gt;   [19]    chr19  1-61431566      *
+#&gt;   [20]     chrX 1-171031299      *
+#&gt;   [21]     chrY  1-91744698      *
+#&gt;   [22]     chrM     1-16299      *
+#&gt;   -------
+#&gt;   seqinfo: 22 sequences from an unspecified genome; no seqlengths
+#&gt; 
+#&gt; $hg38
+#&gt; GRanges object with 25 ranges and 0 metadata columns:
+#&gt;        seqnames      ranges strand
+#&gt;           &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt;
+#&gt;    [1]     chr1 1-248956422      *
+#&gt;    [2]     chr2 1-242193529      *
+#&gt;    [3]     chr3 1-198295559      *
+#&gt;    [4]     chr4 1-190214555      *
+#&gt;    [5]     chr5 1-181538259      *
+#&gt;    ...      ...         ...    ...
+#&gt;   [21]    chr21  1-46709983      *
+#&gt;   [22]    chr22  1-50818468      *
+#&gt;   [23]     chrX 1-156040895      *
+#&gt;   [24]     chrY  1-57227415      *
+#&gt;   [25]     chrM     1-16569      *
+#&gt;   -------
+#&gt;   seqinfo: 25 sequences from an unspecified genome; no seqlengths
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

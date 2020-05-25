@@ -83,7 +83,7 @@ when dealing with fragments coming from ATAC-seq." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VplotR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -136,7 +136,7 @@ when dealing with fragments coming from ATAC-seq.</h1>
 when dealing with fragments coming from ATAC-seq.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>shiftATACGranges</span>(<span class='no'>g</span>, <span class='kw'>pos_shift</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>neg_shift</span> <span class='kw'>=</span> <span class='fl'>4</span>)</pre>
+    <pre class="usage"><span class='fu'>shiftATACGranges</span>(<span class='no'>g</span>, <span class='kw'>pos_shift</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>neg_shift</span> <span class='kw'>=</span> <span class='fl'>5</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -162,6 +162,24 @@ negative strand be shifted by?</p></td>
     <p>A GRanges object containing fragments from the input 
 .bam file.</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>bam_test</span>)
+<span class='fu'>shiftATACGranges</span>(<span class='no'>bam_test</span>)</div><div class='output co'>#&gt; GRanges object with 100000 ranges and 0 metadata columns:
+#&gt;            seqnames        ranges strand
+#&gt;               &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt;
+#&gt;        [1]     chrI       430-550      +
+#&gt;        [2]     chrI       431-551      +
+#&gt;        [3]     chrI       464-600      +
+#&gt;        [4]     chrI       464-600      +
+#&gt;        [5]     chrI       509-630      +
+#&gt;        ...      ...           ...    ...
+#&gt;    [99996]     chrI 355821-355902      -
+#&gt;    [99997]     chrI 355868-356014      +
+#&gt;    [99998]     chrI 355869-355971      +
+#&gt;    [99999]     chrI 355885-355913      +
+#&gt;   [100000]     chrI 355888-355984      +
+#&gt;   -------
+#&gt;   seqinfo: 7 sequences from an unspecified genome; no seqlengths</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

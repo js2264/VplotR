@@ -33,7 +33,8 @@ Imports:
 Suggests: 
     knitr,
     rmarkdown,
-    testthat
+    testthat,
+    pkgdown
 VignetteBuilder: knitr
 biocViews:
     NucleosomePositioning,

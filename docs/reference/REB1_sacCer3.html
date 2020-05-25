@@ -47,8 +47,9 @@
 
 
 <meta property="og:title" content="REB1_sacCer3 — REB1_sacCer3" />
-<meta property="og:description" content="High-confidence REB1 binding sites, from 
-Rossi, Lai &amp;amp; Pugh 2018 Genome Research" />
+<meta property="og:description" content="Genomic loci with a REB1 binding motifs according to 
+http://jaspar.genereg.net/api/v1/matrix/MA0363.1.jaspar. PWM and scanning
+done with TFBSTools." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -81,7 +82,7 @@ Rossi, Lai &amp;amp; Pugh 2018 Genome Research" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VplotR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -129,8 +130,9 @@ Rossi, Lai &amp;amp; Pugh 2018 Genome Research" />
     </div>
 
     <div class="ref-description">
-    <p>High-confidence REB1 binding sites, from 
-Rossi, Lai &amp; Pugh 2018 Genome Research</p>
+    <p>Genomic loci with a REB1 binding motifs according to 
+http://jaspar.genereg.net/api/v1/matrix/MA0363.1.jaspar. PWM and scanning
+done with TFBSTools.</p>
     </div>
 
     <pre class="usage"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>REB1_sacCer3</span>)</pre>
@@ -145,22 +147,22 @@ Rossi, Lai &amp; Pugh 2018 Genome Research</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>REB1_sacCer3</span>)
-<span class='no'>REB1_sacCer3</span></div><div class='output co'>#&gt; GRanges object with 1264 ranges and 0 metadata columns:
-#&gt;          seqnames        ranges strand
-#&gt;             &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt;
-#&gt;      [1]     chrI   72794-72802      -
-#&gt;      [2]     chrI       118-126      +
-#&gt;      [3]     chrI       146-154      +
-#&gt;      [4]     chrI       128-136      +
-#&gt;      [5]     chrI   87164-87172      -
-#&gt;      ...      ...           ...    ...
-#&gt;   [1260]   chrXVI 413129-413137      +
-#&gt;   [1261]   chrXVI 942694-942702      -
-#&gt;   [1262]   chrXVI 360064-360072      -
-#&gt;   [1263]   chrXVI 743555-743563      -
-#&gt;   [1264]   chrXVI 627519-627527      +
+<span class='no'>REB1_sacCer3</span></div><div class='output co'>#&gt; GRanges object with 1003 ranges and 2 metadata columns:
+#&gt;          seqnames        ranges strand |          relScore       ID
+#&gt;             &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; |         &lt;numeric&gt;    &lt;Rle&gt;
+#&gt;      [1]   chrIII 205538-205546      + |                 1 MA0363.1
+#&gt;      [2]   chrVII   35227-35235      + |                 1 MA0363.1
+#&gt;      [3]   chrVII 217381-217389      + |                 1 MA0363.1
+#&gt;      [4]   chrVII 316664-316672      + |                 1 MA0363.1
+#&gt;      [5]   chrVII 609907-609915      + |                 1 MA0363.1
+#&gt;      ...      ...           ...    ... .               ...      ...
+#&gt;    [999]   chrXVI   67336-67344      - | 0.918918918918919 MA0363.1
+#&gt;   [1000]   chrXVI 185107-185115      - | 0.918918918918919 MA0363.1
+#&gt;   [1001]   chrXVI 340019-340027      - | 0.918918918918919 MA0363.1
+#&gt;   [1002]   chrXVI 605244-605252      - | 0.918918918918919 MA0363.1
+#&gt;   [1003]   chrXVI 920067-920075      - | 0.918918918918919 MA0363.1
 #&gt;   -------
-#&gt;   seqinfo: 16 sequences from an unspecified genome; no seqlengths</div></pre>
+#&gt;   seqinfo: 17 sequences from an unspecified genome; no seqlengths</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

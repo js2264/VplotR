@@ -22,20 +22,21 @@ reference:
   - computeVmat
   - normalizeVmat
   - shuffleVmat
-- title: Nucleosome enrichment scores
-- contents:
-  - nucleosomeEnrichment
-  - nucleosomeEnrichment.GRanges
-  - nucleosomeEnrichment.Vmat
 - title: Plotting functions
 - contents:
   - plotFootprint
+  - plotProfile
   - plotVmat
   - plotVmat.default
   - plotVmat.Vmat
   - plotVmat.VmatList
   - plotVmat.list
   - plotVmat.GRanges
+- title: Nucleosome enrichment scores
+- contents:
+  - nucleosomeEnrichment
+  - nucleosomeEnrichment.GRanges
+  - nucleosomeEnrichment.Vmat
 - title: Utilities
 - contents:
   - getFragmentsDistribution
@@ -51,11 +52,14 @@ reference:
   - ce11_proms
   - CTCF_hg38
   - REB1_sacCer3
+  - ABF1_sacCer3
   - bam_test
+  - seqinfos
 - title: Internal functions
 - contents: 
   - getCuts
   - computeNucleosomeEnrichmentOverBackground
+  - theme_ggplot2
 
 toc:
   depth: 3

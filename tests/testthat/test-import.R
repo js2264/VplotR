@@ -1,7 +1,8 @@
-test_that("importo bam and shift fragments", {
+context("test-import")
+
+test_that("import bam and shift fragments", {
     skip('skip')
     expect_equal({
-        
         PROJECT_PATH <- '~/Rpackages/VplotR/'
         setwd(PROJECT_PATH)
         require(devtools)

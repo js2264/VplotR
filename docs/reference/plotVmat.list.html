@@ -81,7 +81,7 @@ before passing them to plotVmat.VmatList() method." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VplotR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -137,6 +137,7 @@ before passing them to plotVmat.VmatList() method.</p>
 <span class='fu'><a href='plotVmat.html'>plotVmat</a></span>(
   <span class='no'>x</span>,
   <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>cores_subsetting</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>xlims</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>250</span>, <span class='fl'>250</span>),
@@ -160,6 +161,11 @@ paired-end fragments and GRanges of interest.</p></td>
     <tr>
       <th>cores</th>
       <td><p>Integer, number of cores to parallelize the plots</p></td>
+    </tr>
+    <tr>
+      <th>cores_subsetting</th>
+      <td><p>Integer, number of threads to parallelize 
+fragments subsetting</p></td>
     </tr>
     <tr>
       <th>nrow</th>
@@ -234,7 +240,7 @@ Vmat rather than the plot?</p></td>
     <span class='no'>list_params</span>,
     <span class='kw'>normFun</span> <span class='kw'>=</span> <span class='st'>'libdepth+nloci'</span>,
     <span class='kw'>roll</span> <span class='kw'>=</span> <span class='fl'>5</span>
-)</div><div class='output co'>#&gt; <span class='message'>- Processing sample 1/2</span></div><div class='output co'>#&gt; <span class='message'>Computing raw library depth</span></div><div class='output co'>#&gt; <span class='message'>Dividing Vmat by its number of loci</span></div><div class='output co'>#&gt; <span class='message'>Smoothing the matrix</span></div><div class='output co'>#&gt; <span class='message'>- Processing sample 2/2</span></div><div class='output co'>#&gt; <span class='message'>Computing raw library depth</span></div><div class='output co'>#&gt; <span class='message'>Dividing Vmat by its number of loci</span></div><div class='output co'>#&gt; <span class='message'>Smoothing the matrix</span></div></pre>
+)</div><div class='output co'>#&gt; <span class='message'>- Processing sample 1/2</span></div><div class='output co'>#&gt; <span class='message'>- Processing sample 2/2</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

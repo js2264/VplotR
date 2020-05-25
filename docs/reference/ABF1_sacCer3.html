@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ce11_all_REs — ce11_all_REs • VplotR</title>
+<title>ABF1_sacCer3 — ABF1_sacCer3 • VplotR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,10 +46,10 @@
 
 
 
-<meta property="og:title" content="ce11_all_REs — ce11_all_REs" />
-<meta property="og:description" content="Regulatory elements annotated in C. elegans (ce11) according to Serizay et 
-al. 2020, &quot;Tissue-specific profiling reveals distinctive regulatory 
-architectures for ubiquitous, germline and somatic genes&quot;, BiorXiv." />
+<meta property="og:title" content="ABF1_sacCer3 — ABF1_sacCer3" />
+<meta property="og:description" content="Genomic loci with a REB1 binding motifs according to 
+http://jaspar.genereg.net/api/v1/matrix/MA0265.1.jaspar. PWM and scanning
+done with TFBSTools." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -124,76 +124,45 @@ architectures for ubiquitous, germline and somatic genes&quot;, BiorXiv." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>ce11_all_REs</h1>
+    <h1>ABF1_sacCer3</h1>
     <small class="dont-index">Source: <a href='https://github.com/js2264/VplotR/blob/master/R/data.R'><code>R/data.R</code></a></small>
-    <div class="hidden name"><code>ce11_all_REs.Rd</code></div>
+    <div class="hidden name"><code>ABF1_sacCer3.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Regulatory elements annotated in C. elegans (ce11) according to Serizay et 
-al. 2020, "Tissue-specific profiling reveals distinctive regulatory 
-architectures for ubiquitous, germline and somatic genes", BiorXiv.</p>
+    <p>Genomic loci with a REB1 binding motifs according to 
+http://jaspar.genereg.net/api/v1/matrix/MA0265.1.jaspar. PWM and scanning
+done with TFBSTools.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>ce11_all_REs</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>ABF1_sacCer3</span>)</pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>GRanges</p>
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
-
-    <p><a href='https://doi.org/10.1101/2020.02.20.958579'>BiorXiv</a></p>
+    <p>An object of class <code>"GRanges"</code>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Serizay et al. 2020, 
-"Tissue-specific profiling reveals distinctive regulatory 
-architectures for ubiquitous, germline and somatic genes", BiorXiv.
-(<a href='https://doi.org/10.1101/2020.02.20.958579'>DOI</a>)</p>
+    <p>Rossi, Lai &amp; Pugh 2018 Genome Research</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>ce11_all_REs</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='no'>ce11_all_REs</span>$<span class='no'>regulatory_class</span>)</div><div class='output co'>#&gt; 
-#&gt;        fwd-promoter        rev-promoter   bidirect-promoter   putative_enhancer 
-#&gt;                6616                6480                2181               20271 
-#&gt; unassigned_promoter pseudogene_promoter      non-coding_RNA       other_element 
-#&gt;                2244                 326                 831                8565 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='no'>ce11_all_REs</span>$<span class='no'>which.tissues</span>)</div><div class='output co'>#&gt; 
-#&gt;                               Germline                                Neurons 
-#&gt;                                   2184                                   2728 
-#&gt;                                 Muscle                                 Hypod. 
-#&gt;                                   2962                                   3468 
-#&gt;                                Intest.                       Germline_Neurons 
-#&gt;                                   2852                                    104 
-#&gt;                        Germline_Muscle                        Germline_Hypod. 
-#&gt;                                    169                                     64 
-#&gt;                       Germline_Intest.                         Neurons_Muscle 
-#&gt;                                     52                                   1145 
-#&gt;                         Neurons_Hypod.                        Neurons_Intest. 
-#&gt;                                    102                                     78 
-#&gt;                          Muscle_Hypod.                         Muscle_Intest. 
-#&gt;                                    411                                    178 
-#&gt;                         Hypod._Intest.                Germline_Neurons_Muscle 
-#&gt;                                    812                                     56 
-#&gt;                Germline_Neurons_Hypod.               Germline_Neurons_Intest. 
-#&gt;                                      7                                     12 
-#&gt;                 Germline_Muscle_Hypod.                Germline_Muscle_Intest. 
-#&gt;                                     27                                     61 
-#&gt;                Germline_Hypod._Intest.                  Neurons_Muscle_Hypod. 
-#&gt;                                     24                                    187 
-#&gt;                 Neurons_Muscle_Intest.                 Neurons_Hypod._Intest. 
-#&gt;                                    208                                     66 
-#&gt;                  Muscle_Hypod._Intest.         Germline_Neurons_Muscle_Hypod. 
-#&gt;                                    511                                     81 
-#&gt;        Germline_Neurons_Muscle_Intest.        Germline_Neurons_Hypod._Intest. 
-#&gt;                                     69                                     21 
-#&gt;         Germline_Muscle_Hypod._Intest.          Neurons_Muscle_Hypod._Intest. 
-#&gt;                                    186                                      0 
-#&gt; Germline_Neurons_Muscle_Hypod._Intest.                                   Soma 
-#&gt;                                      0                                    956 
-#&gt;                                  Ubiq.                           Ubiq.-Biased 
-#&gt;                                   2918                                   2506 
-#&gt;                           Unclassified                                    Low 
-#&gt;                                  20478                                   1831 </div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>ABF1_sacCer3</span>)
+<span class='no'>ABF1_sacCer3</span></div><div class='output co'>#&gt; GRanges object with 567 ranges and 2 metadata columns:
+#&gt;         seqnames          ranges strand |          relScore       ID
+#&gt;            &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt; |         &lt;numeric&gt;    &lt;Rle&gt;
+#&gt;     [1]    chrIV   392624-392639      + | 0.979866260317539 MA0265.1
+#&gt;     [2]    chrIV 1196424-1196439      + | 0.979866260317539 MA0265.1
+#&gt;     [3]   chrXIV   400687-400702      + | 0.979866260317539 MA0265.1
+#&gt;     [4]    chrII   216540-216555      - | 0.978607901587385 MA0265.1
+#&gt;     [5]   chrXVI     95317-95332      - | 0.974832825396923 MA0265.1
+#&gt;     ...      ...             ...    ... .               ...      ...
+#&gt;   [563]    chrIV 1402786-1402801      + |  0.90018209473723 MA0265.1
+#&gt;   [564]     chrX   545320-545335      + |  0.90018209473723 MA0265.1
+#&gt;   [565]    chrXI   571301-571316      - |  0.90018209473723 MA0265.1
+#&gt;   [566]   chrXIV   140631-140646      - |  0.90018209473723 MA0265.1
+#&gt;   [567]   chrXVI   919179-919194      - |  0.90018209473723 MA0265.1
+#&gt;   -------
+#&gt;   seqinfo: 17 sequences from an unspecified genome; no seqlengths</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

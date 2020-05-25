@@ -81,7 +81,7 @@ been implemented to normalize the Vmats." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VplotR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -139,7 +139,8 @@ been implemented to normalize the Vmats.</p>
   <span class='no'>granges</span>,
   <span class='kw'>normFun</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"zscore"</span>),
   <span class='kw'>s</span> <span class='kw'>=</span> <span class='fl'>0.99</span>,
-  <span class='kw'>roll</span> <span class='kw'>=</span> <span class='fl'>1</span>
+  <span class='kw'>roll</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -177,6 +178,10 @@ normalization is chosen</p></td>
       <th>roll</th>
       <td><p>integer, to use as the window to smooth the Vmat rows 
 by rolling mean.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Boolean</p></td>
     </tr>
     </table>
 
