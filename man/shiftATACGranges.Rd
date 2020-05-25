@@ -5,7 +5,7 @@
 \title{A function to shift GRanges fragments by 5/-4. This is useful 
 when dealing with fragments coming from ATAC-seq.}
 \usage{
-shiftATACGranges(g, pos_shift = 5, neg_shift = 4)
+shiftATACGranges(g, pos_shift = 4, neg_shift = 5)
 }
 \arguments{
 \item{g}{GRanges of ATAC-seq fragments}
@@ -23,4 +23,8 @@ A GRanges object containing fragments from the input
 \description{
 A function to shift GRanges fragments by 5/-4. This is useful 
 when dealing with fragments coming from ATAC-seq.
+}
+\examples{
+data(bam_test)
+shiftATACGranges(bam_test)
 }

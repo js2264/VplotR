@@ -1,4 +1,0 @@
-- Treat strands separately in computeVmat
-- Make computeVmat faster (parallelize)
-
-

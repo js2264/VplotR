@@ -3,6 +3,7 @@ utils::globalVariables(c(
     "x",
     "x1",
     "x2",
+    "y",
     "y1", 
     "y2",
     "xmin", 
@@ -14,7 +15,9 @@ utils::globalVariables(c(
     "fisher.test",
     "colorRampPalette",
     "Var1",
-    "Var2"
+    "Var2", 
+    "widths", 
+    "dens"
 ))
 
 COLORSCALE_VMAT <- c(

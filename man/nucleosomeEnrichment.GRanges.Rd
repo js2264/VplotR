@@ -27,5 +27,7 @@ A function to compute nucleosome enrichment over a set of GRanges
 \examples{
 data(bam_test)
 data(ce11_proms)
-nucleosomeEnrichment(bam_test, ce11_proms)
+n <- nucleosomeEnrichment(bam_test, ce11_proms)
+n$fisher_test
+n$plot
 }

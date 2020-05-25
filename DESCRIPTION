@@ -1,7 +1,7 @@
 Package: VplotR
 Type: Package
 Title: Set of tools to analyze ATAC-seq data
-Version: 0.4.2
+Version: 0.5.0
 Date: 2020-05-03
 Encoding: UTF-8
 Author: Jacques Serizay
@@ -28,7 +28,8 @@ Imports:
     reshape2,
     methods, 
     graphics,
-    stats
+    stats, 
+    scico
 Suggests: 
     knitr,
     rmarkdown,

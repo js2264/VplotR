@@ -9,9 +9,10 @@
   granges,
   xlims = c(-250, 250),
   ylims = c(50, 300),
-  normFun = "libdepth+nloci",
+  normFun = "",
   s = 0.95,
   roll = 3,
+  cores = 1,
   return_Vmat = FALSE,
   verbose = 1,
   ...
@@ -41,6 +42,9 @@ normalization is chosen}
 
 \item{roll}{integer, to use as the window to smooth the Vmat rows 
 by rolling mean.}
+
+\item{cores}{Integer, number of threads to parallelize 
+fragments subsetting}
 
 \item{return_Vmat}{Boolean, should the function return the computed 
 Vmat rather than the plot?}

@@ -39,10 +39,12 @@ plotVmat <- function(x, ...) {
 #' @param main character, title of the plot
 #' @param xlab character, x-axis label
 #' @param ylab character, y-axis label
+#' @param key character, legend label
 #' @param ... additional parameters
 #' @return A Vmat ggplot
 #' 
 #' @import ggplot2
+#' @import scico
 #' @import RColorBrewer
 #' @import reshape2
 #' @export
@@ -68,6 +70,7 @@ plotVmat.default <- function(
     main = '', 
     xlab = 'Distance from center of elements',
     ylab = 'Fragment length',
+    key = 'Score', 
     ...
 ) 
 {
@@ -125,15 +128,13 @@ plotVmat.default <- function(
     }
     p <- ggplot2::ggplot(df, ggplot2::aes(Var1, Var2, fill = value))
     p <- p + ggplot2::geom_raster()
-    p <- p + ggplot2::scale_fill_gradientn(
-        breaks = c(min(breaks), max(breaks)), 
-        colors = colors
-    )
+    p <- p + scico::scale_fill_scico(palette = 'roma', direction = -1)
+    p <- p + theme_ggplot2()
     p <- p + ggplot2::theme(
         plot.background = ggplot2::element_blank(),
         legend.background = ggplot2::element_blank(), 
         panel.border = ggplot2::element_rect(
-            colour = "black", fill = NA, size = 1
+            colour = "black", fill = NA, size = 0.5
         )
     )
     p <- p + ggplot2::scale_x_continuous(expand = c(0, 0))
@@ -142,7 +143,7 @@ plotVmat.default <- function(
         title = main,
         x = xlab,
         y = ylab, 
-        fill = 'Score'
+        fill = key
     )
     p <- p + ggplot2::coord_fixed()
     return(p)
@@ -239,6 +240,8 @@ plotVmat.VmatList <- function(x, nrow = NULL, ncol = NULL, dir = 'v', ...) {
 #' normalization is chosen
 #' @param roll integer, to use as the window to smooth the Vmat rows 
 #' by rolling mean.
+#' @param cores Integer, number of threads to parallelize 
+#' fragments subsetting
 #' @param return_Vmat Boolean, should the function return the computed 
 #' Vmat rather than the plot?
 #' @param verbose Boolean 
@@ -262,9 +265,10 @@ plotVmat.GRanges <- function(
     granges,
     xlims = c(-250, 250), 
     ylims = c(50, 300), 
-    normFun = 'libdepth+nloci',
+    normFun = '',
     s = 0.95, 
     roll = 3,
+    cores = 1, 
     return_Vmat = FALSE,
     verbose = 1,
     ...
@@ -272,16 +276,14 @@ plotVmat.GRanges <- function(
 {
     # Calculate Vmat
     if (verbose) message('Computing V-mat') 
-    Vmat <- computeVmat(x, granges, xlims, ylims)
+    Vmat <- computeVmat(
+        x, granges, cores = cores, xlims = xlims, ylims = ylims
+    )
     # Normalize Vmat 
     if (verbose) message('Normalizing the matrix') 
     Vmat <- normalizeVmat(
-        Vmat, 
-        x, 
-        granges, 
-        normFun, 
-        s, 
-        roll
+        Vmat, x, granges, 
+        normFun = normFun, s = s, roll = roll, verbose = verbose
     )
     # Replace NA / inf values by 0
     Vmat[is.infinite(Vmat) | is.na(Vmat)] <- 0
@@ -290,7 +292,18 @@ plotVmat.GRanges <- function(
     if (return_Vmat == TRUE) {
         return(Vmat)
     } else {
-        p <- plotVmat(Vmat, ...)
+        key <- switch(
+            normFun, 
+            'libdepth+nloci' = "Lib. depth & number of loci",
+            'zscore' = "Z-score",
+            'pct' = "% of total fragment #",
+            'quantile' = paste0("% of quantile ", s), 
+            'none' = 'raw', 
+            'skip' = 'raw'
+        )
+        if (is.null(key)) key <- 'raw'
+        key <- sprintf("Frag. density\n(%s)", key)
+        p <- plotVmat(Vmat, key = key, ...)
         return(p)
     }
 }
@@ -303,6 +316,8 @@ plotVmat.GRanges <- function(
 #' @param x list Each element of the list should be a list containing
 #' paired-end fragments and GRanges of interest.
 #' @param cores Integer, number of cores to parallelize the plots
+#' @param cores_subsetting Integer, number of threads to parallelize 
+#' fragments subsetting
 #' @param nrow Integer, how many rows in facet?
 #' @param ncol Integer, how many cols in facet?
 #' @param xlims x limits of the computed Vmat
@@ -351,6 +366,7 @@ plotVmat.GRanges <- function(
 plotVmat.list <- function(
     x, 
     cores = 1,
+    cores_subsetting = 1, 
     nrow = NULL, 
     ncol = NULL, 
     xlims = c(-250, 250), 
@@ -373,13 +389,14 @@ plotVmat.list <- function(
         Vmat <- plotVmat(
             bam_granges, 
             granges, 
-            xlims, 
-            ylims, 
-            normFun, 
-            s,
-            roll, 
+            xlims = xlims, 
+            ylims = ylims, 
+            normFun = normFun, 
+            s = s,
+            roll = roll, 
+            cores = cores_subsetting,
             return_Vmat = TRUE, 
-            verbose = FALSE
+            verbose = verbose - 1
         )
         # Replace NA / inf values by 0
         Vmat[is.infinite(Vmat) | is.na(Vmat)] <- 0
@@ -392,6 +409,17 @@ plotVmat.list <- function(
         return(Vmats_list)
     } 
     else {
-        plotVmat(Vmats_list, nrow, ncol, ...)
+        key <- switch(
+            normFun, 
+            'libdepth+nloci' = "Lib. depth & number of loci",
+            'zscore' = "Z-score",
+            'pct' = "% of total fragment #",
+            'quantile' = paste0("% of quantile ", s), 
+            'none' = 'raw', 
+            'skip' = 'raw'
+        )
+        if (is.null(key)) key <- 'raw'
+        key <- sprintf("Frag. density\n(%s)", key)
+        plotVmat(Vmats_list, key = key, nrow, ncol, ...)
     }
 }

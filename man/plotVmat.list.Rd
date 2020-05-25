@@ -7,6 +7,7 @@
 \method{plotVmat}{list}(
   x,
   cores = 1,
+  cores_subsetting = 1,
   nrow = NULL,
   ncol = NULL,
   xlims = c(-250, 250),
@@ -24,6 +25,9 @@
 paired-end fragments and GRanges of interest.}
 
 \item{cores}{Integer, number of cores to parallelize the plots}
+
+\item{cores_subsetting}{Integer, number of threads to parallelize 
+fragments subsetting}
 
 \item{nrow}{Integer, how many rows in facet?}
 

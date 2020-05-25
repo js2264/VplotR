@@ -53,8 +53,9 @@
 
 #' REB1_sacCer3
 #'
-#' High-confidence REB1 binding sites, from 
-#' Rossi, Lai & Pugh 2018 Genome Research
+#' Genomic loci with a REB1 binding motifs according to 
+#' http://jaspar.genereg.net/api/v1/matrix/MA0363.1.jaspar. PWM and scanning
+#' done with TFBSTools.
 #'
 #' @docType data
 #'
@@ -70,6 +71,27 @@
 #' data(REB1_sacCer3)
 #' REB1_sacCer3
 "REB1_sacCer3"
+
+#' ABF1_sacCer3
+#'
+#' Genomic loci with a REB1 binding motifs according to 
+#' http://jaspar.genereg.net/api/v1/matrix/MA0265.1.jaspar. PWM and scanning
+#' done with TFBSTools.
+#'
+#' @docType data
+#'
+#' @usage data(ABF1_sacCer3)
+#'
+#' @format An object of class \code{"GRanges"}.
+#'
+#' @keywords datasets
+#'
+#' @references Rossi, Lai & Pugh 2018 Genome Research
+#' 
+#' @examples
+#' data(ABF1_sacCer3)
+#' ABF1_sacCer3
+"ABF1_sacCer3"
 
 #' CTCF_hg38
 #'
@@ -87,6 +109,23 @@
 #' data(CTCF_hg38)
 #' CTCF_hg38
 "CTCF_hg38"
+
+#' seqinfos
+#'
+#' Chrom sizes fom different genomes
+#'
+#' @docType data
+#'
+#' @usage data(seqinfos)
+#'
+#' @format An object of class \code{"Seqinfo"}.
+#'
+#' @keywords datasets
+#' 
+#' @examples
+#' data(seqinfos)
+#' seqinfos
+"seqinfos"
 
 #' bam_test
 #'

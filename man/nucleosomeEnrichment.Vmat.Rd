@@ -37,5 +37,7 @@ V_bg <- plotVmat(
     normFun = '',
     return_Vmat = TRUE
 )
-nucleosomeEnrichment(V, V_bg)
+n <- nucleosomeEnrichment(V, V_bg)
+n$fisher_test
+n$plot
 }

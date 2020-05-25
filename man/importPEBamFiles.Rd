@@ -6,15 +6,20 @@
 \usage{
 importPEBamFiles(
   files,
+  genome = NULL,
   where = NULL,
   max_insert_size = 1000,
   shift_ATAC_fragments = FALSE,
+  cores = 10,
   verbose = TRUE
 )
 }
 \arguments{
 \item{files}{character vector, each element of the vector is the path 
 of an individual .bam file.}
+
+\item{genome}{character, genome ID (e.g. sacCer3, ce11, dm6, danRer10,
+mm10 or hg38).}
 
 \item{where}{GRanges, only import the fragments mapping to the 
 input GRanges (can fasten the import process a lot).}
@@ -24,6 +29,8 @@ than this size.}
 
 \item{shift_ATAC_fragments}{Boolean, if the fragments come 
 from ATAC-seq, one might want to shift the extremities by +5 / -4 bp.}
+
+\item{cores}{Integer, number of cores to use when indexing bam files}
 
 \item{verbose}{Boolean}
 }

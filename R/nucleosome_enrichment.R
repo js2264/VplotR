@@ -54,12 +54,13 @@ nucleosomeEnrichment.Vmat <- function(
     ...
 ) 
 {
-    computeNucleosomeEnrichmentOverBackground(
+    res <- computeNucleosomeEnrichmentOverBackground(
         Vmat = x, 
         background = background, 
         plus1_nuc_only = plus1_nuc_only, 
         ...
     )
+    return(res)
 }
 
 #' A function to compute nucleosome enrichment over a set of GRanges

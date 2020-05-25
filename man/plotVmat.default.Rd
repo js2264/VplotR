@@ -14,6 +14,7 @@
   main = "",
   xlab = "Distance from center of elements",
   ylab = "Fragment length",
+  key = "Score",
   ...
 )
 }
@@ -39,6 +40,8 @@ length(breaks) ==  length(colors) + 1}
 \item{xlab}{character, x-axis label}
 
 \item{ylab}{character, y-axis label}
+
+\item{key}{character, legend label}
 
 \item{...}{additional parameters}
 }

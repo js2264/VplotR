@@ -4,12 +4,20 @@
 \alias{computeVmat}
 \title{A function to compute Vplot matrix}
 \usage{
-computeVmat(bam_granges, granges, xlims = c(-250, 250), ylims = c(50, 300))
+computeVmat(
+  bam_granges,
+  granges,
+  cores = 1,
+  xlims = c(-250, 250),
+  ylims = c(50, 300)
+)
 }
 \arguments{
 \item{bam_granges}{GRanges, paired-end fragments}
 
 \item{granges}{GRanges, regions to map the fragments onto}
+
+\item{cores}{Integer, nb of threads to parallelize fragments subsetting}
 
 \item{xlims}{The x limits of the computed Vmat}
 

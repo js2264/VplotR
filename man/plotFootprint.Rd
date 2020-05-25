@@ -7,8 +7,9 @@
 plotFootprint(
   frags,
   targets,
+  split_strand = FALSE,
   plot_central = TRUE,
-  xlim = c(-50, 50),
+  xlim = c(-75, 75),
   bin = 1,
   verbose = 1
 )
@@ -17,6 +18,8 @@ plotFootprint(
 \item{frags}{GRanges, the paired-end fragments}
 
 \item{targets}{GRanges, the loci to map the fragments onto}
+
+\item{split_strand}{Boolean, should the + and - strand be splitted?}
 
 \item{plot_central}{plot grey rectangle over the loci}
 

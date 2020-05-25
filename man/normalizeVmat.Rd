@@ -10,7 +10,8 @@ normalizeVmat(
   granges,
   normFun = c("zscore"),
   s = 0.99,
-  roll = 1
+  roll = 1,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -35,6 +36,8 @@ normalization is chosen}
 
 \item{roll}{integer, to use as the window to smooth the Vmat rows 
 by rolling mean.}
+
+\item{verbose}{Boolean}
 }
 \value{
 A normalized Vmat object
