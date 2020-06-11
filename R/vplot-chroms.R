@@ -337,7 +337,7 @@ plotProfile <- function(
 theme_ggplot2 <- function(
     grid = TRUE,
     border = TRUE, 
-    base_family = NULL, base_size = 8,
+    base_family = "", base_size = 8,
     plot_title_family = base_family, plot_title_size = 12,
     plot_title_face = "plain", plot_title_margin = 5,
     subtitle_size = 11,

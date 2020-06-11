@@ -28,8 +28,7 @@ Imports:
     reshape2,
     methods, 
     graphics,
-    stats, 
-    scico
+    stats
 Suggests: 
     knitr,
     rmarkdown,

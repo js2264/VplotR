@@ -8,7 +8,7 @@ at https://github.com/hrbrmstr/hrbrthemes/}
 theme_ggplot2(
   grid = TRUE,
   border = TRUE,
-  base_family = NULL,
+  base_family = "",
   base_size = 8,
   plot_title_family = base_family,
   plot_title_size = 12,

@@ -44,7 +44,6 @@ plotVmat <- function(x, ...) {
 #' @return A Vmat ggplot
 #' 
 #' @import ggplot2
-#' @import scico
 #' @import RColorBrewer
 #' @import reshape2
 #' @export
@@ -128,7 +127,10 @@ plotVmat.default <- function(
     }
     p <- ggplot2::ggplot(df, ggplot2::aes(Var1, Var2, fill = value))
     p <- p + ggplot2::geom_raster()
-    p <- p + scico::scale_fill_scico(palette = 'roma', direction = -1)
+    p <- p + ggplot2::scale_fill_gradientn(
+        breaks = c(min(breaks), max(breaks)), 
+        colors = colors
+    )
     p <- p + theme_ggplot2()
     p <- p + ggplot2::theme(
         plot.background = ggplot2::element_blank(),
