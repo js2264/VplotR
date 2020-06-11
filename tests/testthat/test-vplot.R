@@ -288,7 +288,14 @@ test_that("CTCF Human ALL PLOTS", {
             'DNase' = list(bam_DNase_hg38_merged, CTCF_hg38, c(36, 150), c(-200, 200)), 
             'ATAC' = list(bam_ATAC_hg38_merged, CTCF_hg38, c(40, 300), c(-400, 400))
         )
-        #
+        # 
+        # p_vp <- plotVmat(bam_MNase_hg38_merged, CTCF_hg38, ylims = c(40, 220), xlims = c(-600, 600), hm = 90,roll = 3,normFun = 'none', verbose = TRUE)
+        # ggsave('CTCF_hg38_MNase_Vplot.pdf', height = 4, width = 8)
+        # p_fp <- plotFootprint(bam_DNase_hg38_merged, CTCF_hg38)
+        # ggsave('CTCF_hg38_DNase_Footprint.pdf', height = 4, width = 8)
+        # p_pr <- plotProfile(bam_MNase_hg38_merged, "chr11:118,926,707-118,929,707", loci = CTCF_hg38, min = 20, max = 260, alpha = 0.3, size = 2)
+        # ggsave('CTCF_hg38_MNase_Profile.pdf', height = 4, width = 8)
+        # 
         vplots <- parallel::mclapply(mc.cores = 3, list_params, function(params) {
             p <- plotVmat(
                 params[[1]], params[[2]], 
@@ -393,7 +400,7 @@ test_that("CTCF Mouse DNAse Vplot", {
 test_that("TSSs Elegans ATAC Vplots", {
     skip('skip')
     expect_equal({
-        bam_list <- readRDS(url('http://ahringerlab.com/VplotR/ATAC_PE_fragments.rds'))
+        bam_list <- readRDS('~/ATAC_PE_fragments.rds')
         #
         data(ce11_proms)
         ce11_proms <- alignToTSS(
@@ -444,7 +451,7 @@ test_that("TSSs Elegans ATAC Vplots", {
             list_params, 
             cores = 10,
             roll = 3, 
-            normFun = 'libdepth+nloci', 
+            normFun = 'zscore', 
             nrow = 2, 
             ncol = 5, 
             verbose = 2
