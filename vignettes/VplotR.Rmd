@@ -52,7 +52,7 @@ Several datasets are available for this package:
 data(ce11_proms)
 ce11_proms
 ATAC_ce11 <- readRDS(url(
-    'https://ahringerlab.com/VplotR/ATAC_ce11_Serizay2020.rds'
+    'http://ahringerlab.com/VplotR/ATAC_ce11_Serizay2020.rds'
 ))
 lengths(ATAC_ce11)
 ```
@@ -64,7 +64,7 @@ lengths(ATAC_ce11)
 data(ABF1_sacCer3)
 ABF1_sacCer3
 MNase_sacCer3 <- readRDS(url(
-    'https://ahringerlab.com/VplotR/MNase_sacCer3_Henikoff2011.rds'
+    'http://ahringerlab.com/VplotR/MNase_sacCer3_Henikoff2011.rds'
 ))
 length(MNase_sacCer3)
 ```
@@ -75,7 +75,7 @@ length(MNase_sacCer3)
 ```{r, eval = FALSE}
 data(CTCF_hg38)
 ATAC_hg38 <- readRDS(url(
-    'https://ahringerlab.com/VplotR/ATAC_hg38_Corces2017.rds'
+    'http://ahringerlab.com/VplotR/ATAC_hg38_Corces2017.rds'
 )) %>% GRangesList() %>% unlist() 
 ```
 
@@ -228,7 +228,7 @@ p <- plotFootprint(
 p
 ```
 
-![](https://raw.githubusercontent.com/js2264/VplotR/master/man/figures/CTCF_ATAC_hg38_Chen2018_footprint.png)
+![](://raw.githubusercontent.com/js2264/VplotR/master/man/figures/CTCF_ATAC_hg38_Chen2018_footprint.png)
 
 ## Nucleosome enrichment quantification 
 

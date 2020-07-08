@@ -39,9 +39,10 @@ Imports:
     graphics,
     stats
 Suggests: 
+    testthat,
+    covr,
     knitr,
     rmarkdown,
-    testthat,
     pkgdown
 VignetteBuilder: knitr
 biocViews:
