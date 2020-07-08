@@ -5,10 +5,10 @@ test_that("import bam and shift fragments", {
     expect_equal({
         PROJECT_PATH <- '~/Rpackages/VplotR/'
         setwd(PROJECT_PATH)
-        require(devtools)
-        require(tidyverse)
-        require(magrittr)
-        require(rtracklayer)
+        # require(devtools)
+        # require(tidyverse)
+        # require(magrittr)
+        # require(rtracklayer)
         load_all()
         #
         bam_ATAC_hg38 <- readRDS('~/ATAC_hg38_Corces2017.rds')

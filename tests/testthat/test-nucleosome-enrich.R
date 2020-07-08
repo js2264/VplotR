@@ -34,7 +34,7 @@ test_that("nuc. enrich at ubiq. and tissue-spe. proms", {
     skip('skip')
     expect_equal({
         bam_list <- readRDS(
-            url('http://ahringerlab.com/VplotR/ATAC_PE_fragments.rds')
+            url('http://ahringerlab.com/VplotR/ATAC_ce11_Serizay2020.rds')
         )
         data(ce11_proms)
         #
@@ -140,7 +140,7 @@ test_that("nuc. enrich at ubiq. and tissue-spe. proms -- with repetitions", {
     skip('skip')
     expect_equal({
         bam_list <- readRDS(
-            url('http://ahringerlab.com/VplotR/ATAC_PE_fragments.rds')
+            url('http://ahringerlab.com/VplotR/ATAC_ce11_Serizay2020.rds')
         )
         data(ce11_proms)
         #

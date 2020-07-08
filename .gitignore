@@ -1,6 +1,12 @@
+docs/
 inst/doc
-data-raw
-giffdiff.html
+data-raw/
+pkgdown/
+gitdiff.html
 *.bw
 *.pdf
 *.bed
+CONDUCT
+TODO
+codecov.yml
+vignettes/advanced.Rmd

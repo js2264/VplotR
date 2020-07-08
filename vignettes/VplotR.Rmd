@@ -40,7 +40,7 @@ fragments <- importPEBamFiles(
 
 *Note: to allow for an accurate background normalization, 
 the `where` argument should be omitted. If no background normalization 
-is needed, the `where` aargument can be used to fasten the import of 
+is needed, the `where` argument can be used to fasten the import of 
 bam fragments.*
 
 Several datasets are available for this package: 
@@ -52,21 +52,21 @@ Several datasets are available for this package:
 data(ce11_proms)
 ce11_proms
 ATAC_ce11 <- readRDS(url(
-    'https://ahringerlab.com/VplotR/ATAC_PE_fragments.rds'
+    'https://ahringerlab.com/VplotR/ATAC_ce11_Serizay2020.rds'
 ))
 lengths(ATAC_ce11)
 ```
 
 * MNase-seq experiment in yeast (Henikoff et al., 2011) 
-  and REB1 binding sites:
+  and ABF1 binding sites:
 
 ```{r, eval = TRUE}
-data(REB1_sacCer3)
-REB1_sacCer3
+data(ABF1_sacCer3)
+ABF1_sacCer3
 MNase_sacCer3 <- readRDS(url(
     'https://ahringerlab.com/VplotR/MNase_sacCer3_Henikoff2011.rds'
 ))
-lengths(MNase_sacCer3)
+length(MNase_sacCer3)
 ```
 
 * ATAC-seq in human cells (Omni-ATAC, Corces et al., 2017) 
@@ -87,36 +87,46 @@ performed using the `getFragmentsDistribution()` function.
 
 ```{r, eval = TRUE}
 df <- getFragmentsDistribution(
-    MNase_sacCer3[['SRR3193262']], 
-    REB1_sacCer3
+    MNase_sacCer3, 
+    ABF1_sacCer3
 )
 ggplot(df, aes(x = x, y = y)) + geom_line() + theme_ggplot2()
 ```
 
 ## Vplot(s)
 
+### Single Vplot
+
 Once data is imported, a V-plot of paired-end fragments over loci of 
 interest is generated using the `plotVmat()` function:
 
 ```{r, eval = TRUE}
-plotVmat(MNase_sacCer3[['SRR3193262']], REB1_sacCer3)
+plotVmat(MNase_sacCer3, ABF1_sacCer3)
 ```
+
+### Multiple Vplots
 
 The generation of multiple V-plots can be parallelized using a list of 
 parameters:
 
 ```{r, eval = TRUE}
 list_params <- list(
-    "MNase\n@ REB1" = list(MNase_sacCer3[['SRR3193262']], REB1_sacCer3), 
+    "MNase\n@ ABF1" = list(MNase_sacCer3, ABF1_sacCer3), 
     "MNase\n@ random loci" = list(
-        MNase_sacCer3[['SRR3193262']], sampleGRanges(REB1_sacCer3)
+        MNase_sacCer3, sampleGRanges(ABF1_sacCer3)
     )
 )
 p <- plotVmat(
     list_params, 
-    cores = 2
+    cores = 1
 )
 p
+```
+
+For instance, ATAC-seq fragment density can be visualized at different classes
+of ubiquitous and tissue-specific promoters in *C. elegans*. 
+
+```{r, eval = TRUE}
 list_params <- list(
     "Germline ATACseq\n@ Ubiq. proms" = list(
         ATAC_ce11[['Germline']], 
@@ -133,35 +143,11 @@ list_params <- list(
     "Neuron ATACseq\n@ Neuron proms" = list(
         ATAC_ce11[['Neurons']], 
         ce11_proms[ce11_proms$which.tissues == 'Neurons']
-    ),
-    "Muscle ATACseq\n@ Ubiq. proms" = list(
-        ATAC_ce11[['Muscle']], 
-        ce11_proms[ce11_proms$which.tissues == 'Ubiq.']
-    ), 
-    "Muscle ATACseq\n@ Muscle proms" = list(
-        ATAC_ce11[['Muscle']], 
-        ce11_proms[ce11_proms$which.tissues == 'Muscle']
-    ),
-    "Hypod. ATACseq\n@ Ubiq. proms" = list(
-        ATAC_ce11[['Hypod.']], 
-        ce11_proms[ce11_proms$which.tissues == 'Ubiq.']
-    ), 
-    "Hypod. ATACseq\n@ Hypod. proms" = list(
-        ATAC_ce11[['Hypod.']], 
-        ce11_proms[ce11_proms$which.tissues == 'Hypod.']
-    ),
-    "Intest. ATACseq\n@ Ubiq. proms" = list(
-        ATAC_ce11[['Intest.']], 
-        ce11_proms[ce11_proms$which.tissues == 'Ubiq.']
-    ), 
-    "Intest. ATACseq\n@ Intest. proms" = list(
-        ATAC_ce11[['Intest.']], 
-        ce11_proms[ce11_proms$which.tissues == 'Intest.']
     )
 )
 p <- plotVmat(
     list_params, 
-    cores = 10,
+    cores = 1,
     nrow = 2, ncol = 5
 )
 p
@@ -169,40 +155,52 @@ p
 
 ## Vplots normalization
 
-Different normalization approaches are available: 
+Different normalization approaches are available using the `normFun` argument. 
 
 ```{r, eval = TRUE}
 # No normalization 
 p <- plotVmat(
     list_params, 
-    cores = 10, 
+    cores = 1, 
     nrow = 2, ncol = 5, 
     verbose = FALSE,
     normFun = ''
 )
 p
+```
+
+By default, plots are normalized by the library depth of the sequencing run  
+and by the number of loci used to compute fragment density. 
+
+```{r, eval = TRUE}
 # Library depth + number of loci of interest (default)
 p <- plotVmat(
     list_params, 
-    cores = 10, 
+    cores = 1, 
     nrow = 2, ncol = 5, 
     verbose = FALSE,
     normFun = 'libdepth+nloci'
 )
 p
+```
+
+Alternatively, heatmaps can be internally z-scored or scaled to a specific 
+quantile. 
+
+```{r, eval = TRUE}
 # Zscore
 p <- plotVmat(
     list_params, 
-    cores = 10, 
+    cores = 1, 
     nrow = 2, ncol = 5, 
     verbose = FALSE,
     normFun = 'zscore'
 )
 p
-# Quantiles
+# Quantile
 p <- plotVmat(
     list_params, 
-    cores = 10, 
+    cores = 1, 
     nrow = 2, ncol = 5, 
     verbose = FALSE,
     normFun = 'quantile', 
@@ -235,8 +233,8 @@ p
 ## Nucleosome enrichment quantification 
 
 Finally, the `nucleosomeEnrichment()` function is useful to
-quantify the enrichment of flanking nucleosomes at promoters 
-in ATAC-seq datasets.
+quantify the enrichment of flanking nucleosomes at promoters, usually from 
+ATAC-seq datasets.
 
 ```{r eval = TRUE}
 germline_proms <- ce11_proms[ce11_proms$which.tissues == "Germline"]

@@ -400,7 +400,7 @@ test_that("CTCF Mouse DNAse Vplot", {
 test_that("TSSs Elegans ATAC Vplots", {
     skip('skip')
     expect_equal({
-        bam_list <- readRDS('~/ATAC_PE_fragments.rds')
+        bam_list <- readRDS('~/ATAC_ce11_Serizay2020.rds')
         #
         data(ce11_proms)
         ce11_proms <- alignToTSS(

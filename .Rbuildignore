@@ -11,8 +11,3 @@
 ^\.gitignore$
 ^TODO$
 ^CONDUCT$
-.travis.yml
-.gitignore
-..Rcheck
-.git
-.pdf
