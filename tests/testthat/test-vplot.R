@@ -119,6 +119,32 @@ test_that("quick vplot", {
             ce11_proms[ce11_proms$which.tissues == 'Ubiq.'], 
         )
         ggsave('tmp.pdf')
+        p <- plotFootprint(
+            bam_test,
+            ce11_proms[ce11_proms$which.tissues == 'Ubiq.'], 
+            split_strand = TRUE
+        )
+        ggsave('tmp.pdf')
+        #
+        unlink('tmp.pdf')
+        TRUE
+    }, TRUE)
+})
+
+test_that("profile", {
+    expect_equal({
+        data(bam_test)
+        data(ce11_proms)
+        # Size distr
+        V <- plotProfile(
+            bam_test,
+            'chrI:10000-12000',
+            loci = ce11_proms,
+            annots = ce11_proms,
+            min = 80, 
+            max = 200
+        )
+        ggsave('tmp.pdf')
         #
         unlink('tmp.pdf')
         TRUE
