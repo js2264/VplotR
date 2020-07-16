@@ -198,7 +198,8 @@ computeVmat <- function(
 #' Vmat <- computeVmat(bam_test, ce11_all_REs)
 #' Vmat <- shuffleVmat(Vmat)
 
-shuffleVmat <- function(Vmat) {
+shuffleVmat <- function(Vmat) 
+{
     shuffled.Vmat <- c(Vmat)
     shuffled.Vmat <- shuffled.Vmat[sample(
         x = seq_along(shuffled.Vmat), 

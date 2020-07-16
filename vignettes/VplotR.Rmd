@@ -22,9 +22,11 @@ suppressPackageStartupMessages({
 })
 ```
 
-## Importing data
+## Importing sequencing datasets
 
-Paired-end .bam files are read using the `importPEBamFiles()` 
+### Using `importPEBamFiles()` function
+
+Paired-end .bam files are imported using the `importPEBamFiles()` 
 function as follows:
 
 ```{r eval = FALSE}
@@ -38,10 +40,7 @@ fragments <- importPEBamFiles(
 )
 ```
 
-*Note: to allow for an accurate background normalization, 
-the `where` argument should be omitted. If no background normalization 
-is needed, the `where` argument can be used to fasten the import of 
-bam fragments.*
+### Provided datasets
 
 Several datasets are available for this package: 
 
@@ -151,9 +150,11 @@ p <- plotVmat(
 p
 ```
 
-## Vplots normalization
+### Vplots normalization
 
 Different normalization approaches are available using the `normFun` argument. 
+
+* Un-normalized raw counts can be plotted by specifying `normFun = 'none'`. 
 
 ```{r, eval = TRUE}
 # No normalization 
@@ -162,12 +163,12 @@ p <- plotVmat(
     cores = 1, 
     nrow = 2, ncol = 5, 
     verbose = FALSE,
-    normFun = ''
+    normFun = 'none'
 )
 p
 ```
 
-By default, plots are normalized by the library depth of the sequencing run  
+* By default, plots are normalized by the library depth of the sequencing run 
 and by the number of loci used to compute fragment density. 
 
 ```{r, eval = TRUE}
@@ -182,7 +183,7 @@ p <- plotVmat(
 p
 ```
 
-Alternatively, heatmaps can be internally z-scored or scaled to a specific 
+* Alternatively, heatmaps can be internally z-scored or scaled to a specific 
 quantile. 
 
 ```{r, eval = TRUE}
@@ -223,23 +224,26 @@ p
 
 ![](https://raw.githubusercontent.com/js2264/VplotR/master/man/figures/CTCF_ATAC_hg38_Corces2017_footprint.png)
 
-## Nucleosome enrichment quantification 
+## Local fragment distribution
 
-Finally, the `nucleosomeEnrichment()` function is useful to
-quantify the enrichment of flanking nucleosomes at promoters, usually from 
-ATAC-seq datasets.
+VplotR provides a function to plot the distribution of paired-end 
+fragments over an individual genomic window.
 
-```{r eval = TRUE}
-germline_proms <- ce11_proms[ce11_proms$which.tissues == "Germline"]
-nuc_enrich_germline <- nucleosomeEnrichment(
-    ATAC_ce11_Serizay2020[['Germline']],
-    germline_proms
+```{r}
+data(MNase_sacCer3_Henikoff2011_subset)
+genes_sacCer3 <- GenomicFeatures::genes(TxDb.Scerevisiae.UCSC.sacCer3.sgdGene::
+    TxDb.Scerevisiae.UCSC.sacCer3.sgdGene
 )
-nuc_enrich_germline$fisher_test
-nuc_enrich_germline$plot
+p <- plotProfile(
+    fragments = MNase_sacCer3_Henikoff2011_subset,
+    window = "chrXV:186,400-187,400", 
+    loci = ABF1_sacCer3, 
+    annots = genes_sacCer3,
+    min = 20, max = 200, alpha = 0.1, size = 1.5
+)
 ```
 
-### Session Info
+## Session Info
 ```{r echo = TRUE, collapse = TRUE, eval = TRUE}
 sessionInfo()
 ```

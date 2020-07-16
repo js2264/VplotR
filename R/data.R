@@ -182,3 +182,22 @@
 #' MNase_sacCer3_Henikoff2011
 "MNase_sacCer3_Henikoff2011"
 
+#' MNase_sacCer3_Henikoff2011_subset
+#'
+#' A sample of fragments from multiple MNase-seq experiments performed in 
+#' yeast (Henikoff et al. 2011, "Epigenome characterization at single 
+#' base-pair resolution", PNAS), mapping over chrXV:186,400-187,400.
+#'
+#' @docType data
+#'
+#' @usage data(MNase_sacCer3_Henikoff2011_subset)
+#'
+#' @format An object of class \code{"GRanges"}.
+#'
+#' @keywords datasets
+#' 
+#' @examples
+#' data(MNase_sacCer3_Henikoff2011_subset)
+#' MNase_sacCer3_Henikoff2011_subset
+"MNase_sacCer3_Henikoff2011_subset"
+

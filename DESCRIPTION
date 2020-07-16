@@ -1,7 +1,7 @@
 Package: VplotR
 Type: Package
 Title: Set of tools to make V-plots and compute footprint profiles
-Version: 0.99.2
+Version: 0.99.3
 Date: 2020-05-03
 Encoding: UTF-8
 Authors@R: 
@@ -39,6 +39,8 @@ Imports:
     graphics,
     stats
 Suggests: 
+    GenomicFeatures, 
+    TxDb.Scerevisiae.UCSC.sacCer3.sgdGene,
     testthat,
     covr,
     knitr,
