@@ -279,7 +279,7 @@ normalizeVmat <- function(
         q <- quantile(Vmat, probs = s)
         Vmat[Vmat >= q] <- q
         # Then scale so that max value is one
-        Vmat <- Vmat/q
+        Vmat <- Vmat/q*100
     }
     else if (normFun == 'max') {
         Vmat <- Vmat/max(Vmat)

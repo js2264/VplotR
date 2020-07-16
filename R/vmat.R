@@ -288,7 +288,8 @@ plotVmat.GRanges <- function(
         normFun = normFun, s = s, roll = roll, verbose = verbose
     )
     # Replace NA / inf values by 0
-    Vmat[is.infinite(Vmat) | is.na(Vmat)] <- 0
+    if (any(is.infinite(Vmat) | is.na(Vmat)))
+        Vmat[is.infinite(Vmat) | is.na(Vmat)] <- 0
     class(Vmat) <- c("Vmat", class(Vmat))
     #
     if (return_Vmat == TRUE) {

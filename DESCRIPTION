@@ -1,7 +1,7 @@
 Package: VplotR
 Type: Package
 Title: Set of tools to make V-plots and compute footprint profiles
-Version: 0.99.0
+Version: 0.99.1
 Date: 2020-05-03
 Encoding: UTF-8
 Authors@R: 
@@ -20,15 +20,15 @@ URL: https://github.com/js2264/VplotR
 BugReports: https://github.com/js2264/VplotR/issues
 RoxygenNote: 7.1.0
 Depends:
-    R (>= 4.0)
+    R (>= 4.0),
+    GenomicRanges,
+    IRanges,
+    ggplot2
 Imports: 
-    ggplot2,
     cowplot,
     magrittr,
     GenomeInfoDb,
     GenomicAlignments,
-    GenomicRanges,
-    IRanges,
     RColorBrewer,
     zoo,
     Rsamtools,

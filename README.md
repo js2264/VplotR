@@ -36,15 +36,16 @@ devtools::install_github("js2264/VplotR")
 
 ## Main functions 
 
-The main user-level functions of VplotR are `importPEBamFiles()`,
-`getFragmentsDistribution()`, `plotVmat()` and `plotFootprint()`. 
+The main user-level functions of VplotR are `getFragmentsDistribution()`, 
+`plotVmat()`, `plotFootprint()` and `plotProfile()`.
 
-* `importPEBamFiles()` imports fragments from a paired-end .bam file in R;
 * `getFragmentsDistribution()` computes the distribution of fragment sizes
   over sets of genomic ranges;
 * `plotVmat()` is used to compute fragment density and generate V-plots;
 * `plotFootprint()` generates the MNase-seq or ATAC-seq footprint at a 
   set of genomic ranges.
+* `plotProfile()` is used to plot the distribution of paired-end fragments 
+  at a single locus of interest.
 
 See the package vignettes for full description of each function 
 and examples of use cases.

@@ -207,9 +207,9 @@ test_that("Yeast MNase ALL PLOTS", {
         )
         ggsave('ABF1_sacCer3_Footprint.pdf', width = 7, height = 3)
         # Genomic profile
-        genes_sacCer3 <- GenomicFeatures::genes(TxDb.Scerevisiae.UCSC.sacCer3.sgdGene::
-            TxDb.Scerevisiae.UCSC.sacCer3.sgdGene
-        )
+        # genes_sacCer3 <- GenomicFeatures::genes(TxDb.Scerevisiae.UCSC.sacCer3.sgdGene::
+        #     TxDb.Scerevisiae.UCSC.sacCer3.sgdGene
+        # )
         loc <- "chrXV:186,000-187,800"
         loc <- "chrXV:186,500-187,300"
         p <- plotProfile(

@@ -53,9 +53,6 @@ data(ce11_proms)
 ce11_proms
 data(ATAC_ce11_Serizay2020)
 head(ATAC_ce11_Serizay2020)
-ATAC_ce11_Serizay2020 <- readRDS(url(
-    'https://ahringerlab.com/VplotR/ATAC_ce11_Serizay2020.rds'
-))
 ```
 
 * MNase-seq experiment in yeast (Henikoff et al., 2011) 
@@ -66,9 +63,6 @@ data(ABF1_sacCer3)
 ABF1_sacCer3
 data(MNase_sacCer3_Henikoff2011)
 head(MNase_sacCer3_Henikoff2011)
-MNase_sacCer3_Henikoff2011 <- readRDS(url(
-    'https://ahringerlab.com/VplotR/MNase_sacCer3_Henikoff2011.rds'
-))
 ```
 
 * ATAC-seq in human cells (Omni-ATAC, Corces et al., 2017) 
