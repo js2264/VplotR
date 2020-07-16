@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Internal function — computeNucleosomeEnrichmentOverBackground • VplotR</title>
+<title>Changelog • VplotR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,7 @@
 
 
 
-<meta property="og:title" content="Internal function — computeNucleosomeEnrichmentOverBackground" />
-<meta property="og:description" content="A function to compute nucleosome enrichment of a Vmat" />
+<meta property="og:title" content="Changelog" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -67,7 +66,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-topic">
+    <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -122,76 +121,54 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Internal function</h1>
-    <small class="dont-index">Source: <a href='https://github.com/js2264/VplotR/blob/master/R/nucleosome_enrichment.R'><code>R/nucleosome_enrichment.R</code></a></small>
-    <div class="hidden name"><code>computeNucleosomeEnrichmentOverBackground.Rd</code></div>
+      <h1 data-toc-skip>Changelog <small></small></h1>
+      <small>Source: <a href='https://github.com/js2264/VplotR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div class="ref-description">
-    <p>A function to compute nucleosome enrichment of a Vmat</p>
-    </div>
-
-    <pre class="usage"><span class='fu'>computeNucleosomeEnrichmentOverBackground</span>(
-  <span class='no'>Vmat</span>,
-  <span class='kw'>background</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>plus1_nuc_only</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>minus1_nuc</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>xmin</span> <span class='kw'>=</span> -<span class='fl'>150</span>, <span class='kw'>xmax</span> <span class='kw'>=</span> -<span class='fl'>70</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>ymin</span> <span class='kw'>=</span> <span class='fl'>165</span>, <span class='kw'>ymax</span> <span class='kw'>=</span> <span class='fl'>260</span>)),
-  <span class='kw'>minus1_nuc_neg</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>xmin</span> <span class='kw'>=</span> -<span class='fl'>150</span>, <span class='kw'>xmax</span> <span class='kw'>=</span> -<span class='fl'>70</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>ymin</span> <span class='kw'>=</span> <span class='fl'>60</span>, <span class='kw'>ymax</span> <span class='kw'>=</span> <span class='fl'>145</span>)),
-  <span class='kw'>plus1_nuc</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>xmin</span> <span class='kw'>=</span> <span class='fl'>70</span>, <span class='kw'>xmax</span> <span class='kw'>=</span> <span class='fl'>150</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>ymin</span> <span class='kw'>=</span> <span class='fl'>165</span>, <span class='kw'>ymax</span> <span class='kw'>=</span> <span class='fl'>260</span>)),
-  <span class='kw'>plus1_nuc_neg</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>xmin</span> <span class='kw'>=</span> <span class='fl'>70</span>, <span class='kw'>xmax</span> <span class='kw'>=</span> <span class='fl'>150</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>ymin</span> <span class='kw'>=</span> <span class='fl'>50</span>, <span class='kw'>ymax</span> <span class='kw'>=</span> <span class='fl'>145</span>)),
-  <span class='no'>...</span>
-)</pre>
-
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>Vmat</th>
-      <td><p>A Vmat computed by nucleosomeEnrichment function</p></td>
-    </tr>
-    <tr>
-      <th>background</th>
-      <td><p>a background Vmat</p></td>
-    </tr>
-    <tr>
-      <th>plus1_nuc_only</th>
-      <td><p>Boolean Should compute nucleosome enrichment
-only for +1 nucleosome?</p></td>
-    </tr>
-    <tr>
-      <th>minus1_nuc</th>
-      <td><p>list where the -1 nucleosome is located</p></td>
-    </tr>
-    <tr>
-      <th>minus1_nuc_neg</th>
-      <td><p>where the background of the -1 nucleosome 
-is located</p></td>
-    </tr>
-    <tr>
-      <th>plus1_nuc</th>
-      <td><p>where the +1 nucleosome is located</p></td>
-    </tr>
-    <tr>
-      <th>plus1_nuc_neg</th>
-      <td><p>where the background of the +1 nucleosome
-is located</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>additional parameters</p></td>
-    </tr>
-    </table>
-
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>list</p>
-
+    <div id="periodicdna-0-5-0-2020-05-25" class="section level1">
+<h1 class="page-header" data-toc-text="0.5.0">
+<a href="#periodicdna-0-5-0-2020-05-25" class="anchor"></a>periodicDNA 0.5.0 (2020-05-25)</h1>
+<ul>
+<li>IMPORTANT:
+<ul>
+<li>Created plotProfile function</li>
+</ul>
+</li>
+<li>MINOR:
+<ul>
+<li>Changed color scale to scico package, roma scale</li>
+</ul>
+</li>
+</ul>
+</div>
+    <div id="periodicdna-0-4-2-2020-05-10" class="section level1">
+<h1 class="page-header" data-toc-text="0.4.2">
+<a href="#periodicdna-0-4-2-2020-05-10" class="anchor"></a>periodicDNA 0.4.2 (2020-05-10)</h1>
+<ul>
+<li>IMPORTANT:
+<ul>
+<li>Improved nucleosomeEnrichment and background computation</li>
+<li>Treat strands separately in computeVmat</li>
+<li>Added plot theming</li>
+</ul>
+</li>
+<li>MINOR:
+<ul>
+<li>Clarified normalization approaches</li>
+<li>Improved documentation</li>
+<li>Make computeVmat a bit faster by removing some intermediate steps</li>
+</ul>
+</li>
+</ul>
+</div>
   </div>
+
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
     </nav>
   </div>
+
 </div>
 
 
