@@ -43,7 +43,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">VplotR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.1</span>
       </span>
     </div>
 
@@ -107,16 +107,16 @@ VplotR is designed around <a href="https://ggplot2.tidyverse.org/">ggplot2</a> a
 <div id="main-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#main-functions" class="anchor"></a>Main functions</h2>
-<p>The main user-level functions of VplotR are <code>importPEBamFiles()</code>, <code>getFragmentsDistribution()</code>, <code>plotVmat()</code> and <code>plotFootprint()</code>.</p>
+<p>The main user-level functions of VplotR are <code>getFragmentsDistribution()</code>, <code>plotVmat()</code>, <code>plotFootprint()</code> and <code>plotProfile()</code>.</p>
 <ul>
-<li>
-<code>importPEBamFiles()</code> imports fragments from a paired-end .bam file in R;</li>
 <li>
 <code>getFragmentsDistribution()</code> computes the distribution of fragment sizes over sets of genomic ranges;</li>
 <li>
 <code>plotVmat()</code> is used to compute fragment density and generate V-plots;</li>
 <li>
 <code>plotFootprint()</code> generates the MNase-seq or ATAC-seq footprint at a set of genomic ranges.</li>
+<li>
+<code>plotProfile()</code> is used to plot the distribution of paired-end fragments at a single locus of interest.</li>
 </ul>
 <p>See the package vignettes for full description of each function and examples of use cases.</p>
 </div>

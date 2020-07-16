@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Changelog • VplotR</title>
+<title>ATAC_ce11_Serizay2020 — ATAC_ce11_Serizay2020 • VplotR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,7 +46,10 @@
 
 
 
-<meta property="og:title" content="Changelog" />
+<meta property="og:title" content="ATAC_ce11_Serizay2020 — ATAC_ce11_Serizay2020" />
+<meta property="og:description" content="A sample of ATAC-seq fragments from individual worm tissues (Serizay et 
+al. 2020, &quot;Tissue-specific profiling reveals distinctive regulatory 
+architectures for ubiquitous, germline and somatic genes&quot;, BiorXiv)" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -66,7 +69,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-news">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -121,54 +124,68 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1 data-toc-skip>Changelog <small></small></h1>
-      <small>Source: <a href='https://github.com/js2264/VplotR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
+    <h1>ATAC_ce11_Serizay2020</h1>
+    <small class="dont-index">Source: <a href='https://github.com/js2264/VplotR/blob/master/R/data.R'><code>R/data.R</code></a></small>
+    <div class="hidden name"><code>ATAC_ce11_Serizay2020.Rd</code></div>
     </div>
 
-    <div id="periodicdna-0-5-0-2020-05-25" class="section level1">
-<h1 class="page-header" data-toc-text="0.5.0">
-<a href="#periodicdna-0-5-0-2020-05-25" class="anchor"></a>periodicDNA 0.5.0 (2020-05-25)</h1>
-<ul>
-<li>IMPORTANT:
-<ul>
-<li>Created plotProfile function</li>
-</ul>
-</li>
-<li>MINOR:
-<ul>
-<li>Changed color scale to scico package, roma scale</li>
-</ul>
-</li>
-</ul>
-</div>
-    <div id="periodicdna-0-4-2-2020-05-10" class="section level1">
-<h1 class="page-header" data-toc-text="0.4.2">
-<a href="#periodicdna-0-4-2-2020-05-10" class="anchor"></a>periodicDNA 0.4.2 (2020-05-10)</h1>
-<ul>
-<li>IMPORTANT:
-<ul>
-<li>Improved nucleosomeEnrichment and background computation</li>
-<li>Treat strands separately in computeVmat</li>
-<li>Added plot theming</li>
-</ul>
-</li>
-<li>MINOR:
-<ul>
-<li>Clarified normalization approaches</li>
-<li>Improved documentation</li>
-<li>Make computeVmat a bit faster by removing some intermediate steps</li>
-</ul>
-</li>
-</ul>
-</div>
-  </div>
+    <div class="ref-description">
+    <p>A sample of ATAC-seq fragments from individual worm tissues (Serizay et 
+al. 2020, "Tissue-specific profiling reveals distinctive regulatory 
+architectures for ubiquitous, germline and somatic genes", BiorXiv)</p>
+    </div>
 
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>ATAC_ce11_Serizay2020</span>)</pre>
+
+
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>An object of class <code>"list"</code>.</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>ATAC_ce11_Serizay2020</span>)
+<span class='no'>ATAC_ce11_Serizay2020</span></div><div class='output co'>#&gt; $Germline
+#&gt; GRanges object with 462953 ranges and 0 metadata columns:
+#&gt;            seqnames            ranges strand
+#&gt;               &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt;
+#&gt;        [1]     chrI         3509-3903      +
+#&gt;        [2]     chrI         3643-3942      +
+#&gt;        [3]     chrI         3691-3787      +
+#&gt;        [4]     chrI         3789-3917      +
+#&gt;        [5]     chrI         3885-3955      +
+#&gt;        ...      ...               ...    ...
+#&gt;   [462949]     chrX 17712287-17712576      -
+#&gt;   [462950]     chrX 17714500-17714649      -
+#&gt;   [462951]     chrX 17714538-17714584      -
+#&gt;   [462952]     chrX 17715632-17715844      -
+#&gt;   [462953]     chrX 17717201-17717228      -
+#&gt;   -------
+#&gt;   seqinfo: 7 sequences from an unspecified genome; no seqlengths
+#&gt; 
+#&gt; $Neurons
+#&gt; GRanges object with 367450 ranges and 0 metadata columns:
+#&gt;            seqnames            ranges strand
+#&gt;               &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt;
+#&gt;        [1]     chrI         1090-1126      +
+#&gt;        [2]     chrI         1853-2036      +
+#&gt;        [3]     chrI         3856-3959      +
+#&gt;        [4]     chrI         3893-3966      +
+#&gt;        [5]     chrI         5337-5378      +
+#&gt;        ...      ...               ...    ...
+#&gt;   [367446]     chrX 17684144-17684277      -
+#&gt;   [367447]     chrX 17687489-17687605      -
+#&gt;   [367448]     chrX 17698195-17698222      -
+#&gt;   [367449]     chrX 17707838-17708056      -
+#&gt;   [367450]     chrX 17709221-17709346      -
+#&gt;   -------
+#&gt;   seqinfo: 7 sequences from an unspecified genome; no seqlengths
+#&gt; </div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
     </nav>
   </div>
-
 </div>
 
 
