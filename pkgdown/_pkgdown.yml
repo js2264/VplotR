@@ -48,6 +48,8 @@ reference:
   - sampleGRanges.GRanges
 - title: Data
 - contents:
+  - ATAC_ce11_Serizay2020
+  - MNase_sacCer3_Henikoff2011
   - ce11_all_REs
   - ce11_proms
   - CTCF_hg38

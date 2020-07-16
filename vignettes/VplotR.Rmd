@@ -51,10 +51,11 @@ Several datasets are available for this package:
 ```{r, eval = TRUE}
 data(ce11_proms)
 ce11_proms
-ATAC_ce11 <- readRDS(url(
-    'http://ahringerlab.com/VplotR/ATAC_ce11_Serizay2020.rds'
+data(ATAC_ce11_Serizay2020)
+head(ATAC_ce11_Serizay2020)
+ATAC_ce11_Serizay2020 <- readRDS(url(
+    'https://ahringerlab.com/VplotR/ATAC_ce11_Serizay2020.rds'
 ))
-lengths(ATAC_ce11)
 ```
 
 * MNase-seq experiment in yeast (Henikoff et al., 2011) 
@@ -63,10 +64,11 @@ lengths(ATAC_ce11)
 ```{r, eval = TRUE}
 data(ABF1_sacCer3)
 ABF1_sacCer3
-MNase_sacCer3 <- readRDS(url(
-    'http://ahringerlab.com/VplotR/MNase_sacCer3_Henikoff2011.rds'
+data(MNase_sacCer3_Henikoff2011)
+head(MNase_sacCer3_Henikoff2011)
+MNase_sacCer3_Henikoff2011 <- readRDS(url(
+    'https://ahringerlab.com/VplotR/MNase_sacCer3_Henikoff2011.rds'
 ))
-length(MNase_sacCer3)
 ```
 
 * ATAC-seq in human cells (Omni-ATAC, Corces et al., 2017) 
@@ -75,7 +77,7 @@ length(MNase_sacCer3)
 ```{r, eval = FALSE}
 data(CTCF_hg38)
 ATAC_hg38 <- readRDS(url(
-    'http://ahringerlab.com/VplotR/ATAC_hg38_Corces2017.rds'
+    'https://ahringerlab.com/VplotR/ATAC_hg38_Corces2017.rds'
 )) %>% GRangesList() %>% unlist() 
 ```
 
@@ -87,10 +89,11 @@ performed using the `getFragmentsDistribution()` function.
 
 ```{r, eval = TRUE}
 df <- getFragmentsDistribution(
-    MNase_sacCer3, 
+    MNase_sacCer3_Henikoff2011, 
     ABF1_sacCer3
 )
-ggplot(df, aes(x = x, y = y)) + geom_line() + theme_ggplot2()
+p <- ggplot(df, aes(x = x, y = y)) + geom_line() + theme_ggplot2()
+p
 ```
 
 ## Vplot(s)
@@ -101,7 +104,8 @@ Once data is imported, a V-plot of paired-end fragments over loci of
 interest is generated using the `plotVmat()` function:
 
 ```{r, eval = TRUE}
-plotVmat(MNase_sacCer3, ABF1_sacCer3)
+p <- plotVmat(x = MNase_sacCer3_Henikoff2011, granges = ABF1_sacCer3)
+p
 ```
 
 ### Multiple Vplots
@@ -111,9 +115,9 @@ parameters:
 
 ```{r, eval = TRUE}
 list_params <- list(
-    "MNase\n@ ABF1" = list(MNase_sacCer3, ABF1_sacCer3), 
+    "MNase\n@ ABF1" = list(MNase_sacCer3_Henikoff2011, ABF1_sacCer3), 
     "MNase\n@ random loci" = list(
-        MNase_sacCer3, sampleGRanges(ABF1_sacCer3)
+        MNase_sacCer3_Henikoff2011, sampleGRanges(ABF1_sacCer3)
     )
 )
 p <- plotVmat(
@@ -129,19 +133,19 @@ of ubiquitous and tissue-specific promoters in *C. elegans*.
 ```{r, eval = TRUE}
 list_params <- list(
     "Germline ATACseq\n@ Ubiq. proms" = list(
-        ATAC_ce11[['Germline']], 
+        ATAC_ce11_Serizay2020[['Germline']], 
         ce11_proms[ce11_proms$which.tissues == 'Ubiq.']
     ), 
     "Germline ATACseq\n@ Germline proms" = list(
-        ATAC_ce11[['Germline']], 
+        ATAC_ce11_Serizay2020[['Germline']], 
         ce11_proms[ce11_proms$which.tissues == 'Germline']
     ),
     "Neuron ATACseq\n@ Ubiq. proms" = list(
-        ATAC_ce11[['Neurons']], 
+        ATAC_ce11_Serizay2020[['Neurons']], 
         ce11_proms[ce11_proms$which.tissues == 'Ubiq.']
     ), 
     "Neuron ATACseq\n@ Neuron proms" = list(
-        ATAC_ce11[['Neurons']], 
+        ATAC_ce11_Serizay2020[['Neurons']], 
         ce11_proms[ce11_proms$which.tissues == 'Neurons']
     )
 )
@@ -216,11 +220,6 @@ ATAC-seq over sets of genomic loci. For instance, CTCF is known for its
 ~40-bp large footprint at its binding loci. 
 
 ```{r, eval = FALSE}
-p <- plotVmat(
-    unlist(GRangesList(ATAC_hg38)), 
-    CTCF_hg38
-)
-p
 p <- plotFootprint(
     ATAC_hg38,
     CTCF_hg38
@@ -228,7 +227,7 @@ p <- plotFootprint(
 p
 ```
 
-![](://raw.githubusercontent.com/js2264/VplotR/master/man/figures/CTCF_ATAC_hg38_Chen2018_footprint.png)
+![](https://raw.githubusercontent.com/js2264/VplotR/master/man/figures/CTCF_ATAC_hg38_Corces2017_footprint.png)
 
 ## Nucleosome enrichment quantification 
 
@@ -239,7 +238,7 @@ ATAC-seq datasets.
 ```{r eval = TRUE}
 germline_proms <- ce11_proms[ce11_proms$which.tissues == "Germline"]
 nuc_enrich_germline <- nucleosomeEnrichment(
-    ATAC_ce11[['mixed']],
+    ATAC_ce11_Serizay2020[['Germline']],
     germline_proms
 )
 nuc_enrich_germline$fisher_test

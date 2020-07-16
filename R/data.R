@@ -144,3 +144,41 @@
 #' bam_test
 "bam_test"
 
+#' ATAC_ce11_Serizay2020
+#'
+#' A sample of ATAC-seq fragments from individual worm tissues (Serizay et 
+#' al. 2020, "Tissue-specific profiling reveals distinctive regulatory 
+#' architectures for ubiquitous, germline and somatic genes", BiorXiv)
+#'
+#' @docType data
+#'
+#' @usage data(ATAC_ce11_Serizay2020)
+#'
+#' @format An object of class \code{"list"}.
+#'
+#' @keywords datasets
+#' 
+#' @examples
+#' data(ATAC_ce11_Serizay2020)
+#' ATAC_ce11_Serizay2020
+"ATAC_ce11_Serizay2020"
+
+#' MNase_sacCer3_Henikoff2011
+#'
+#' A sample of MNase-seq fragments from yeast (Henikoff et 
+#' al. 2011, "Epigenome characterization at single base-pair resolution", 
+#' PNAS)
+#'
+#' @docType data
+#'
+#' @usage data(MNase_sacCer3_Henikoff2011)
+#'
+#' @format An object of class \code{"GRanges"}.
+#'
+#' @keywords datasets
+#' 
+#' @examples
+#' data(MNase_sacCer3_Henikoff2011)
+#' MNase_sacCer3_Henikoff2011
+"MNase_sacCer3_Henikoff2011"
+
