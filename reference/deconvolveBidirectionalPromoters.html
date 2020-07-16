@@ -154,63 +154,37 @@ have been duplicated and split into forward and reverse strands.</p>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>GenomicRanges</span>)
 <span class='no'>proms</span> <span class='kw'>&lt;-</span> <span class='no'>ce11_all_REs</span>[<span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span>(<span class='st'>'prom'</span>, <span class='no'>ce11_all_REs</span>$<span class='no'>regulatory_class</span>)]
 <span class='no'>proms</span></div><div class='output co'>#&gt; GRanges object with 17847 ranges and 2 metadata columns:
-#&gt;                                   seqnames            ranges strand |
-#&gt;                                      &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; |
-#&gt;    nlp-40,homt-1_chrI_11273_11423     chrI       11273-11423      * |
-#&gt;           nlp-40_chrI_15431_15581     chrI       15431-15581      * |
-#&gt;                ._chrI_16959_17109     chrI       16959-17109      * |
-#&gt;           rcor-1_chrI_24453_24603     chrI       24453-24603      * |
-#&gt;           rcor-1_chrI_26903_27053     chrI       26903-27053      - |
-#&gt;                               ...      ...               ...    ... .
-#&gt;    T23E7.6_chrX_17684894_17685044     chrX 17684894-17685044      - |
-#&gt;    T23E7.6_chrX_17686030_17686180     chrX 17686030-17686180      - |
-#&gt;      cgt-2_chrX_17694789_17694939     chrX 17694789-17694939      + |
-#&gt;          ._chrX_17702756_17702906     chrX 17702756-17702906      * |
-#&gt;   H11L12.1_chrX_17711839_17711989     chrX 17711839-17711989      - |
-#&gt;                                      regulatory_class which.tissues
-#&gt;                                              &lt;factor&gt;      &lt;factor&gt;
-#&gt;    nlp-40,homt-1_chrI_11273_11423 bidirect-promoter    Intest.     
-#&gt;           nlp-40_chrI_15431_15581 unassigned_promoter  Unclassified
-#&gt;                ._chrI_16959_17109 unassigned_promoter  Ubiq.       
-#&gt;           rcor-1_chrI_24453_24603 unassigned_promoter  Unclassified
-#&gt;           rcor-1_chrI_26903_27053 rev-promoter         Ubiq.       
-#&gt;                               ...                 ...           ...
-#&gt;    T23E7.6_chrX_17684894_17685044 rev-promoter         Hypod.      
-#&gt;    T23E7.6_chrX_17686030_17686180 rev-promoter         Unclassified
-#&gt;      cgt-2_chrX_17694789_17694939 fwd-promoter         Intest.     
-#&gt;          ._chrX_17702756_17702906 unassigned_promoter  Unclassified
-#&gt;   H11L12.1_chrX_17711839_17711989 rev-promoter         Germline    
+#&gt;           seqnames            ranges strand |    regulatory_class which.tissues
+#&gt;              &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; |            &lt;factor&gt;      &lt;factor&gt;
+#&gt;       [1]     chrI       11273-11423      * | bidirect-promoter    Intest.     
+#&gt;       [2]     chrI       15431-15581      * | unassigned_promoter  Unclassified
+#&gt;       [3]     chrI       16959-17109      * | unassigned_promoter  Ubiq.       
+#&gt;       [4]     chrI       24453-24603      * | unassigned_promoter  Unclassified
+#&gt;       [5]     chrI       26903-27053      - | rev-promoter         Ubiq.       
+#&gt;       ...      ...               ...    ... .                 ...           ...
+#&gt;   [17843]     chrX 17684894-17685044      - | rev-promoter         Hypod.      
+#&gt;   [17844]     chrX 17686030-17686180      - | rev-promoter         Unclassified
+#&gt;   [17845]     chrX 17694789-17694939      + | fwd-promoter         Intest.     
+#&gt;   [17846]     chrX 17702756-17702906      * | unassigned_promoter  Unclassified
+#&gt;   [17847]     chrX 17711839-17711989      - | rev-promoter         Germline    
 #&gt;   -------
 #&gt;   seqinfo: 6 sequences from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='fu'>strand</span>(<span class='no'>proms</span>))</div><div class='output co'>#&gt; 
 #&gt;    +    -    * 
 #&gt; 6616 6480 4751 </div><div class='input'><span class='no'>proms</span> <span class='kw'>&lt;-</span> <span class='fu'>deconvolveBidirectionalPromoters</span>(<span class='no'>proms</span>)
 <span class='no'>proms</span></div><div class='output co'>#&gt; GRanges object with 22598 ranges and 2 metadata columns:
-#&gt;                                   seqnames            ranges strand |
-#&gt;                                      &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; |
-#&gt;    nlp-40,homt-1_chrI_11273_11423     chrI       11273-11423      + |
-#&gt;    nlp-40,homt-1_chrI_11273_11423     chrI       11273-11423      - |
-#&gt;           nlp-40_chrI_15431_15581     chrI       15431-15581      + |
-#&gt;           nlp-40_chrI_15431_15581     chrI       15431-15581      - |
-#&gt;                ._chrI_16959_17109     chrI       16959-17109      + |
-#&gt;                               ...      ...               ...    ... .
-#&gt;    T23E7.6_chrX_17686030_17686180     chrX 17686030-17686180      - |
-#&gt;      cgt-2_chrX_17694789_17694939     chrX 17694789-17694939      + |
-#&gt;          ._chrX_17702756_17702906     chrX 17702756-17702906      + |
-#&gt;          ._chrX_17702756_17702906     chrX 17702756-17702906      - |
-#&gt;   H11L12.1_chrX_17711839_17711989     chrX 17711839-17711989      - |
-#&gt;                                      regulatory_class which.tissues
-#&gt;                                              &lt;factor&gt;      &lt;factor&gt;
-#&gt;    nlp-40,homt-1_chrI_11273_11423 bidirect-promoter    Intest.     
-#&gt;    nlp-40,homt-1_chrI_11273_11423 bidirect-promoter    Intest.     
-#&gt;           nlp-40_chrI_15431_15581 unassigned_promoter  Unclassified
-#&gt;           nlp-40_chrI_15431_15581 unassigned_promoter  Unclassified
-#&gt;                ._chrI_16959_17109 unassigned_promoter  Ubiq.       
-#&gt;                               ...                 ...           ...
-#&gt;    T23E7.6_chrX_17686030_17686180 rev-promoter         Unclassified
-#&gt;      cgt-2_chrX_17694789_17694939 fwd-promoter         Intest.     
-#&gt;          ._chrX_17702756_17702906 unassigned_promoter  Unclassified
-#&gt;          ._chrX_17702756_17702906 unassigned_promoter  Unclassified
-#&gt;   H11L12.1_chrX_17711839_17711989 rev-promoter         Germline    
+#&gt;           seqnames            ranges strand |    regulatory_class which.tissues
+#&gt;              &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; |            &lt;factor&gt;      &lt;factor&gt;
+#&gt;       [1]     chrI       11273-11423      + | bidirect-promoter    Intest.     
+#&gt;       [2]     chrI       11273-11423      - | bidirect-promoter    Intest.     
+#&gt;       [3]     chrI       15431-15581      + | unassigned_promoter  Unclassified
+#&gt;       [4]     chrI       15431-15581      - | unassigned_promoter  Unclassified
+#&gt;       [5]     chrI       16959-17109      + | unassigned_promoter  Ubiq.       
+#&gt;       ...      ...               ...    ... .                 ...           ...
+#&gt;   [22594]     chrX 17686030-17686180      - | rev-promoter         Unclassified
+#&gt;   [22595]     chrX 17694789-17694939      + | fwd-promoter         Intest.     
+#&gt;   [22596]     chrX 17702756-17702906      + | unassigned_promoter  Unclassified
+#&gt;   [22597]     chrX 17702756-17702906      - | unassigned_promoter  Unclassified
+#&gt;   [22598]     chrX 17711839-17711989      - | rev-promoter         Germline    
 #&gt;   -------
 #&gt;   seqinfo: 6 sequences from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='fu'>strand</span>(<span class='no'>proms</span>))</div><div class='output co'>#&gt; 
 #&gt;     +     -     * 

@@ -169,60 +169,34 @@ and TSS.fwd columns, and extended by upstream/downstream bp.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>ce11_proms</span>)
 <span class='no'>ce11_proms</span></div><div class='output co'>#&gt; GRanges object with 17458 ranges and 3 metadata columns:
-#&gt;                                   seqnames            ranges strand |   TSS.fwd
-#&gt;                                      &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-#&gt;    nlp-40,homt-1_chrI_11273_11423     chrI       11273-11423      + |     11294
-#&gt;    nlp-40,homt-1_chrI_11273_11423     chrI       11273-11423      - |     11294
-#&gt;           rcor-1_chrI_26903_27053     chrI       26903-27053      - |     27038
-#&gt;           sesn-1_chrI_36019_36169     chrI       36019-36169      - |     36112
-#&gt;           sesn-1_chrI_42127_42277     chrI       42127-42277      - |     42216
-#&gt;                               ...      ...               ...    ... .       ...
-#&gt;    T23E7.2_chrX_17670496_17670646     chrX 17670496-17670646      + |  17670678
-#&gt;    T23E7.6_chrX_17684894_17685044     chrX 17684894-17685044      - |  17684919
-#&gt;    T23E7.6_chrX_17686030_17686180     chrX 17686030-17686180      - |  17686189
-#&gt;      cgt-2_chrX_17694789_17694939     chrX 17694789-17694939      + |  17694962
-#&gt;   H11L12.1_chrX_17711839_17711989     chrX 17711839-17711989      - |  17711974
-#&gt;                                     TSS.rev which.tissues
-#&gt;                                   &lt;numeric&gt;      &lt;factor&gt;
-#&gt;    nlp-40,homt-1_chrI_11273_11423     11416       Intest.
-#&gt;    nlp-40,homt-1_chrI_11273_11423     11416       Intest.
-#&gt;           rcor-1_chrI_26903_27053     26901       Ubiq.  
-#&gt;           sesn-1_chrI_36019_36169     36028       Intest.
-#&gt;           sesn-1_chrI_42127_42277     42119       Soma   
-#&gt;                               ...       ...           ...
-#&gt;    T23E7.2_chrX_17670496_17670646  17670478  Muscle      
-#&gt;    T23E7.6_chrX_17684894_17685044  17684932  Hypod.      
-#&gt;    T23E7.6_chrX_17686030_17686180  17686064  Unclassified
-#&gt;      cgt-2_chrX_17694789_17694939  17694934  Intest.     
-#&gt;   H11L12.1_chrX_17711839_17711989  17711854  Germline    
+#&gt;           seqnames            ranges strand |   TSS.fwd   TSS.rev which.tissues
+#&gt;              &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt; &lt;numeric&gt;      &lt;factor&gt;
+#&gt;       [1]     chrI       11273-11423      + |     11294     11416       Intest.
+#&gt;       [2]     chrI       11273-11423      - |     11294     11416       Intest.
+#&gt;       [3]     chrI       26903-27053      - |     27038     26901       Ubiq.  
+#&gt;       [4]     chrI       36019-36169      - |     36112     36028       Intest.
+#&gt;       [5]     chrI       42127-42277      - |     42216     42119       Soma   
+#&gt;       ...      ...               ...    ... .       ...       ...           ...
+#&gt;   [17454]     chrX 17670496-17670646      + |  17670678  17670478  Muscle      
+#&gt;   [17455]     chrX 17684894-17685044      - |  17684919  17684932  Hypod.      
+#&gt;   [17456]     chrX 17686030-17686180      - |  17686189  17686064  Unclassified
+#&gt;   [17457]     chrX 17694789-17694939      + |  17694962  17694934  Intest.     
+#&gt;   [17458]     chrX 17711839-17711989      - |  17711974  17711854  Germline    
 #&gt;   -------
 #&gt;   seqinfo: 6 sequences from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'>alignToTSS</span>(<span class='no'>ce11_proms</span>)</div><div class='output co'>#&gt; GRanges object with 17458 ranges and 3 metadata columns:
-#&gt;                                   seqnames    ranges strand |   TSS.fwd
-#&gt;                                      &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-#&gt;    nlp-40,homt-1_chrI_11273_11423     chrI     11294      + |     11294
-#&gt;    nlp-40,homt-1_chrI_11273_11423     chrI     11416      - |     11294
-#&gt;           rcor-1_chrI_26903_27053     chrI     26901      - |     27038
-#&gt;           sesn-1_chrI_36019_36169     chrI     36028      - |     36112
-#&gt;           sesn-1_chrI_42127_42277     chrI     42119      - |     42216
-#&gt;                               ...      ...       ...    ... .       ...
-#&gt;    T23E7.2_chrX_17670496_17670646     chrX  17670678      + |  17670678
-#&gt;    T23E7.6_chrX_17684894_17685044     chrX  17684932      - |  17684919
-#&gt;    T23E7.6_chrX_17686030_17686180     chrX  17686064      - |  17686189
-#&gt;      cgt-2_chrX_17694789_17694939     chrX  17694962      + |  17694962
-#&gt;   H11L12.1_chrX_17711839_17711989     chrX  17711854      - |  17711974
-#&gt;                                     TSS.rev which.tissues
-#&gt;                                   &lt;numeric&gt;      &lt;factor&gt;
-#&gt;    nlp-40,homt-1_chrI_11273_11423     11416       Intest.
-#&gt;    nlp-40,homt-1_chrI_11273_11423     11416       Intest.
-#&gt;           rcor-1_chrI_26903_27053     26901       Ubiq.  
-#&gt;           sesn-1_chrI_36019_36169     36028       Intest.
-#&gt;           sesn-1_chrI_42127_42277     42119       Soma   
-#&gt;                               ...       ...           ...
-#&gt;    T23E7.2_chrX_17670496_17670646  17670478  Muscle      
-#&gt;    T23E7.6_chrX_17684894_17685044  17684932  Hypod.      
-#&gt;    T23E7.6_chrX_17686030_17686180  17686064  Unclassified
-#&gt;      cgt-2_chrX_17694789_17694939  17694934  Intest.     
-#&gt;   H11L12.1_chrX_17711839_17711989  17711854  Germline    
+#&gt;           seqnames    ranges strand |   TSS.fwd   TSS.rev which.tissues
+#&gt;              &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt; &lt;numeric&gt;      &lt;factor&gt;
+#&gt;       [1]     chrI     11294      + |     11294     11416       Intest.
+#&gt;       [2]     chrI     11416      - |     11294     11416       Intest.
+#&gt;       [3]     chrI     26901      - |     27038     26901       Ubiq.  
+#&gt;       [4]     chrI     36028      - |     36112     36028       Intest.
+#&gt;       [5]     chrI     42119      - |     42216     42119       Soma   
+#&gt;       ...      ...       ...    ... .       ...       ...           ...
+#&gt;   [17454]     chrX  17670678      + |  17670678  17670478  Muscle      
+#&gt;   [17455]     chrX  17684932      - |  17684919  17684932  Hypod.      
+#&gt;   [17456]     chrX  17686064      - |  17686189  17686064  Unclassified
+#&gt;   [17457]     chrX  17694962      + |  17694962  17694934  Intest.     
+#&gt;   [17458]     chrX  17711854      - |  17711974  17711854  Germline    
 #&gt;   -------
 #&gt;   seqinfo: 6 sequences from an unspecified genome; no seqlengths</div></pre>
   </div>
