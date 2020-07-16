@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>A function to plot a computed Vmat — plotVmat.Vmat • VplotR</title>
+<title>MNase_sacCer3_Henikoff2011_subset — MNase_sacCer3_Henikoff2011_subset • VplotR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,10 @@
 
 
 
-<meta property="og:title" content="A function to plot a computed Vmat — plotVmat.Vmat" />
-<meta property="og:description" content="The plotVmat.Vmat() method forwards the Vmat to plotVmat.default()." />
+<meta property="og:title" content="MNase_sacCer3_Henikoff2011_subset — MNase_sacCer3_Henikoff2011_subset" />
+<meta property="og:description" content="A sample of fragments from multiple MNase-seq experiments performed in 
+yeast (Henikoff et al. 2011, &quot;Epigenome characterization at single 
+base-pair resolution&quot;, PNAS), mapping over chrXV:186,400-187,400." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -122,44 +124,42 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>A function to plot a computed Vmat</h1>
-    <small class="dont-index">Source: <a href='https://github.com/js2264/VplotR/blob/master/R/vmat.R'><code>R/vmat.R</code></a></small>
-    <div class="hidden name"><code>plotVmat.Vmat.Rd</code></div>
+    <h1>MNase_sacCer3_Henikoff2011_subset</h1>
+    <small class="dont-index">Source: <a href='https://github.com/js2264/VplotR/blob/master/R/data.R'><code>R/data.R</code></a></small>
+    <div class="hidden name"><code>MNase_sacCer3_Henikoff2011_subset.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The plotVmat.Vmat() method forwards the Vmat to plotVmat.default().</p>
+    <p>A sample of fragments from multiple MNase-seq experiments performed in 
+yeast (Henikoff et al. 2011, "Epigenome characterization at single 
+base-pair resolution", PNAS), mapping over chrXV:186,400-187,400.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for Vmat</span>
-<span class='fu'>plotVmat</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>MNase_sacCer3_Henikoff2011_subset</span>)</pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>x</th>
-      <td><p>A computed Vmat (ideally, should be normalized)</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>additional parameters</p></td>
-    </tr>
-    </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A Vmat ggplot</p>
+    <p>An object of class <code>"GRanges"</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>bam_test</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>ce11_proms</span>)
-<span class='no'>V</span> <span class='kw'>&lt;-</span> <span class='fu'>plotVmat</span>(
-    <span class='no'>bam_test</span>,
-    <span class='no'>ce11_proms</span>,
-    <span class='kw'>normFun</span> <span class='kw'>=</span> <span class='st'>'libdepth+nloci'</span>,
-    <span class='kw'>return_Vmat</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</div><div class='output co'>#&gt; <span class='message'>Computing V-mat</span></div><div class='output co'>#&gt; <span class='message'>Normalizing the matrix</span></div><div class='output co'>#&gt; <span class='message'>Computing raw library depth</span></div><div class='output co'>#&gt; <span class='message'>Dividing Vmat by its number of loci</span></div><div class='output co'>#&gt; <span class='message'>Smoothing the matrix</span></div><div class='input'><span class='fu'>plotVmat</span>(<span class='no'>V</span>)</div><div class='img'><img src='plotVmat.Vmat-1.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>MNase_sacCer3_Henikoff2011_subset</span>)
+<span class='no'>MNase_sacCer3_Henikoff2011_subset</span></div><div class='output co'>#&gt; GRanges object with 73835 ranges and 0 metadata columns:
+#&gt;              seqnames        ranges strand
+#&gt;                 &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt;
+#&gt;   SRR3193259    chrXV 185281-185411      +
+#&gt;   SRR3193259    chrXV 185284-185404      +
+#&gt;   SRR3193259    chrXV 185284-185411      +
+#&gt;   SRR3193259    chrXV 185284-185536      +
+#&gt;   SRR3193259    chrXV 185311-185414      +
+#&gt;          ...      ...           ...    ...
+#&gt;   SRR3193265    chrXV 188398-188557      -
+#&gt;   SRR3193265    chrXV 188398-188569      -
+#&gt;   SRR3193265    chrXV 188399-188475      -
+#&gt;   SRR3193265    chrXV 188399-188566      -
+#&gt;   SRR3193265    chrXV 188400-188552      -
+#&gt;   -------
+#&gt;   seqinfo: 17 sequences (1 circular) from sacCer3 genome</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
