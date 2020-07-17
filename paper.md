@@ -26,7 +26,8 @@ VplotR provides functions to import paired-end sequencing bam files from any typ
 ![Interpretation of V-plots. A- Sequenced fragments (for instance obtained from ATAC-seq) mapping to a locus of interest can originate from either nucleosomal DNA (in pink) or from nucleosome-free DNA (for instance from NDRs, in blue). B- The fragments can be embedded in a two-dimension graph. The horizontal coordinate represents the distance from the center of a fragment to the center of a locus of interest (for instance the NDR). The vertical coordinate represents the length of the fragment. C- When this projection is done over hundreds of loci, it results in a fragment density plot, i.e. a matrix which can be visualized as a heatmap, with the color gradient representing the density of fragments at each set of coordinates.\label{fig:example}](figures/figures_example.png)
 
 # Availability 
-VplotR is available as an R package and can be readily installed from Bioconductor. The developmental release can be found on Github. Package dependencies and system requirements are documented at https://js2264.github.io/VplotR/. VplotR has been tested using R (version 3.5) on Mac OS (versions 10.11 and later) and Ubuntu 18.04.2 machines. To ensure stability, VplotR includes unit tests for most functions and supports continuous integration using Travis CI platform. Code contributions, bug reports, fixes and feature requests are most welcome by opening issues and pull requests at https://js2264.github.io/VplotR/.  
+VplotR is available as an R package and can be readily installed from Bioconductor. The developmental release can be found on Github. Package dependencies and system requirements are documented at https://js2264.github.io/VplotR/. VplotR has been tested using R (version 3.5) on Mac OS (versions 10.11 and later) and Ubuntu 18.04.2 machines.  
+To ensure stability, VplotR includes unit tests for most functions and supports continuous integration using Travis CI platform. Code contributions, bug reports, fixes and feature requests are most welcome by opening issues and pull requests at https://js2264.github.io/VplotR/.  
 
 # Implementation
 The main user-level functions of VplotR are `plotVmat()`, `plotProfile()` and `plotFootprint()`. `plotVmat()` is used to generate V-plots (i.e. paired-end fragment density plots aggregated over a set of loci of interest) while `plotProfile()` is used to generate paired-end fragment plots over a single genomic locus. `plotFootprint()` can be used to profile the DNA accessibility footprint measured by a genomic assay over a motif of interest. Additional functions such as `importPEBamFiles()` and `getFragmentsDistribution()` are useful to import and investigate sets of paired-end sequencing fragments. Full examples of how to use the main package functions are described in the package vignette available at https://js2264.github.io/VplotR/articles/VplotR.html.
@@ -63,7 +64,7 @@ data(MNase_sacCer3_Henikoff2011)
 
 ## Checking fragment size distribution
 
-The distribution of fragment sizes can be obtained with `getFragmentsDistribution()` and plotted using `ggplot2` (\autoref{fragsize}):
+The distribution of fragment sizes can be obtained with `getFragmentsDistribution()` and plotted using `ggplot2` (\autoref{fig:fragsize}):
 
 ```r
 ### The one-dimensional distribution of fragment sizes is obtained using the getFragmentsDistribution() function:
@@ -87,7 +88,7 @@ ggplot(dist, aes(x = x, y = y)) +
 
 ## Plotting fragment density over a set of genomic loci
 
-`plotVmat()` is used to produce a V-plot (\autoref{vplot}):
+`plotVmat()` is used to produce a V-plot (\autoref{fig:vplot}):
 
 ```r
 plotVmat(
@@ -104,7 +105,7 @@ for more information).
 
 ## Plotting DNA accessibility footprint
 
-Observations from V-plots can be further investigated by plotting DNA accessibility footprints over these loci. `plotFootprint()` function can be leveraged to plot these footprint profiles (\autoref{footprint}). 
+Observations from V-plots can be further investigated by plotting DNA accessibility footprints over these loci. `plotFootprint()` function can be leveraged to plot these footprint profiles (\autoref{fig:footprint}). 
 
 ```r
 plotFootprint(
@@ -117,7 +118,7 @@ plotFootprint(
 
 ## Plotting fragments over a single genomic locus
 
-Finally, VplotR provides a function to plot the distribution of paired-end fragments over an individual genomic window (\autoref{locus}). 
+Finally, VplotR provides a function to plot the distribution of paired-end fragments over an individual genomic window (\autoref{fig:locus}). 
 
 ```r
 genes_sacCer3 <- GenomicFeatures::genes(
