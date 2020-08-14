@@ -57,7 +57,6 @@ reference:
   - REB1_sacCer3
   - ABF1_sacCer3
   - bam_test
-  - seqinfos
 - title: Internal functions
 - contents: 
   - getCuts
