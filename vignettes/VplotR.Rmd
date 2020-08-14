@@ -241,6 +241,7 @@ p <- plotProfile(
     annots = genes_sacCer3,
     min = 20, max = 200, alpha = 0.1, size = 1.5
 )
+p
 ```
 
 ## Session Info

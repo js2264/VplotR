@@ -6,5 +6,4 @@ gitdiff.html
 *.pdf
 *.bed
 CONDUCT
-TODO
 vignettes/advanced.Rmd
