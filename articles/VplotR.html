@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VplotR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.4</span>
       </span>
     </div>
 
@@ -92,28 +92,43 @@
     
     
 <!-- TOC START min:1 max:3 link:true asterisk:false update:true -->
-<pre><code>- [Introduction](#introduction)
-    - [Overview](#overview)
-    - [Installation](#installation)
-- [Importing sequencing datasets](#importing-sequencing-datasets)
-    - [Using `importPEBamFiles()` function](#using-importpebamfiles-function)
-    - [Provided datasets](#provided-datasets)
-- [Fragment size distribution](#fragment-size-distribution)
-- [Vplot(s)](#vplots)
-    - [Single Vplot](#single-vplot)
-    - [Multiple Vplots](#multiple-vplots)
-    - [Vplots normalization](#vplots-normalization)
-- [Footprints](#footprints)
-- [Local fragment distribution](#local-fragment-distribution)
-- [Session Info](#session-info)</code></pre>
-<!-- TOC END -->
+<ul>
+<li>
+<a href="#introduction">Introduction</a>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#installation">Installation</a></li>
+</ul>
+</li>
+<li>
+<a href="#importing-sequencing-datasets">Importing sequencing datasets</a>
+<ul>
+<li><a href="#using-importpebamfiles-function">Using <code><a href="https://rdrr.io/pkg/VplotR/man/importPEBamFiles.html">importPEBamFiles()</a></code> function</a></li>
+<li><a href="#provided-datasets">Provided datasets</a></li>
+</ul>
+</li>
+<li><a href="#fragment-size-distribution">Fragment size distribution</a></li>
+<li>
+<a href="#vplots">Vplot(s)</a>
+<ul>
+<li><a href="#single-vplot">Single Vplot</a></li>
+<li><a href="#multiple-vplots">Multiple Vplots</a></li>
+<li><a href="#vplots-normalization">Vplots normalization</a></li>
+</ul>
+</li>
+<li><a href="#footprints">Footprints</a></li>
+<li><a href="#local-fragment-distribution">Local fragment distribution</a></li>
+<li>
+<a href="#session-info">Session Info</a> <!-- TOC END -->
+</li>
+</ul>
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
 <div id="overview" class="section level3">
 <h3 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h3>
-<p>VplotR is an R package streamlining the process of generating V-plots, i.e. two-dimensional paired-end fragment density plots. It contains functions to import paired-end sequencing bam files from any type of DNA accessibility experiments (e.g. ATAC-seq, DNA-seq, MNase-seq) and can produce V-plots and one-dimensional footprint profiles over single or aggregated genomic loci of interest. The R package is well integrated within the Bioconductor environment and easily fits in standard genomic analysis workflows. Integrating V-plots into existing analytical frameworks has already brought additional insights in chromatin organization (<span class="citation">@Serizay2020</span>).</p>
+<p>VplotR is an R package streamlining the process of generating V-plots, i.e. two-dimensional paired-end fragment density plots. It contains functions to import paired-end sequencing bam files from any type of DNA accessibility experiments (e.g. ATAC-seq, DNA-seq, MNase-seq) and can produce V-plots and one-dimensional footprint profiles over single or aggregated genomic loci of interest. The R package is well integrated within the Bioconductor environment and easily fits in standard genomic analysis workflows. Integrating V-plots into existing analytical frameworks has already brought additional insights in chromatin organization (Serizay et al., 2020).</p>
 <p>The main user-level functions of VplotR are <code><a href="https://rdrr.io/pkg/VplotR/man/getFragmentsDistribution.html">getFragmentsDistribution()</a></code>, <code><a href="https://rdrr.io/pkg/VplotR/man/plotVmat.html">plotVmat()</a></code>, <code><a href="https://rdrr.io/pkg/VplotR/man/plotFootprint.html">plotFootprint()</a></code> and <code><a href="https://rdrr.io/pkg/VplotR/man/plotProfile.html">plotProfile()</a></code>.</p>
 <ul>
 <li>
@@ -130,7 +145,7 @@
 <h3 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h3>
 <p>VplotR can be installed from Bioconductor:</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="kw">if</span>(!<span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span>(<span class="st">"BiocManager"</span>, <span class="kw">quietly</span> <span class="kw">=</span> <span class="fl">TRUE</span>))
+<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="kw">if</span>(!<span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span>(<span class="st">"BiocManager"</span>, <span class="kw">quietly</span> <span class="kw">=</span> <span class="fl">TRUE</span>))
 <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"BiocManager"</span>)
 <span class="kw pkg">BiocManager</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span>(<span class="st">"VplotR"</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"VplotR"</span>)</pre></body></html></div>
@@ -143,7 +158,7 @@
 <h3 class="hasAnchor">
 <a href="#using-importpebamfiles-function" class="anchor"></a>Using <code>importPEBamFiles()</code> function</h3>
 <p>Paired-end .bam files are imported using the <code><a href="https://rdrr.io/pkg/VplotR/man/importPEBamFiles.html">importPEBamFiles()</a></code> function as follows:</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">VplotR</span>)
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">VplotR</span>)
 <span class="no">bamfile</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"ex1.bam"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"Rsamtools"</span>)
 <span class="no">fragments</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/VplotR/man/importPEBamFiles.html">importPEBamFiles</a></span>(
     <span class="no">bamfile</span>,
@@ -178,7 +193,7 @@
 <ul>
 <li>Sets of tissue-specific ATAC-seq experiments in young adult C. elegans (Serizay et al., 2020):</li>
 </ul>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">ce11_proms</span>)
+<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">ce11_proms</span>)
 <span class="no">ce11_proms</span>
 <span class="co">#&gt; GRanges object with 17458 ranges and 3 metadata columns:</span>
 <span class="co">#&gt;           seqnames            ranges strand |   TSS.fwd   TSS.rev which.tissues</span>
@@ -236,7 +251,7 @@
 <ul>
 <li>MNase-seq experiment in yeast (Henikoff et al., 2011) and ABF1 binding sites:</li>
 </ul>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">ABF1_sacCer3</span>)
+<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">ABF1_sacCer3</span>)
 <span class="no">ABF1_sacCer3</span>
 <span class="co">#&gt; GRanges object with 567 ranges and 2 metadata columns:</span>
 <span class="co">#&gt;         seqnames          ranges strand |  relScore       ID</span>
@@ -278,7 +293,7 @@
 <h2 class="hasAnchor">
 <a href="#fragment-size-distribution" class="anchor"></a>Fragment size distribution</h2>
 <p>A preliminary control to check the distribution of fragment sizes (regardless of their location relative to genomic loci) can be performed using the <code><a href="https://rdrr.io/pkg/VplotR/man/getFragmentsDistribution.html">getFragmentsDistribution()</a></code> function.</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">df</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/VplotR/man/getFragmentsDistribution.html">getFragmentsDistribution</a></span>(
+<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">df</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/VplotR/man/getFragmentsDistribution.html">getFragmentsDistribution</a></span>(
     <span class="no">MNase_sacCer3_Henikoff2011</span>,
     <span class="no">ABF1_sacCer3</span>
 )
@@ -299,7 +314,7 @@
 <h3 class="hasAnchor">
 <a href="#single-vplot" class="anchor"></a>Single Vplot</h3>
 <p>Once data is imported, a V-plot of paired-end fragments over loci of interest is generated using the <code><a href="https://rdrr.io/pkg/VplotR/man/plotVmat.html">plotVmat()</a></code> function:</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">p</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/VplotR/man/plotVmat.html">plotVmat</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">MNase_sacCer3_Henikoff2011</span>, <span class="kw">granges</span> <span class="kw">=</span> <span class="no">ABF1_sacCer3</span>)
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">p</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/VplotR/man/plotVmat.html">plotVmat</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">MNase_sacCer3_Henikoff2011</span>, <span class="kw">granges</span> <span class="kw">=</span> <span class="no">ABF1_sacCer3</span>)
 <span class="co">#&gt; Computing V-mat</span>
 <span class="co">#&gt; Normalizing the matrix</span>
 <span class="co">#&gt; No normalization applied</span>
@@ -311,7 +326,7 @@
 <h3 class="hasAnchor">
 <a href="#multiple-vplots" class="anchor"></a>Multiple Vplots</h3>
 <p>The generation of multiple V-plots can be parallelized using a list of parameters:</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">list_params</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
+<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">list_params</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
     <span class="st">"MNase\n@ ABF1"</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">MNase_sacCer3_Henikoff2011</span>, <span class="no">ABF1_sacCer3</span>),
     <span class="st">"MNase\n@ random loci"</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
         <span class="no">MNase_sacCer3_Henikoff2011</span>, <span class="fu"><a href="https://rdrr.io/pkg/VplotR/man/sampleGRanges.html">sampleGRanges</a></span>(<span class="no">ABF1_sacCer3</span>)
@@ -326,7 +341,7 @@
 <span class="no">p</span></pre></body></html></div>
 <p><img src="VplotR_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 <p>For instance, ATAC-seq fragment density can be visualized at different classes of ubiquitous and tissue-specific promoters in <em>C. elegans</em>.</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">list_params</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
+<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">list_params</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
     <span class="st">"Germline ATACseq\n@ Ubiq. proms"</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
         <span class="no">ATAC_ce11_Serizay2020</span><span class="kw">[[</span><span class="st">'Germline'</span>]],
         <span class="no">ce11_proms</span>[<span class="no">ce11_proms</span>$<span class="no">which.tissues</span> <span class="kw">==</span> <span class="st">'Ubiq.'</span>]
@@ -363,7 +378,7 @@
 <ul>
 <li>Un-normalized raw counts can be plotted by specifying <code>normFun = 'none'</code>.</li>
 </ul>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="co"># No normalization </span>
+<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="co"># No normalization </span>
 <span class="no">p</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/VplotR/man/plotVmat.html">plotVmat</a></span>(
     <span class="no">list_params</span>,
     <span class="kw">cores</span> <span class="kw">=</span> <span class="fl">1</span>,
@@ -392,7 +407,7 @@
 <ul>
 <li>By default, plots are normalized by the library depth of the sequencing run and by the number of loci used to compute fragment density.</li>
 </ul>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="co"># Library depth + number of loci of interest (default)</span>
+<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="co"># Library depth + number of loci of interest (default)</span>
 <span class="no">p</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/VplotR/man/plotVmat.html">plotVmat</a></span>(
     <span class="no">list_params</span>,
     <span class="kw">cores</span> <span class="kw">=</span> <span class="fl">1</span>,
@@ -425,7 +440,7 @@
 <ul>
 <li>Alternatively, heatmaps can be internally z-scored or scaled to a specific quantile.</li>
 </ul>
-<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="co"># Zscore</span>
+<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="co"># Zscore</span>
 <span class="no">p</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/VplotR/man/plotVmat.html">plotVmat</a></span>(
     <span class="no">list_params</span>,
     <span class="kw">cores</span> <span class="kw">=</span> <span class="fl">1</span>,
@@ -447,7 +462,7 @@
 <span class="co">#&gt; Smoothing the matrix</span>
 <span class="no">p</span></pre></body></html></div>
 <p><img src="VplotR_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="co"># Quantile</span>
+<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="co"># Quantile</span>
 <span class="no">p</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/VplotR/man/plotVmat.html">plotVmat</a></span>(
     <span class="no">list_params</span>,
     <span class="kw">cores</span> <span class="kw">=</span> <span class="fl">1</span>,
@@ -476,7 +491,7 @@
 <h2 class="hasAnchor">
 <a href="#footprints" class="anchor"></a>Footprints</h2>
 <p>VplotR also implements a function to profile the footprint from MNase or ATAC-seq over sets of genomic loci. For instance, CTCF is known for its ~40-bp large footprint at its binding loci.</p>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="no">p</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/VplotR/man/plotFootprint.html">plotFootprint</a></span>(
+<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="no">p</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/VplotR/man/plotFootprint.html">plotFootprint</a></span>(
     <span class="no">MNase_sacCer3_Henikoff2011</span>,
     <span class="no">ABF1_sacCer3</span>
 )
@@ -492,7 +507,7 @@
 <h2 class="hasAnchor">
 <a href="#local-fragment-distribution" class="anchor"></a>Local fragment distribution</h2>
 <p>VplotR provides a function to plot the distribution of paired-end fragments over an individual genomic window.</p>
-<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">MNase_sacCer3_Henikoff2011_subset</span>)
+<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">MNase_sacCer3_Henikoff2011_subset</span>)
 <span class="no">genes_sacCer3</span> <span class="kw">&lt;-</span> <span class="kw pkg">GenomicFeatures</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/GenomicFeatures/man/transcripts.html">genes</a></span>(<span class="kw pkg">TxDb.Scerevisiae.UCSC.sacCer3.sgdGene</span><span class="kw ns">::</span>
     <span class="no"><a href="https://rdrr.io/pkg/TxDb.Scerevisiae.UCSC.sacCer3.sgdGene/man/package.html">TxDb.Scerevisiae.UCSC.sacCer3.sgdGene</a></span>
 )
@@ -516,7 +531,7 @@
 <div id="session-info" class="section level2">
 <h2 class="hasAnchor">
 <a href="#session-info" class="anchor"></a>Session Info</h2>
-<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span>()
+<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span>()
 <span class="co">#&gt; R version 4.0.0 (2020-04-24)</span>
 <span class="co">#&gt; Platform: x86_64-pc-linux-gnu (64-bit)</span>
 <span class="co">#&gt; Running under: Ubuntu 14.04.5 LTS</span>
@@ -538,7 +553,7 @@
 <span class="co">#&gt; [8] methods   base     </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; other attached packages:</span>
-<span class="co">#&gt; [1] VplotR_0.99.3        magrittr_1.5         ggplot2_3.3.2       </span>
+<span class="co">#&gt; [1] VplotR_0.99.4        magrittr_1.5         ggplot2_3.3.2       </span>
 <span class="co">#&gt; [4] GenomicRanges_1.41.6 GenomeInfoDb_1.25.10 IRanges_2.23.10     </span>
 <span class="co">#&gt; [7] S4Vectors_0.27.12    BiocGenerics_0.35.4 </span>
 <span class="co">#&gt; </span>
