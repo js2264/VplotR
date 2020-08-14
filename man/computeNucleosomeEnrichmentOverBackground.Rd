@@ -41,3 +41,4 @@ list
 \description{
 A function to compute nucleosome enrichment of a Vmat
 }
+\keyword{internal}
