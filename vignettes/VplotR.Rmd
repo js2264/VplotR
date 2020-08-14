@@ -83,15 +83,14 @@ library("VplotR")
 Paired-end .bam files are imported using the `importPEBamFiles()` 
 function as follows:
 
-```{r eval = FALSE}
+```{r eval = TRUE}
 library(VplotR)
-data(ce11_proms)
-ce11_proms
+bamfile <- system.file("extdata", "ex1.bam", package = "Rsamtools")
 fragments <- importPEBamFiles(
-    'ATAC-seq-mapped-fragments.bam', 
-    where = ce11_proms, 
+    bamfile, 
     shift_ATAC_fragments = TRUE
 )
+fragments
 ```
 
 ### Provided datasets

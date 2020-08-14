@@ -25,6 +25,14 @@
 #' @import IRanges
 #' @import GenomeInfoDb
 #' @export
+#' 
+#' @examples
+#' bamfile <- system.file("extdata", "ex1.bam", package = "Rsamtools")
+#' fragments <- importPEBamFiles(
+#'     bamfile, 
+#'     shift_ATAC_fragments = TRUE
+#' )
+#' fragments
 
 importPEBamFiles <- function(
     files, 
