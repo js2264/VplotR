@@ -50,7 +50,6 @@
 <meta property="og:description" content="This function takes bam file paths and read them into GRanges 
 objects.
 Note: Can be quite lengthy for .bam files with 5+ millions fragments." />
-<meta property="og:image" content="/logo.png" />
 
 
 
@@ -187,6 +186,27 @@ from ATAC-seq, one might want to shift the extremities by +5 / -4 bp.</p></td>
 
     <p>A GRanges object containing fragments from the input .bam file.</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>bamfile</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"ex1.bam"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"Rsamtools"</span>)
+<span class='no'>fragments</span> <span class='kw'>&lt;-</span> <span class='fu'>importPEBamFiles</span>(
+    <span class='no'>bamfile</span>,
+    <span class='kw'>shift_ATAC_fragments</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</div><div class='output co'>#&gt; <span class='message'>&gt; Importing /home/travis/R/Library/Rsamtools/extdata/ex1.bam ...</span></div><div class='output co'>#&gt; <span class='message'>&gt; Filtering /home/travis/R/Library/Rsamtools/extdata/ex1.bam ...</span></div><div class='output co'>#&gt; <span class='message'>&gt; Shifting /home/travis/R/Library/Rsamtools/extdata/ex1.bam ...</span></div><div class='output co'>#&gt; <span class='message'>&gt; /home/travis/R/Library/Rsamtools/extdata/ex1.bam import completed.</span></div><div class='input'><span class='no'>fragments</span></div><div class='output co'>#&gt; GRanges object with 1572 ranges and 0 metadata columns:
+#&gt;          seqnames    ranges strand
+#&gt;             &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
+#&gt;      [1]     seq1    41-215      +
+#&gt;      [2]     seq1    54-255      +
+#&gt;      [3]     seq1    56-258      +
+#&gt;      [4]     seq1    65-255      +
+#&gt;      [5]     seq1    65-265      +
+#&gt;      ...      ...       ...    ...
+#&gt;   [1568]     seq2 1326-1542      -
+#&gt;   [1569]     seq2 1336-1544      -
+#&gt;   [1570]     seq2 1358-1550      -
+#&gt;   [1571]     seq2 1380-1557      -
+#&gt;   [1572]     seq2 1353-1562      -
+#&gt;   -------
+#&gt;   seqinfo: 2 sequences from an unspecified genome; no seqlengths</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
