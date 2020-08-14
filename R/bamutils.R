@@ -21,6 +21,7 @@
 #' @import parallel
 #' @import Rsamtools
 #' @import GenomicRanges
+#' @import GenomicAlignments
 #' @import IRanges
 #' @import GenomeInfoDb
 #' @export
