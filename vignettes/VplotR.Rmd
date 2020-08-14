@@ -21,8 +21,10 @@ suppressPackageStartupMessages({
     library(VplotR)
 })
 ```
+
 <!-- TOC START min:1 max:3 link:true asterisk:false update:true -->
     - [Introduction](#introduction)
+        - [Overview](#overview)
         - [Installation](#installation)
     - [Importing sequencing datasets](#importing-sequencing-datasets)
         - [Using `importPEBamFiles()` function](#using-importpebamfiles-function)
@@ -38,6 +40,30 @@ suppressPackageStartupMessages({
 <!-- TOC END -->
 
 ## Introduction
+
+### Overview 
+
+VplotR is an R package streamlining the process of generating V-plots, 
+i.e. two-dimensional paired-end fragment density plots. 
+It contains functions to import paired-end sequencing bam files from any 
+type of DNA accessibility experiments (e.g. ATAC-seq, DNA-seq, MNase-seq) 
+and can produce V-plots and one-dimensional footprint profiles over single 
+or aggregated genomic loci of interest. The R package is well integrated 
+within the Bioconductor environment and easily fits in standard genomic 
+analysis workflows. Integrating V-plots into existing analytical frameworks 
+has already brought additional insights in chromatin organization 
+(@Serizay2020). 
+
+The main user-level functions of VplotR are `getFragmentsDistribution()`, 
+`plotVmat()`, `plotFootprint()` and `plotProfile()`.
+
+* `getFragmentsDistribution()` computes the distribution of fragment sizes
+  over sets of genomic ranges;
+* `plotVmat()` is used to compute fragment density and generate V-plots;
+* `plotFootprint()` generates the MNase-seq or ATAC-seq footprint at a 
+  set of genomic ranges.
+* `plotProfile()` is used to plot the distribution of paired-end fragments 
+  at a single locus of interest.
 
 ### Installation
 
