@@ -1,10 +1,11 @@
+[![](https://img.shields.io/badge/release%20version--orange.svg)](https://www.bioconductor.org/packages/VplotR)
 [![](https://travis-ci.com/js2264/VplotR.svg?branch=master)](https://travis-ci.com/js2264/VplotR)
 [![](https://codecov.io/gh/js2264/VplotR/branch/master/graph/badge.svg)](https://codecov.io/github/js2264/VplotR?branch=master)
 [![](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![](https://img.shields.io/github/languages/code-size/js2264/VplotR.svg)](https://github.com/js2264/VplotR)
 [![](https://img.shields.io/badge/license-GPL--3-orange.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 
-# VplotR <img src="man/figures/logo.png" align="right" alt="" />
+# VplotR <img src="inst/figures/logo.png" align="right" alt="" />
 
 ## Introduction
 

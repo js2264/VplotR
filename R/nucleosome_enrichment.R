@@ -135,6 +135,7 @@ nucleosomeEnrichment.GRanges <- function(
 #' 
 #' @import ggplot2
 #' @importFrom cowplot plot_grid
+#' @keywords internal
 
 computeNucleosomeEnrichmentOverBackground <- function(
     Vmat, 

@@ -110,23 +110,6 @@
 #' CTCF_hg38
 "CTCF_hg38"
 
-#' seqinfos
-#'
-#' Chrom sizes fom different genomes
-#'
-#' @docType data
-#'
-#' @usage data(seqinfos)
-#'
-#' @format An object of class \code{"Seqinfo"}.
-#'
-#' @keywords datasets
-#' 
-#' @examples
-#' data(seqinfos)
-#' seqinfos
-"seqinfos"
-
 #' bam_test
 #'
 #' A .bam file sample

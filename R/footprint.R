@@ -292,6 +292,7 @@ plotFootprint <- function(
 #' 
 #' @import GenomicRanges
 #' @import IRanges
+#' @keywords internal
 
 getCuts <- function(gr) {
     g <- c(

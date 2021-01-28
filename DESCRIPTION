@@ -1,7 +1,7 @@
 Package: VplotR
 Type: Package
 Title: Set of tools to make V-plots and compute footprint profiles
-Version: 0.99.3
+Version: 1.1.0
 Date: 2020-05-03
 Encoding: UTF-8
 Authors@R: 
@@ -54,4 +54,4 @@ biocViews:
     BiologicalQuestion, 
     ATACSeq, 
     Alignment
-License: GPL-3 + file LICENSE
+License: GPL-3

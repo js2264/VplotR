@@ -42,3 +42,11 @@ This function takes bam file paths and read them into GRanges
 objects.
 Note: Can be quite lengthy for .bam files with 5+ millions fragments.
 }
+\examples{
+bamfile <- system.file("extdata", "ex1.bam", package = "Rsamtools")
+fragments <- importPEBamFiles(
+    bamfile, 
+    shift_ATAC_fragments = TRUE
+)
+fragments
+}

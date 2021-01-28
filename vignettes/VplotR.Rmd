@@ -22,6 +22,58 @@ suppressPackageStartupMessages({
 })
 ```
 
+- [Introduction](#introduction)
+    - [Overview](#overview)
+    - [Installation](#installation)
+- [Importing sequencing datasets](#importing-sequencing-datasets)
+    - [Using `importPEBamFiles()` function](#using-importpebamfiles-function)
+    - [Provided datasets](#provided-datasets)
+- [Fragment size distribution](#fragment-size-distribution)
+- [Vplot(s)](#vplots)
+    - [Single Vplot](#single-vplot)
+    - [Multiple Vplots](#multiple-vplots)
+    - [Vplots normalization](#vplots-normalization)
+- [Footprints](#footprints)
+- [Local fragment distribution](#local-fragment-distribution)
+- [Session Info](#session-info)
+
+## Introduction
+
+### Overview 
+
+VplotR is an R package streamlining the process of generating V-plots, 
+i.e. two-dimensional paired-end fragment density plots. 
+It contains functions to import paired-end sequencing bam files from any 
+type of DNA accessibility experiments (e.g. ATAC-seq, DNA-seq, MNase-seq) 
+and can produce V-plots and one-dimensional footprint profiles over single 
+or aggregated genomic loci of interest. The R package is well integrated 
+within the Bioconductor environment and easily fits in standard genomic 
+analysis workflows. Integrating V-plots into existing analytical frameworks 
+has already brought additional insights in chromatin organization 
+(Serizay et al., 2020). 
+
+The main user-level functions of VplotR are `getFragmentsDistribution()`, 
+`plotVmat()`, `plotFootprint()` and `plotProfile()`.
+
+* `getFragmentsDistribution()` computes the distribution of fragment sizes
+  over sets of genomic ranges;
+* `plotVmat()` is used to compute fragment density and generate V-plots;
+* `plotFootprint()` generates the MNase-seq or ATAC-seq footprint at a 
+  set of genomic ranges.
+* `plotProfile()` is used to plot the distribution of paired-end fragments 
+  at a single locus of interest.
+
+### Installation
+
+VplotR can be installed from Bioconductor: 
+
+```{r eval = FALSE}
+if(!requireNamespace("BiocManager", quietly = TRUE))
+install.packages("BiocManager")
+BiocManager::install("VplotR")
+library("VplotR")
+```
+
 ## Importing sequencing datasets
 
 ### Using `importPEBamFiles()` function
@@ -29,15 +81,14 @@ suppressPackageStartupMessages({
 Paired-end .bam files are imported using the `importPEBamFiles()` 
 function as follows:
 
-```{r eval = FALSE}
+```{r eval = TRUE}
 library(VplotR)
-data(ce11_proms)
-ce11_proms
+bamfile <- system.file("extdata", "ex1.bam", package = "Rsamtools")
 fragments <- importPEBamFiles(
-    'ATAC-seq-mapped-fragments.bam', 
-    where = ce11_proms, 
+    bamfile, 
     shift_ATAC_fragments = TRUE
 )
+fragments
 ```
 
 ### Provided datasets
@@ -51,7 +102,7 @@ Several datasets are available for this package:
 data(ce11_proms)
 ce11_proms
 data(ATAC_ce11_Serizay2020)
-head(ATAC_ce11_Serizay2020)
+ATAC_ce11_Serizay2020
 ```
 
 * MNase-seq experiment in yeast (Henikoff et al., 2011) 
@@ -61,17 +112,7 @@ head(ATAC_ce11_Serizay2020)
 data(ABF1_sacCer3)
 ABF1_sacCer3
 data(MNase_sacCer3_Henikoff2011)
-head(MNase_sacCer3_Henikoff2011)
-```
-
-* ATAC-seq in human cells (Omni-ATAC, Corces et al., 2017) 
-  and CTCF binding sites:
-
-```{r, eval = FALSE}
-data(CTCF_hg38)
-ATAC_hg38 <- readRDS(url(
-    'https://ahringerlab.com/VplotR/ATAC_hg38_Corces2017.rds'
-)) %>% GRangesList() %>% unlist() 
+MNase_sacCer3_Henikoff2011
 ```
 
 ## Fragment size distribution
@@ -214,15 +255,13 @@ VplotR also implements a function to profile the footprint from MNase or
 ATAC-seq over sets of genomic loci. For instance, CTCF is known for its 
 ~40-bp large footprint at its binding loci. 
 
-```{r, eval = FALSE}
+```{r}
 p <- plotFootprint(
-    ATAC_hg38,
-    CTCF_hg38
+    MNase_sacCer3_Henikoff2011,
+    ABF1_sacCer3
 )
 p
 ```
-
-![](https://raw.githubusercontent.com/js2264/VplotR/master/man/figures/CTCF_ATAC_hg38_Corces2017_footprint.png)
 
 ## Local fragment distribution
 
@@ -241,6 +280,7 @@ p <- plotProfile(
     annots = genes_sacCer3,
     min = 20, max = 200, alpha = 0.1, size = 1.5
 )
+p
 ```
 
 ## Session Info

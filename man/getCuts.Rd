@@ -16,3 +16,4 @@ GRanges
 Function to extract cuts (i.e. extremities) of fragments stored
 as GRanges.
 }
+\keyword{internal}
