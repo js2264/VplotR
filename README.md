@@ -1,4 +1,4 @@
-[![](https://img.shields.io/badge/release%20version-1.0.0-orange.svg)](https://www.bioconductor.org/packages/VplotR)
+[![](https://img.shields.io/badge/release%20version-1.1.0-orange.svg)](https://www.bioconductor.org/packages/VplotR)
 [![](https://travis-ci.com/js2264/VplotR.svg?branch=master)](https://travis-ci.com/js2264/VplotR)
 [![](https://codecov.io/gh/js2264/VplotR/branch/master/graph/badge.svg)](https://codecov.io/github/js2264/VplotR?branch=master)
 [![](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
