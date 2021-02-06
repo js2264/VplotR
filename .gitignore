@@ -5,5 +5,4 @@ gitdiff.html
 *.bw
 *.pdf
 *.bed
-CONDUCT
 vignettes/advanced.Rmd
