@@ -83,7 +83,7 @@ are the TSSs." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VplotR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -91,7 +91,7 @@ are the TSSs." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -108,7 +108,7 @@ are the TSSs." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/js2264/VplotR/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -138,7 +138,7 @@ assumes the ranges are promoters and that the end or the ranges
 are the TSSs.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>alignToTSS</span>(<span class='no'>granges</span>, <span class='kw'>upstream</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>downstream</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
+    <pre class="usage"><span class='fu'>alignToTSS</span><span class='op'>(</span><span class='va'>granges</span>, upstream <span class='op'>=</span> <span class='fl'>0</span>, downstream <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,8 +166,9 @@ object by extended by? [Default: 1]</p></td>
 and TSS.fwd columns, and extended by upstream/downstream bp.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>ce11_proms</span>)
-<span class='no'>ce11_proms</span></div><div class='output co'>#&gt; GRanges object with 17458 ranges and 3 metadata columns:
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>ce11_proms</span><span class='op'>)</span>
+<span class='va'>ce11_proms</span>
+</div><div class='output co'>#&gt; GRanges object with 17458 ranges and 3 metadata columns:
 #&gt;           seqnames            ranges strand |   TSS.fwd   TSS.rev which.tissues
 #&gt;              &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt; &lt;numeric&gt;      &lt;factor&gt;
 #&gt;       [1]     chrI       11273-11423      + |     11294     11416       Intest.
@@ -182,7 +183,8 @@ and TSS.fwd columns, and extended by upstream/downstream bp.</p>
 #&gt;   [17457]     chrX 17694789-17694939      + |  17694962  17694934  Intest.     
 #&gt;   [17458]     chrX 17711839-17711989      - |  17711974  17711854  Germline    
 #&gt;   -------
-#&gt;   seqinfo: 6 sequences from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'>alignToTSS</span>(<span class='no'>ce11_proms</span>)</div><div class='output co'>#&gt; GRanges object with 17458 ranges and 3 metadata columns:
+#&gt;   seqinfo: 6 sequences from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'>alignToTSS</span><span class='op'>(</span><span class='va'>ce11_proms</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; GRanges object with 17458 ranges and 3 metadata columns:
 #&gt;           seqnames    ranges strand |   TSS.fwd   TSS.rev which.tissues
 #&gt;              &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt; &lt;numeric&gt;      &lt;factor&gt;
 #&gt;       [1]     chrI     11294      + |     11294     11416       Intest.
@@ -213,7 +215,7 @@ and TSS.fwd columns, and extended by upstream/downstream bp.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

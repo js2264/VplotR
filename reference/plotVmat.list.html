@@ -80,7 +80,7 @@ before passing them to plotVmat.VmatList() method." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VplotR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@ before passing them to plotVmat.VmatList() method." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -105,7 +105,7 @@ before passing them to plotVmat.VmatList() method." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/js2264/VplotR/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -133,21 +133,21 @@ before passing them to plotVmat.VmatList() method.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for list</span>
-<span class='fu'>plotVmat</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>cores_subsetting</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>xlims</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>250</span>, <span class='fl'>250</span>),
-  <span class='kw'>ylims</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>50</span>, <span class='fl'>300</span>),
-  <span class='kw'>normFun</span> <span class='kw'>=</span> <span class='st'>"libdepth+nloci"</span>,
-  <span class='kw'>s</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
-  <span class='kw'>roll</span> <span class='kw'>=</span> <span class='fl'>3</span>,
-  <span class='kw'>return_Vmat</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='no'>...</span>
-)</pre>
+<span class='fu'><a href='plotVmat.html'>plotVmat</a></span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  cores <span class='op'>=</span> <span class='fl'>1</span>,
+  cores_subsetting <span class='op'>=</span> <span class='fl'>1</span>,
+  nrow <span class='op'>=</span> <span class='cn'>NULL</span>,
+  ncol <span class='op'>=</span> <span class='cn'>NULL</span>,
+  xlims <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>250</span>, <span class='fl'>250</span><span class='op'>)</span>,
+  ylims <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>50</span>, <span class='fl'>300</span><span class='op'>)</span>,
+  normFun <span class='op'>=</span> <span class='st'>"libdepth+nloci"</span>,
+  s <span class='op'>=</span> <span class='fl'>0.95</span>,
+  roll <span class='op'>=</span> <span class='fl'>3</span>,
+  return_Vmat <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  verbose <span class='op'>=</span> <span class='fl'>1</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -223,23 +223,24 @@ Vmat rather than the plot?</p></td>
     <p>A list of Vmat ggplots</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>bam_test</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>ce11_proms</span>)
-<span class='no'>list_params</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-    <span class='st'>'germline'</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-        <span class='no'>bam_test</span>,
-        <span class='no'>ce11_proms</span>[<span class='no'>ce11_proms</span>$<span class='no'>which.tissues</span> <span class='kw'>==</span> <span class='st'>'Germline'</span>]
-    ),
-    <span class='st'>'muscle'</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-        <span class='no'>bam_test</span>,
-        <span class='no'>ce11_proms</span>[<span class='no'>ce11_proms</span>$<span class='no'>which.tissues</span> <span class='kw'>==</span> <span class='st'>'Muscle'</span>]
-    )
-)
-<span class='no'>V</span> <span class='kw'>&lt;-</span> <span class='fu'>plotVmat</span>(
-    <span class='no'>list_params</span>,
-    <span class='kw'>normFun</span> <span class='kw'>=</span> <span class='st'>'libdepth+nloci'</span>,
-    <span class='kw'>roll</span> <span class='kw'>=</span> <span class='fl'>5</span>
-)</div><div class='output co'>#&gt; <span class='message'>- Processing sample 1/2</span></div><div class='output co'>#&gt; <span class='message'>- Processing sample 2/2</span></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>bam_test</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>ce11_proms</span><span class='op'>)</span>
+<span class='va'>list_params</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+    <span class='st'>'germline'</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+        <span class='va'>bam_test</span>,
+        <span class='va'>ce11_proms</span><span class='op'>[</span><span class='va'>ce11_proms</span><span class='op'>$</span><span class='va'>which.tissues</span> <span class='op'>==</span> <span class='st'>'Germline'</span><span class='op'>]</span>
+    <span class='op'>)</span>,
+    <span class='st'>'muscle'</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+        <span class='va'>bam_test</span>,
+        <span class='va'>ce11_proms</span><span class='op'>[</span><span class='va'>ce11_proms</span><span class='op'>$</span><span class='va'>which.tissues</span> <span class='op'>==</span> <span class='st'>'Muscle'</span><span class='op'>]</span>
+    <span class='op'>)</span>
+<span class='op'>)</span>
+<span class='va'>V</span> <span class='op'>&lt;-</span> <span class='fu'><a href='plotVmat.html'>plotVmat</a></span><span class='op'>(</span>
+    <span class='va'>list_params</span>,
+    normFun <span class='op'>=</span> <span class='st'>'libdepth+nloci'</span>, 
+    roll <span class='op'>=</span> <span class='fl'>5</span>
+<span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>- Processing sample 1/2</span></div><div class='output co'>#&gt; <span class='message'>- Processing sample 2/2</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -255,7 +256,7 @@ Vmat rather than the plot?</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

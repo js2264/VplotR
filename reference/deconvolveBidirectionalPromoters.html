@@ -80,7 +80,7 @@ stranded ranges. It duplicates the ranges which are '*'." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VplotR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@ stranded ranges. It duplicates the ranges which are '*'." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -105,7 +105,7 @@ stranded ranges. It duplicates the ranges which are '*'." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/js2264/VplotR/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -132,7 +132,7 @@ stranded ranges. It duplicates the ranges which are '*'." />
 stranded ranges. It duplicates the ranges which are '*'.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>deconvolveBidirectionalPromoters</span>(<span class='no'>granges</span>)</pre>
+    <pre class="usage"><span class='fu'>deconvolveBidirectionalPromoters</span><span class='op'>(</span><span class='va'>granges</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -149,10 +149,11 @@ stranded ranges. It duplicates the ranges which are '*'.</p>
 have been duplicated and split into forward and reverse strands.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>ce11_all_REs</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>GenomicRanges</span>)
-<span class='no'>proms</span> <span class='kw'>&lt;-</span> <span class='no'>ce11_all_REs</span>[<span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span>(<span class='st'>'prom'</span>, <span class='no'>ce11_all_REs</span>$<span class='no'>regulatory_class</span>)]
-<span class='no'>proms</span></div><div class='output co'>#&gt; GRanges object with 17847 ranges and 2 metadata columns:
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>ce11_all_REs</span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://bioconductor.org/packages/GenomicRanges'>GenomicRanges</a></span><span class='op'>)</span>
+<span class='va'>proms</span> <span class='op'>&lt;-</span> <span class='va'>ce11_all_REs</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span><span class='op'>(</span><span class='st'>'prom'</span>, <span class='va'>ce11_all_REs</span><span class='op'>$</span><span class='va'>regulatory_class</span><span class='op'>)</span><span class='op'>]</span>
+<span class='va'>proms</span>
+</div><div class='output co'>#&gt; GRanges object with 17847 ranges and 2 metadata columns:
 #&gt;           seqnames            ranges strand |    regulatory_class which.tissues
 #&gt;              &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; |            &lt;factor&gt;      &lt;factor&gt;
 #&gt;       [1]     chrI       11273-11423      * | bidirect-promoter    Intest.     
@@ -167,10 +168,12 @@ have been duplicated and split into forward and reverse strands.</p>
 #&gt;   [17846]     chrX 17702756-17702906      * | unassigned_promoter  Unclassified
 #&gt;   [17847]     chrX 17711839-17711989      - | rev-promoter         Germline    
 #&gt;   -------
-#&gt;   seqinfo: 6 sequences from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='fu'>strand</span>(<span class='no'>proms</span>))</div><div class='output co'>#&gt; 
+#&gt;   seqinfo: 6 sequences from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='fu'>strand</span><span class='op'>(</span><span class='va'>proms</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;    +    -    * 
-#&gt; 6616 6480 4751 </div><div class='input'><span class='no'>proms</span> <span class='kw'>&lt;-</span> <span class='fu'>deconvolveBidirectionalPromoters</span>(<span class='no'>proms</span>)
-<span class='no'>proms</span></div><div class='output co'>#&gt; GRanges object with 22598 ranges and 2 metadata columns:
+#&gt; 6616 6480 4751 </div><div class='input'><span class='va'>proms</span> <span class='op'>&lt;-</span> <span class='fu'>deconvolveBidirectionalPromoters</span><span class='op'>(</span><span class='va'>proms</span><span class='op'>)</span>
+<span class='va'>proms</span>
+</div><div class='output co'>#&gt; GRanges object with 22598 ranges and 2 metadata columns:
 #&gt;           seqnames            ranges strand |    regulatory_class which.tissues
 #&gt;              &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; |            &lt;factor&gt;      &lt;factor&gt;
 #&gt;       [1]     chrI       11273-11423      + | bidirect-promoter    Intest.     
@@ -185,7 +188,8 @@ have been duplicated and split into forward and reverse strands.</p>
 #&gt;   [22597]     chrX 17702756-17702906      - | unassigned_promoter  Unclassified
 #&gt;   [22598]     chrX 17711839-17711989      - | rev-promoter         Germline    
 #&gt;   -------
-#&gt;   seqinfo: 6 sequences from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='fu'>strand</span>(<span class='no'>proms</span>))</div><div class='output co'>#&gt; 
+#&gt;   seqinfo: 6 sequences from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='fu'>strand</span><span class='op'>(</span><span class='va'>proms</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;     +     -     * 
 #&gt; 11367 11231     0 </div></pre>
   </div>
@@ -203,7 +207,7 @@ have been duplicated and split into forward and reverse strands.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

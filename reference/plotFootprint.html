@@ -80,7 +80,7 @@ extremities) and plot the footprint profile over a set of GRanges." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VplotR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@ extremities) and plot the footprint profile over a set of GRanges." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -105,7 +105,7 @@ extremities) and plot the footprint profile over a set of GRanges." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/js2264/VplotR/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -132,15 +132,15 @@ extremities) and plot the footprint profile over a set of GRanges." />
 extremities) and plot the footprint profile over a set of GRanges.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>plotFootprint</span>(
-  <span class='no'>frags</span>,
-  <span class='no'>targets</span>,
-  <span class='kw'>split_strand</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>plot_central</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>75</span>, <span class='fl'>75</span>),
-  <span class='kw'>bin</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>1</span>
-)</pre>
+    <pre class="usage"><span class='fu'>plotFootprint</span><span class='op'>(</span>
+  <span class='va'>frags</span>,
+  <span class='va'>targets</span>,
+  split_strand <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  plot_central <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  xlim <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>75</span>, <span class='fl'>75</span><span class='op'>)</span>,
+  bin <span class='op'>=</span> <span class='fl'>1</span>,
+  verbose <span class='op'>=</span> <span class='fl'>1</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -180,9 +180,10 @@ extremities) and plot the footprint profile over a set of GRanges.</p>
     <p>A footprint ggplot</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>bam_test</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>ce11_proms</span>)
-<span class='fu'>plotFootprint</span>(<span class='no'>bam_test</span>, <span class='no'>ce11_proms</span>)</div><div class='output co'>#&gt; <span class='message'>- Getting cuts</span></div><div class='output co'>#&gt; <span class='message'>- Getting cut coverage</span></div><div class='output co'>#&gt; <span class='message'>- Getting cut coverage / target</span></div><div class='output co'>#&gt; <span class='message'>- Reformatting data into matrix</span></div><div class='output co'>#&gt; <span class='message'>- Plotting footprint</span></div><div class='img'><img src='plotFootprint-1.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>bam_test</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>ce11_proms</span><span class='op'>)</span>
+<span class='fu'>plotFootprint</span><span class='op'>(</span><span class='va'>bam_test</span>, <span class='va'>ce11_proms</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>- Getting cuts</span></div><div class='output co'>#&gt; <span class='message'>- Getting cut coverage</span></div><div class='output co'>#&gt; <span class='message'>- Getting cut coverage / target</span></div><div class='output co'>#&gt; <span class='message'>- Reformatting data into matrix</span></div><div class='output co'>#&gt; <span class='message'>- Plotting footprint</span></div><div class='img'><img src='plotFootprint-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -198,7 +199,7 @@ extremities) and plot the footprint profile over a set of GRanges.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VplotR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -45,7 +45,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -62,7 +62,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/js2264/VplotR/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -76,13 +76,13 @@
 
       
 
-      </header><div class="row">
+      </header><script src="VplotR_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>VplotR</h1>
                         <h4 class="author">Jacques Serizay</h4>
             
-            <h4 class="date">2020-08-14</h4>
+            <h4 class="date">2021-02-06</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/js2264/VplotR/blob/master/vignettes/VplotR.Rmd"><code>vignettes/VplotR.Rmd</code></a></small>
       <div class="hidden name"><code>VplotR.Rmd</code></div>
@@ -102,7 +102,7 @@
 <li>
 <a href="#importing-sequencing-datasets">Importing sequencing datasets</a>
 <ul>
-<li><a href="#using-importpebamfiles-function">Using <code><a href="https://rdrr.io/pkg/VplotR/man/importPEBamFiles.html">importPEBamFiles()</a></code> function</a></li>
+<li><a href="#using-importpebamfiles-function">Using <code>importPEBamFiles()</code> function</a></li>
 <li><a href="#provided-datasets">Provided datasets</a></li>
 </ul>
 </li>
@@ -126,26 +126,27 @@
 <h3 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h3>
 <p>VplotR is an R package streamlining the process of generating V-plots, i.e. two-dimensional paired-end fragment density plots. It contains functions to import paired-end sequencing bam files from any type of DNA accessibility experiments (e.g. ATAC-seq, DNA-seq, MNase-seq) and can produce V-plots and one-dimensional footprint profiles over single or aggregated genomic loci of interest. The R package is well integrated within the Bioconductor environment and easily fits in standard genomic analysis workflows. Integrating V-plots into existing analytical frameworks has already brought additional insights in chromatin organization (Serizay et al., 2020).</p>
-<p>The main user-level functions of VplotR are <code><a href="https://rdrr.io/pkg/VplotR/man/getFragmentsDistribution.html">getFragmentsDistribution()</a></code>, <code><a href="https://rdrr.io/pkg/VplotR/man/plotVmat.html">plotVmat()</a></code>, <code><a href="https://rdrr.io/pkg/VplotR/man/plotFootprint.html">plotFootprint()</a></code> and <code><a href="https://rdrr.io/pkg/VplotR/man/plotProfile.html">plotProfile()</a></code>.</p>
+<p>The main user-level functions of VplotR are <code><a href="../reference/getFragmentsDistribution.html">getFragmentsDistribution()</a></code>, <code><a href="../reference/plotVmat.html">plotVmat()</a></code>, <code><a href="../reference/plotFootprint.html">plotFootprint()</a></code> and <code><a href="../reference/plotProfile.html">plotProfile()</a></code>.</p>
 <ul>
 <li>
-<code><a href="https://rdrr.io/pkg/VplotR/man/getFragmentsDistribution.html">getFragmentsDistribution()</a></code> computes the distribution of fragment sizes over sets of genomic ranges;</li>
+<code><a href="../reference/getFragmentsDistribution.html">getFragmentsDistribution()</a></code> computes the distribution of fragment sizes over sets of genomic ranges;</li>
 <li>
-<code><a href="https://rdrr.io/pkg/VplotR/man/plotVmat.html">plotVmat()</a></code> is used to compute fragment density and generate V-plots;</li>
+<code><a href="../reference/plotVmat.html">plotVmat()</a></code> is used to compute fragment density and generate V-plots;</li>
 <li>
-<code><a href="https://rdrr.io/pkg/VplotR/man/plotFootprint.html">plotFootprint()</a></code> generates the MNase-seq or ATAC-seq footprint at a set of genomic ranges.</li>
+<code><a href="../reference/plotFootprint.html">plotFootprint()</a></code> generates the MNase-seq or ATAC-seq footprint at a set of genomic ranges.</li>
 <li>
-<code><a href="https://rdrr.io/pkg/VplotR/man/plotProfile.html">plotProfile()</a></code> is used to plot the distribution of paired-end fragments at a single locus of interest.</li>
+<code><a href="../reference/plotProfile.html">plotProfile()</a></code> is used to plot the distribution of paired-end fragments at a single locus of interest.</li>
 </ul>
 </div>
 <div id="installation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h3>
 <p>VplotR can be installed from Bioconductor:</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="kw">if</span>(!<span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span>(<span class="st">"BiocManager"</span>, <span class="kw">quietly</span> <span class="kw">=</span> <span class="fl">TRUE</span>))
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"BiocManager"</span>)
-<span class="kw pkg">BiocManager</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span>(<span class="st">"VplotR"</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"VplotR"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span>
+<span class="fu">BiocManager</span><span class="fu">::</span><span class="fu">install</span><span class="op">(</span><span class="st">"VplotR"</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/js2264/VplotR">"VplotR"</a></span><span class="op">)</span></code></pre></div>
 </div>
 </div>
 <div id="importing-sequencing-datasets" class="section level2">
@@ -154,18 +155,19 @@
 <div id="using-importpebamfiles-function" class="section level3">
 <h3 class="hasAnchor">
 <a href="#using-importpebamfiles-function" class="anchor"></a>Using <code>importPEBamFiles()</code> function</h3>
-<p>Paired-end .bam files are imported using the <code><a href="https://rdrr.io/pkg/VplotR/man/importPEBamFiles.html">importPEBamFiles()</a></code> function as follows:</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">VplotR</span>)
-<span class="no">bamfile</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"ex1.bam"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"Rsamtools"</span>)
-<span class="no">fragments</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/VplotR/man/importPEBamFiles.html">importPEBamFiles</a></span>(
-    <span class="no">bamfile</span>,
-    <span class="kw">shift_ATAC_fragments</span> <span class="kw">=</span> <span class="fl">TRUE</span>
-)
-<span class="co">#&gt; &gt; Importing /home/travis/R/Library/Rsamtools/extdata/ex1.bam ...</span>
-<span class="co">#&gt; &gt; Filtering /home/travis/R/Library/Rsamtools/extdata/ex1.bam ...</span>
-<span class="co">#&gt; &gt; Shifting /home/travis/R/Library/Rsamtools/extdata/ex1.bam ...</span>
-<span class="co">#&gt; &gt; /home/travis/R/Library/Rsamtools/extdata/ex1.bam import completed.</span>
-<span class="no">fragments</span>
+<p>Paired-end .bam files are imported using the <code><a href="../reference/importPEBamFiles.html">importPEBamFiles()</a></code> function as follows:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/js2264/VplotR">VplotR</a></span><span class="op">)</span>
+<span class="va">bamfile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"ex1.bam"</span>, package <span class="op">=</span> <span class="st">"Rsamtools"</span><span class="op">)</span>
+<span class="va">fragments</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/importPEBamFiles.html">importPEBamFiles</a></span><span class="op">(</span>
+    <span class="va">bamfile</span>, 
+    shift_ATAC_fragments <span class="op">=</span> <span class="cn">TRUE</span>
+<span class="op">)</span>
+<span class="co">#&gt; &gt; Importing /Users/runner/work/_temp/Library/Rsamtools/extdata/ex1.bam ...</span>
+<span class="co">#&gt; &gt; Filtering /Users/runner/work/_temp/Library/Rsamtools/extdata/ex1.bam ...</span>
+<span class="co">#&gt; &gt; Shifting /Users/runner/work/_temp/Library/Rsamtools/extdata/ex1.bam ...</span>
+<span class="co">#&gt; &gt; /Users/runner/work/_temp/Library/Rsamtools/extdata/ex1.bam import completed.</span>
+<span class="va">fragments</span>
 <span class="co">#&gt; GRanges object with 1572 ranges and 0 metadata columns:</span>
 <span class="co">#&gt;          seqnames    ranges strand</span>
 <span class="co">#&gt;             &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span>
@@ -181,7 +183,7 @@
 <span class="co">#&gt;   [1571]     seq2 1380-1557      -</span>
 <span class="co">#&gt;   [1572]     seq2 1353-1562      -</span>
 <span class="co">#&gt;   -------</span>
-<span class="co">#&gt;   seqinfo: 2 sequences from an unspecified genome; no seqlengths</span></pre></body></html></div>
+<span class="co">#&gt;   seqinfo: 2 sequences from an unspecified genome; no seqlengths</span></code></pre></div>
 </div>
 <div id="provided-datasets" class="section level3">
 <h3 class="hasAnchor">
@@ -190,8 +192,9 @@
 <ul>
 <li>Sets of tissue-specific ATAC-seq experiments in young adult C. elegans (Serizay et al., 2020):</li>
 </ul>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">ce11_proms</span>)
-<span class="no">ce11_proms</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">ce11_proms</span><span class="op">)</span>
+<span class="va">ce11_proms</span>
 <span class="co">#&gt; GRanges object with 17458 ranges and 3 metadata columns:</span>
 <span class="co">#&gt;           seqnames            ranges strand |   TSS.fwd   TSS.rev which.tissues</span>
 <span class="co">#&gt;              &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt; &lt;numeric&gt;      &lt;factor&gt;</span>
@@ -208,8 +211,8 @@
 <span class="co">#&gt;   [17458]     chrX 17711839-17711989      - |  17711974  17711854  Germline    </span>
 <span class="co">#&gt;   -------</span>
 <span class="co">#&gt;   seqinfo: 6 sequences from an unspecified genome; no seqlengths</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">ATAC_ce11_Serizay2020</span>)
-<span class="no">ATAC_ce11_Serizay2020</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">ATAC_ce11_Serizay2020</span><span class="op">)</span>
+<span class="va">ATAC_ce11_Serizay2020</span>
 <span class="co">#&gt; $Germline</span>
 <span class="co">#&gt; GRanges object with 462371 ranges and 0 metadata columns:</span>
 <span class="co">#&gt;            seqnames            ranges strand</span>
@@ -244,12 +247,13 @@
 <span class="co">#&gt;   [367934]     chrX 17708264-17708347      -</span>
 <span class="co">#&gt;   [367935]     chrX 17709920-17710007      -</span>
 <span class="co">#&gt;   -------</span>
-<span class="co">#&gt;   seqinfo: 7 sequences from an unspecified genome; no seqlengths</span></pre></body></html></div>
+<span class="co">#&gt;   seqinfo: 7 sequences from an unspecified genome; no seqlengths</span></code></pre></div>
 <ul>
 <li>MNase-seq experiment in yeast (Henikoff et al., 2011) and ABF1 binding sites:</li>
 </ul>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">ABF1_sacCer3</span>)
-<span class="no">ABF1_sacCer3</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">ABF1_sacCer3</span><span class="op">)</span>
+<span class="va">ABF1_sacCer3</span>
 <span class="co">#&gt; GRanges object with 567 ranges and 2 metadata columns:</span>
 <span class="co">#&gt;         seqnames          ranges strand |  relScore       ID</span>
 <span class="co">#&gt;            &lt;Rle&gt;       &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;    &lt;Rle&gt;</span>
@@ -266,8 +270,8 @@
 <span class="co">#&gt;   [567]   chrXVI   919179-919194      - |  0.900182 MA0265.1</span>
 <span class="co">#&gt;   -------</span>
 <span class="co">#&gt;   seqinfo: 17 sequences from an unspecified genome; no seqlengths</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">MNase_sacCer3_Henikoff2011</span>)
-<span class="no">MNase_sacCer3_Henikoff2011</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">MNase_sacCer3_Henikoff2011</span><span class="op">)</span>
+<span class="va">MNase_sacCer3_Henikoff2011</span>
 <span class="co">#&gt; GRanges object with 400000 ranges and 0 metadata columns:</span>
 <span class="co">#&gt;            seqnames        ranges strand</span>
 <span class="co">#&gt;               &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt;</span>
@@ -283,25 +287,26 @@
 <span class="co">#&gt;   [399999]   chrXVI 920442-920659      -</span>
 <span class="co">#&gt;   [400000]   chrXVI 920454-920683      -</span>
 <span class="co">#&gt;   -------</span>
-<span class="co">#&gt;   seqinfo: 17 sequences from an unspecified genome</span></pre></body></html></div>
+<span class="co">#&gt;   seqinfo: 17 sequences from an unspecified genome</span></code></pre></div>
 </div>
 </div>
 <div id="fragment-size-distribution" class="section level2">
 <h2 class="hasAnchor">
 <a href="#fragment-size-distribution" class="anchor"></a>Fragment size distribution</h2>
-<p>A preliminary control to check the distribution of fragment sizes (regardless of their location relative to genomic loci) can be performed using the <code><a href="https://rdrr.io/pkg/VplotR/man/getFragmentsDistribution.html">getFragmentsDistribution()</a></code> function.</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">df</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/VplotR/man/getFragmentsDistribution.html">getFragmentsDistribution</a></span>(
-    <span class="no">MNase_sacCer3_Henikoff2011</span>,
-    <span class="no">ABF1_sacCer3</span>
-)
+<p>A preliminary control to check the distribution of fragment sizes (regardless of their location relative to genomic loci) can be performed using the <code><a href="../reference/getFragmentsDistribution.html">getFragmentsDistribution()</a></code> function.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getFragmentsDistribution.html">getFragmentsDistribution</a></span><span class="op">(</span>
+    <span class="va">MNase_sacCer3_Henikoff2011</span>, 
+    <span class="va">ABF1_sacCer3</span>
+<span class="op">)</span>
 <span class="co">#&gt; Warning in as.cls(x): NAs introduced by coercion</span>
 
 <span class="co">#&gt; Warning in as.cls(x): NAs introduced by coercion</span>
 
 <span class="co">#&gt; Warning in as.cls(x): NAs introduced by coercion</span>
-<span class="no">p</span> <span class="kw">&lt;-</span> <span class="fu">ggplot</span>(<span class="no">df</span>, <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">x</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">y</span>)) + <span class="fu">geom_line</span>() + <span class="fu"><a href="https://rdrr.io/pkg/VplotR/man/theme_ggplot2.html">theme_ggplot2</a></span>()
-<span class="no">p</span>
-<span class="co">#&gt; Warning: Removed 2 row(s) containing missing values (geom_path).</span></pre></body></html></div>
+<span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="../reference/theme_ggplot2.html">theme_ggplot2</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">p</span>
+<span class="co">#&gt; Warning: Removed 2 row(s) containing missing values (geom_path).</span></code></pre></div>
 <p><img src="VplotR_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 </div>
 <div id="vplots" class="section level2">
@@ -310,62 +315,65 @@
 <div id="single-vplot" class="section level3">
 <h3 class="hasAnchor">
 <a href="#single-vplot" class="anchor"></a>Single Vplot</h3>
-<p>Once data is imported, a V-plot of paired-end fragments over loci of interest is generated using the <code><a href="https://rdrr.io/pkg/VplotR/man/plotVmat.html">plotVmat()</a></code> function:</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">p</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/VplotR/man/plotVmat.html">plotVmat</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">MNase_sacCer3_Henikoff2011</span>, <span class="kw">granges</span> <span class="kw">=</span> <span class="no">ABF1_sacCer3</span>)
+<p>Once data is imported, a V-plot of paired-end fragments over loci of interest is generated using the <code><a href="../reference/plotVmat.html">plotVmat()</a></code> function:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotVmat.html">plotVmat</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">MNase_sacCer3_Henikoff2011</span>, granges <span class="op">=</span> <span class="va">ABF1_sacCer3</span><span class="op">)</span>
 <span class="co">#&gt; Computing V-mat</span>
 <span class="co">#&gt; Normalizing the matrix</span>
 <span class="co">#&gt; No normalization applied</span>
 <span class="co">#&gt; Smoothing the matrix</span>
-<span class="no">p</span></pre></body></html></div>
+<span class="va">p</span></code></pre></div>
 <p><img src="VplotR_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 </div>
 <div id="multiple-vplots" class="section level3">
 <h3 class="hasAnchor">
 <a href="#multiple-vplots" class="anchor"></a>Multiple Vplots</h3>
 <p>The generation of multiple V-plots can be parallelized using a list of parameters:</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">list_params</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
-    <span class="st">"MNase\n@ ABF1"</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">MNase_sacCer3_Henikoff2011</span>, <span class="no">ABF1_sacCer3</span>),
-    <span class="st">"MNase\n@ random loci"</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
-        <span class="no">MNase_sacCer3_Henikoff2011</span>, <span class="fu"><a href="https://rdrr.io/pkg/VplotR/man/sampleGRanges.html">sampleGRanges</a></span>(<span class="no">ABF1_sacCer3</span>)
-    )
-)
-<span class="no">p</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/VplotR/man/plotVmat.html">plotVmat</a></span>(
-    <span class="no">list_params</span>,
-    <span class="kw">cores</span> <span class="kw">=</span> <span class="fl">1</span>
-)
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">list_params</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+    <span class="st">"MNase\n@ ABF1"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">MNase_sacCer3_Henikoff2011</span>, <span class="va">ABF1_sacCer3</span><span class="op">)</span>, 
+    <span class="st">"MNase\n@ random loci"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+        <span class="va">MNase_sacCer3_Henikoff2011</span>, <span class="fu"><a href="../reference/sampleGRanges.html">sampleGRanges</a></span><span class="op">(</span><span class="va">ABF1_sacCer3</span><span class="op">)</span>
+    <span class="op">)</span>
+<span class="op">)</span>
+<span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotVmat.html">plotVmat</a></span><span class="op">(</span>
+    <span class="va">list_params</span>, 
+    cores <span class="op">=</span> <span class="fl">1</span>
+<span class="op">)</span>
 <span class="co">#&gt; - Processing sample 1/2</span>
 <span class="co">#&gt; - Processing sample 2/2</span>
-<span class="no">p</span></pre></body></html></div>
+<span class="va">p</span></code></pre></div>
 <p><img src="VplotR_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 <p>For instance, ATAC-seq fragment density can be visualized at different classes of ubiquitous and tissue-specific promoters in <em>C. elegans</em>.</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">list_params</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
-    <span class="st">"Germline ATACseq\n@ Ubiq. proms"</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
-        <span class="no">ATAC_ce11_Serizay2020</span><span class="kw">[[</span><span class="st">'Germline'</span>]],
-        <span class="no">ce11_proms</span>[<span class="no">ce11_proms</span>$<span class="no">which.tissues</span> <span class="kw">==</span> <span class="st">'Ubiq.'</span>]
-    ),
-    <span class="st">"Germline ATACseq\n@ Germline proms"</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
-        <span class="no">ATAC_ce11_Serizay2020</span><span class="kw">[[</span><span class="st">'Germline'</span>]],
-        <span class="no">ce11_proms</span>[<span class="no">ce11_proms</span>$<span class="no">which.tissues</span> <span class="kw">==</span> <span class="st">'Germline'</span>]
-    ),
-    <span class="st">"Neuron ATACseq\n@ Ubiq. proms"</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
-        <span class="no">ATAC_ce11_Serizay2020</span><span class="kw">[[</span><span class="st">'Neurons'</span>]],
-        <span class="no">ce11_proms</span>[<span class="no">ce11_proms</span>$<span class="no">which.tissues</span> <span class="kw">==</span> <span class="st">'Ubiq.'</span>]
-    ),
-    <span class="st">"Neuron ATACseq\n@ Neuron proms"</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
-        <span class="no">ATAC_ce11_Serizay2020</span><span class="kw">[[</span><span class="st">'Neurons'</span>]],
-        <span class="no">ce11_proms</span>[<span class="no">ce11_proms</span>$<span class="no">which.tissues</span> <span class="kw">==</span> <span class="st">'Neurons'</span>]
-    )
-)
-<span class="no">p</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/VplotR/man/plotVmat.html">plotVmat</a></span>(
-    <span class="no">list_params</span>,
-    <span class="kw">cores</span> <span class="kw">=</span> <span class="fl">1</span>,
-    <span class="kw">nrow</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">5</span>
-)
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">list_params</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+    <span class="st">"Germline ATACseq\n@ Ubiq. proms"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+        <span class="va">ATAC_ce11_Serizay2020</span><span class="op">[[</span><span class="st">'Germline'</span><span class="op">]</span><span class="op">]</span>, 
+        <span class="va">ce11_proms</span><span class="op">[</span><span class="va">ce11_proms</span><span class="op">$</span><span class="va">which.tissues</span> <span class="op">==</span> <span class="st">'Ubiq.'</span><span class="op">]</span>
+    <span class="op">)</span>, 
+    <span class="st">"Germline ATACseq\n@ Germline proms"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+        <span class="va">ATAC_ce11_Serizay2020</span><span class="op">[[</span><span class="st">'Germline'</span><span class="op">]</span><span class="op">]</span>, 
+        <span class="va">ce11_proms</span><span class="op">[</span><span class="va">ce11_proms</span><span class="op">$</span><span class="va">which.tissues</span> <span class="op">==</span> <span class="st">'Germline'</span><span class="op">]</span>
+    <span class="op">)</span>,
+    <span class="st">"Neuron ATACseq\n@ Ubiq. proms"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+        <span class="va">ATAC_ce11_Serizay2020</span><span class="op">[[</span><span class="st">'Neurons'</span><span class="op">]</span><span class="op">]</span>, 
+        <span class="va">ce11_proms</span><span class="op">[</span><span class="va">ce11_proms</span><span class="op">$</span><span class="va">which.tissues</span> <span class="op">==</span> <span class="st">'Ubiq.'</span><span class="op">]</span>
+    <span class="op">)</span>, 
+    <span class="st">"Neuron ATACseq\n@ Neuron proms"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+        <span class="va">ATAC_ce11_Serizay2020</span><span class="op">[[</span><span class="st">'Neurons'</span><span class="op">]</span><span class="op">]</span>, 
+        <span class="va">ce11_proms</span><span class="op">[</span><span class="va">ce11_proms</span><span class="op">$</span><span class="va">which.tissues</span> <span class="op">==</span> <span class="st">'Neurons'</span><span class="op">]</span>
+    <span class="op">)</span>
+<span class="op">)</span>
+<span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotVmat.html">plotVmat</a></span><span class="op">(</span>
+    <span class="va">list_params</span>, 
+    cores <span class="op">=</span> <span class="fl">1</span>,
+    nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">5</span>
+<span class="op">)</span>
 <span class="co">#&gt; - Processing sample 1/4</span>
 <span class="co">#&gt; - Processing sample 2/4</span>
 <span class="co">#&gt; - Processing sample 3/4</span>
 <span class="co">#&gt; - Processing sample 4/4</span>
-<span class="no">p</span></pre></body></html></div>
+<span class="va">p</span></code></pre></div>
 <p><img src="VplotR_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 </div>
 <div id="vplots-normalization" class="section level3">
@@ -375,14 +383,15 @@
 <ul>
 <li>Un-normalized raw counts can be plotted by specifying <code>normFun = 'none'</code>.</li>
 </ul>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="co"># No normalization </span>
-<span class="no">p</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/VplotR/man/plotVmat.html">plotVmat</a></span>(
-    <span class="no">list_params</span>,
-    <span class="kw">cores</span> <span class="kw">=</span> <span class="fl">1</span>,
-    <span class="kw">nrow</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">5</span>,
-    <span class="kw">verbose</span> <span class="kw">=</span> <span class="fl">FALSE</span>,
-    <span class="kw">normFun</span> <span class="kw">=</span> <span class="st">'none'</span>
-)
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># No normalization </span>
+<span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotVmat.html">plotVmat</a></span><span class="op">(</span>
+    <span class="va">list_params</span>, 
+    cores <span class="op">=</span> <span class="fl">1</span>, 
+    nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">5</span>, 
+    verbose <span class="op">=</span> <span class="cn">FALSE</span>,
+    normFun <span class="op">=</span> <span class="st">'none'</span>
+<span class="op">)</span>
 <span class="co">#&gt; Computing V-mat</span>
 <span class="co">#&gt; Normalizing the matrix</span>
 <span class="co">#&gt; No normalization applied</span>
@@ -399,19 +408,20 @@
 <span class="co">#&gt; Normalizing the matrix</span>
 <span class="co">#&gt; No normalization applied</span>
 <span class="co">#&gt; Smoothing the matrix</span>
-<span class="no">p</span></pre></body></html></div>
+<span class="va">p</span></code></pre></div>
 <p><img src="VplotR_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 <ul>
 <li>By default, plots are normalized by the library depth of the sequencing run and by the number of loci used to compute fragment density.</li>
 </ul>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="co"># Library depth + number of loci of interest (default)</span>
-<span class="no">p</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/VplotR/man/plotVmat.html">plotVmat</a></span>(
-    <span class="no">list_params</span>,
-    <span class="kw">cores</span> <span class="kw">=</span> <span class="fl">1</span>,
-    <span class="kw">nrow</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">5</span>,
-    <span class="kw">verbose</span> <span class="kw">=</span> <span class="fl">FALSE</span>,
-    <span class="kw">normFun</span> <span class="kw">=</span> <span class="st">'libdepth+nloci'</span>
-)
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Library depth + number of loci of interest (default)</span>
+<span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotVmat.html">plotVmat</a></span><span class="op">(</span>
+    <span class="va">list_params</span>, 
+    cores <span class="op">=</span> <span class="fl">1</span>, 
+    nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">5</span>, 
+    verbose <span class="op">=</span> <span class="cn">FALSE</span>,
+    normFun <span class="op">=</span> <span class="st">'libdepth+nloci'</span>
+<span class="op">)</span>
 <span class="co">#&gt; Computing V-mat</span>
 <span class="co">#&gt; Normalizing the matrix</span>
 <span class="co">#&gt; Computing raw library depth</span>
@@ -432,19 +442,20 @@
 <span class="co">#&gt; Computing raw library depth</span>
 <span class="co">#&gt; Dividing Vmat by its number of loci</span>
 <span class="co">#&gt; Smoothing the matrix</span>
-<span class="no">p</span></pre></body></html></div>
+<span class="va">p</span></code></pre></div>
 <p><img src="VplotR_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 <ul>
 <li>Alternatively, heatmaps can be internally z-scored or scaled to a specific quantile.</li>
 </ul>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="co"># Zscore</span>
-<span class="no">p</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/VplotR/man/plotVmat.html">plotVmat</a></span>(
-    <span class="no">list_params</span>,
-    <span class="kw">cores</span> <span class="kw">=</span> <span class="fl">1</span>,
-    <span class="kw">nrow</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">5</span>,
-    <span class="kw">verbose</span> <span class="kw">=</span> <span class="fl">FALSE</span>,
-    <span class="kw">normFun</span> <span class="kw">=</span> <span class="st">'zscore'</span>
-)
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Zscore</span>
+<span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotVmat.html">plotVmat</a></span><span class="op">(</span>
+    <span class="va">list_params</span>, 
+    cores <span class="op">=</span> <span class="fl">1</span>, 
+    nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">5</span>, 
+    verbose <span class="op">=</span> <span class="cn">FALSE</span>,
+    normFun <span class="op">=</span> <span class="st">'zscore'</span>
+<span class="op">)</span>
 <span class="co">#&gt; Computing V-mat</span>
 <span class="co">#&gt; Normalizing the matrix</span>
 <span class="co">#&gt; Smoothing the matrix</span>
@@ -457,17 +468,18 @@
 <span class="co">#&gt; Computing V-mat</span>
 <span class="co">#&gt; Normalizing the matrix</span>
 <span class="co">#&gt; Smoothing the matrix</span>
-<span class="no">p</span></pre></body></html></div>
+<span class="va">p</span></code></pre></div>
 <p><img src="VplotR_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
-<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="co"># Quantile</span>
-<span class="no">p</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/VplotR/man/plotVmat.html">plotVmat</a></span>(
-    <span class="no">list_params</span>,
-    <span class="kw">cores</span> <span class="kw">=</span> <span class="fl">1</span>,
-    <span class="kw">nrow</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">5</span>,
-    <span class="kw">verbose</span> <span class="kw">=</span> <span class="fl">FALSE</span>,
-    <span class="kw">normFun</span> <span class="kw">=</span> <span class="st">'quantile'</span>,
-    <span class="kw">s</span> <span class="kw">=</span> <span class="fl">0.99</span>
-)
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Quantile</span>
+<span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotVmat.html">plotVmat</a></span><span class="op">(</span>
+    <span class="va">list_params</span>, 
+    cores <span class="op">=</span> <span class="fl">1</span>, 
+    nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">5</span>, 
+    verbose <span class="op">=</span> <span class="cn">FALSE</span>,
+    normFun <span class="op">=</span> <span class="st">'quantile'</span>, 
+    s <span class="op">=</span> <span class="fl">0.99</span>
+<span class="op">)</span>
 <span class="co">#&gt; Computing V-mat</span>
 <span class="co">#&gt; Normalizing the matrix</span>
 <span class="co">#&gt; Smoothing the matrix</span>
@@ -480,7 +492,7 @@
 <span class="co">#&gt; Computing V-mat</span>
 <span class="co">#&gt; Normalizing the matrix</span>
 <span class="co">#&gt; Smoothing the matrix</span>
-<span class="no">p</span></pre></body></html></div>
+<span class="va">p</span></code></pre></div>
 <p><img src="VplotR_files/figure-html/unnamed-chunk-12-2.png" width="700"></p>
 </div>
 </div>
@@ -488,33 +500,35 @@
 <h2 class="hasAnchor">
 <a href="#footprints" class="anchor"></a>Footprints</h2>
 <p>VplotR also implements a function to profile the footprint from MNase or ATAC-seq over sets of genomic loci. For instance, CTCF is known for its ~40-bp large footprint at its binding loci.</p>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="no">p</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/VplotR/man/plotFootprint.html">plotFootprint</a></span>(
-    <span class="no">MNase_sacCer3_Henikoff2011</span>,
-    <span class="no">ABF1_sacCer3</span>
-)
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotFootprint.html">plotFootprint</a></span><span class="op">(</span>
+    <span class="va">MNase_sacCer3_Henikoff2011</span>,
+    <span class="va">ABF1_sacCer3</span>
+<span class="op">)</span>
 <span class="co">#&gt; - Getting cuts</span>
 <span class="co">#&gt; - Getting cut coverage</span>
 <span class="co">#&gt; - Getting cut coverage / target</span>
 <span class="co">#&gt; - Reformatting data into matrix</span>
 <span class="co">#&gt; - Plotting footprint</span>
-<span class="no">p</span></pre></body></html></div>
+<span class="va">p</span></code></pre></div>
 <p><img src="VplotR_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
 </div>
 <div id="local-fragment-distribution" class="section level2">
 <h2 class="hasAnchor">
 <a href="#local-fragment-distribution" class="anchor"></a>Local fragment distribution</h2>
 <p>VplotR provides a function to plot the distribution of paired-end fragments over an individual genomic window.</p>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">MNase_sacCer3_Henikoff2011_subset</span>)
-<span class="no">genes_sacCer3</span> <span class="kw">&lt;-</span> <span class="kw pkg">GenomicFeatures</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/GenomicFeatures/man/transcripts.html">genes</a></span>(<span class="kw pkg">TxDb.Scerevisiae.UCSC.sacCer3.sgdGene</span><span class="kw ns">::</span>
-    <span class="no"><a href="https://rdrr.io/pkg/TxDb.Scerevisiae.UCSC.sacCer3.sgdGene/man/package.html">TxDb.Scerevisiae.UCSC.sacCer3.sgdGene</a></span>
-)
-<span class="no">p</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/VplotR/man/plotProfile.html">plotProfile</a></span>(
-    <span class="kw">fragments</span> <span class="kw">=</span> <span class="no">MNase_sacCer3_Henikoff2011_subset</span>,
-    <span class="kw">window</span> <span class="kw">=</span> <span class="st">"chrXV:186,400-187,400"</span>,
-    <span class="kw">loci</span> <span class="kw">=</span> <span class="no">ABF1_sacCer3</span>,
-    <span class="kw">annots</span> <span class="kw">=</span> <span class="no">genes_sacCer3</span>,
-    <span class="kw">min</span> <span class="kw">=</span> <span class="fl">20</span>, <span class="kw">max</span> <span class="kw">=</span> <span class="fl">200</span>, <span class="kw">alpha</span> <span class="kw">=</span> <span class="fl">0.1</span>, <span class="kw">size</span> <span class="kw">=</span> <span class="fl">1.5</span>
-)
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">MNase_sacCer3_Henikoff2011_subset</span><span class="op">)</span>
+<span class="va">genes_sacCer3</span> <span class="op">&lt;-</span> <span class="fu">GenomicFeatures</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/GenomicFeatures/man/transcripts.html">genes</a></span><span class="op">(</span><span class="fu">TxDb.Scerevisiae.UCSC.sacCer3.sgdGene</span><span class="fu">::</span>
+    <span class="va"><a href="https://rdrr.io/pkg/TxDb.Scerevisiae.UCSC.sacCer3.sgdGene/man/package.html">TxDb.Scerevisiae.UCSC.sacCer3.sgdGene</a></span>
+<span class="op">)</span>
+<span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotProfile.html">plotProfile</a></span><span class="op">(</span>
+    fragments <span class="op">=</span> <span class="va">MNase_sacCer3_Henikoff2011_subset</span>,
+    window <span class="op">=</span> <span class="st">"chrXV:186,400-187,400"</span>, 
+    loci <span class="op">=</span> <span class="va">ABF1_sacCer3</span>, 
+    annots <span class="op">=</span> <span class="va">genes_sacCer3</span>,
+    min <span class="op">=</span> <span class="fl">20</span>, max <span class="op">=</span> <span class="fl">200</span>, alpha <span class="op">=</span> <span class="fl">0.1</span>, size <span class="op">=</span> <span class="fl">1.5</span>
+<span class="op">)</span>
 <span class="co">#&gt; Filtering and resizing fragments</span>
 <span class="co">#&gt; 32276 fragments mapped over 1001 bases</span>
 <span class="co">#&gt; Filtering and resizing fragments</span>
@@ -522,122 +536,124 @@
 <span class="co">#&gt; Warning: Removed 49 row(s) containing missing values (geom_path).</span>
 <span class="co">#&gt; Warning: Removed 5176 rows containing missing values (geom_point).</span>
 <span class="co">#&gt; Warning: Removed 19 row(s) containing missing values (geom_path).</span>
-<span class="no">p</span></pre></body></html></div>
+<span class="va">p</span></code></pre></div>
 <p><img src="VplotR_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
 </div>
 <div id="session-info" class="section level2">
 <h2 class="hasAnchor">
 <a href="#session-info" class="anchor"></a>Session Info</h2>
-<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span>()
-<span class="co">#&gt; R version 4.0.0 (2020-04-24)</span>
-<span class="co">#&gt; Platform: x86_64-pc-linux-gnu (64-bit)</span>
-<span class="co">#&gt; Running under: Ubuntu 14.04.5 LTS</span>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; R version 4.0.3 (2020-10-10)</span>
+<span class="co">#&gt; Platform: x86_64-apple-darwin17.0 (64-bit)</span>
+<span class="co">#&gt; Running under: macOS Catalina 10.15.7</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Matrix products: default</span>
-<span class="co">#&gt; BLAS:   /home/travis/R-bin/lib/R/lib/libRblas.so</span>
-<span class="co">#&gt; LAPACK: /home/travis/R-bin/lib/R/lib/libRlapack.so</span>
+<span class="co">#&gt; BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib</span>
+<span class="co">#&gt; LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; locale:</span>
-<span class="co">#&gt;  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              </span>
-<span class="co">#&gt;  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    </span>
-<span class="co">#&gt;  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   </span>
-<span class="co">#&gt;  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 </span>
-<span class="co">#&gt;  [9] LC_ADDRESS=C               LC_TELEPHONE=C            </span>
-<span class="co">#&gt; [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       </span>
+<span class="co">#&gt; [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; attached base packages:</span>
 <span class="co">#&gt; [1] parallel  stats4    stats     graphics  grDevices utils     datasets </span>
 <span class="co">#&gt; [8] methods   base     </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; other attached packages:</span>
-<span class="co">#&gt; [1] VplotR_0.99.5        magrittr_1.5         ggplot2_3.3.2       </span>
-<span class="co">#&gt; [4] GenomicRanges_1.41.6 GenomeInfoDb_1.25.10 IRanges_2.23.10     </span>
-<span class="co">#&gt; [7] S4Vectors_0.27.12    BiocGenerics_0.35.4 </span>
+<span class="co">#&gt; [1] VplotR_1.1.0         magrittr_2.0.1       ggplot2_3.3.3       </span>
+<span class="co">#&gt; [4] GenomicRanges_1.42.0 GenomeInfoDb_1.26.2  IRanges_2.24.1      </span>
+<span class="co">#&gt; [7] S4Vectors_0.28.1     BiocGenerics_0.36.0 </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; loaded via a namespace (and not attached):</span>
-<span class="co">#&gt;  [1] Biobase_2.49.0                             </span>
-<span class="co">#&gt;  [2] httr_1.4.2                                 </span>
-<span class="co">#&gt;  [3] bit64_4.0.2                                </span>
-<span class="co">#&gt;  [4] assertthat_0.2.1                           </span>
-<span class="co">#&gt;  [5] askpass_1.1                                </span>
-<span class="co">#&gt;  [6] BiocFileCache_1.13.1                       </span>
-<span class="co">#&gt;  [7] blob_1.2.1                                 </span>
-<span class="co">#&gt;  [8] GenomeInfoDbData_1.2.3                     </span>
-<span class="co">#&gt;  [9] Rsamtools_2.5.3                            </span>
-<span class="co">#&gt; [10] yaml_2.2.1                                 </span>
-<span class="co">#&gt; [11] progress_1.2.2                             </span>
-<span class="co">#&gt; [12] pillar_1.4.6                               </span>
-<span class="co">#&gt; [13] RSQLite_2.2.0                              </span>
-<span class="co">#&gt; [14] backports_1.1.8                            </span>
-<span class="co">#&gt; [15] lattice_0.20-41                            </span>
-<span class="co">#&gt; [16] glue_1.4.1                                 </span>
-<span class="co">#&gt; [17] digest_0.6.25                              </span>
-<span class="co">#&gt; [18] RColorBrewer_1.1-2                         </span>
-<span class="co">#&gt; [19] XVector_0.29.3                             </span>
-<span class="co">#&gt; [20] colorspace_1.4-1                           </span>
-<span class="co">#&gt; [21] cowplot_1.0.0                              </span>
-<span class="co">#&gt; [22] htmltools_0.5.0                            </span>
-<span class="co">#&gt; [23] Matrix_1.2-18                              </span>
-<span class="co">#&gt; [24] plyr_1.8.6                                 </span>
-<span class="co">#&gt; [25] XML_3.99-0.5                               </span>
-<span class="co">#&gt; [26] pkgconfig_2.0.3                            </span>
-<span class="co">#&gt; [27] biomaRt_2.45.2                             </span>
-<span class="co">#&gt; [28] zlibbioc_1.35.0                            </span>
-<span class="co">#&gt; [29] TxDb.Scerevisiae.UCSC.sacCer3.sgdGene_3.2.2</span>
-<span class="co">#&gt; [30] purrr_0.3.4                                </span>
-<span class="co">#&gt; [31] scales_1.1.1                               </span>
-<span class="co">#&gt; [32] BiocParallel_1.23.2                        </span>
-<span class="co">#&gt; [33] openssl_1.4.2                              </span>
-<span class="co">#&gt; [34] tibble_3.0.3                               </span>
-<span class="co">#&gt; [35] generics_0.0.2                             </span>
-<span class="co">#&gt; [36] farver_2.0.3                               </span>
-<span class="co">#&gt; [37] ellipsis_0.3.1                             </span>
-<span class="co">#&gt; [38] withr_2.2.0                                </span>
-<span class="co">#&gt; [39] SummarizedExperiment_1.19.6                </span>
-<span class="co">#&gt; [40] GenomicFeatures_1.41.2                     </span>
-<span class="co">#&gt; [41] crayon_1.3.4                               </span>
-<span class="co">#&gt; [42] memoise_1.1.0                              </span>
-<span class="co">#&gt; [43] evaluate_0.14                              </span>
-<span class="co">#&gt; [44] fs_1.5.0                                   </span>
-<span class="co">#&gt; [45] MASS_7.3-51.5                              </span>
-<span class="co">#&gt; [46] tools_4.0.0                                </span>
-<span class="co">#&gt; [47] prettyunits_1.1.1                          </span>
-<span class="co">#&gt; [48] hms_0.5.3                                  </span>
-<span class="co">#&gt; [49] lifecycle_0.2.0                            </span>
-<span class="co">#&gt; [50] matrixStats_0.56.0                         </span>
-<span class="co">#&gt; [51] stringr_1.4.0                              </span>
-<span class="co">#&gt; [52] munsell_0.5.0                              </span>
-<span class="co">#&gt; [53] DelayedArray_0.15.7                        </span>
-<span class="co">#&gt; [54] AnnotationDbi_1.51.3                       </span>
-<span class="co">#&gt; [55] Biostrings_2.57.2                          </span>
-<span class="co">#&gt; [56] compiler_4.0.0                             </span>
-<span class="co">#&gt; [57] pkgdown_1.5.1                              </span>
-<span class="co">#&gt; [58] rlang_0.4.7                                </span>
-<span class="co">#&gt; [59] grid_4.0.0                                 </span>
-<span class="co">#&gt; [60] RCurl_1.98-1.2                             </span>
-<span class="co">#&gt; [61] rappdirs_0.3.1                             </span>
-<span class="co">#&gt; [62] bitops_1.0-6                               </span>
-<span class="co">#&gt; [63] labeling_0.3                               </span>
-<span class="co">#&gt; [64] rmarkdown_2.3                              </span>
-<span class="co">#&gt; [65] gtable_0.3.0                               </span>
-<span class="co">#&gt; [66] curl_4.3                                   </span>
-<span class="co">#&gt; [67] DBI_1.1.0                                  </span>
-<span class="co">#&gt; [68] reshape2_1.4.4                             </span>
-<span class="co">#&gt; [69] R6_2.4.1                                   </span>
-<span class="co">#&gt; [70] GenomicAlignments_1.25.3                   </span>
-<span class="co">#&gt; [71] zoo_1.8-8                                  </span>
-<span class="co">#&gt; [72] rtracklayer_1.49.5                         </span>
-<span class="co">#&gt; [73] knitr_1.29                                 </span>
-<span class="co">#&gt; [74] dplyr_1.0.1                                </span>
-<span class="co">#&gt; [75] bit_4.0.4                                  </span>
-<span class="co">#&gt; [76] rprojroot_1.3-2                            </span>
-<span class="co">#&gt; [77] desc_1.2.0                                 </span>
-<span class="co">#&gt; [78] stringi_1.4.6                              </span>
-<span class="co">#&gt; [79] Rcpp_1.0.5                                 </span>
-<span class="co">#&gt; [80] vctrs_0.3.2                                </span>
-<span class="co">#&gt; [81] dbplyr_1.4.4                               </span>
-<span class="co">#&gt; [82] tidyselect_1.1.0                           </span>
-<span class="co">#&gt; [83] xfun_0.16</span></pre></body></html></div>
+<span class="co">#&gt;  [1] bitops_1.0-6                               </span>
+<span class="co">#&gt;  [2] matrixStats_0.58.0                         </span>
+<span class="co">#&gt;  [3] fs_1.5.0                                   </span>
+<span class="co">#&gt;  [4] bit64_4.0.5                                </span>
+<span class="co">#&gt;  [5] RColorBrewer_1.1-2                         </span>
+<span class="co">#&gt;  [6] progress_1.2.2                             </span>
+<span class="co">#&gt;  [7] httr_1.4.2                                 </span>
+<span class="co">#&gt;  [8] rprojroot_2.0.2                            </span>
+<span class="co">#&gt;  [9] tools_4.0.3                                </span>
+<span class="co">#&gt; [10] R6_2.5.0                                   </span>
+<span class="co">#&gt; [11] DBI_1.1.1                                  </span>
+<span class="co">#&gt; [12] colorspace_2.0-0                           </span>
+<span class="co">#&gt; [13] withr_2.4.1                                </span>
+<span class="co">#&gt; [14] tidyselect_1.1.0                           </span>
+<span class="co">#&gt; [15] prettyunits_1.1.1                          </span>
+<span class="co">#&gt; [16] bit_4.0.4                                  </span>
+<span class="co">#&gt; [17] curl_4.3                                   </span>
+<span class="co">#&gt; [18] compiler_4.0.3                             </span>
+<span class="co">#&gt; [19] textshaping_0.2.1                          </span>
+<span class="co">#&gt; [20] Biobase_2.50.0                             </span>
+<span class="co">#&gt; [21] xml2_1.3.2                                 </span>
+<span class="co">#&gt; [22] desc_1.2.0                                 </span>
+<span class="co">#&gt; [23] DelayedArray_0.16.1                        </span>
+<span class="co">#&gt; [24] rtracklayer_1.50.0                         </span>
+<span class="co">#&gt; [25] labeling_0.4.2                             </span>
+<span class="co">#&gt; [26] scales_1.1.1                               </span>
+<span class="co">#&gt; [27] askpass_1.1                                </span>
+<span class="co">#&gt; [28] rappdirs_0.3.3                             </span>
+<span class="co">#&gt; [29] pkgdown_1.6.1                              </span>
+<span class="co">#&gt; [30] systemfonts_1.0.0                          </span>
+<span class="co">#&gt; [31] stringr_1.4.0                              </span>
+<span class="co">#&gt; [32] digest_0.6.27                              </span>
+<span class="co">#&gt; [33] Rsamtools_2.6.0                            </span>
+<span class="co">#&gt; [34] rmarkdown_2.6                              </span>
+<span class="co">#&gt; [35] XVector_0.30.0                             </span>
+<span class="co">#&gt; [36] pkgconfig_2.0.3                            </span>
+<span class="co">#&gt; [37] htmltools_0.5.1.1                          </span>
+<span class="co">#&gt; [38] MatrixGenerics_1.2.1                       </span>
+<span class="co">#&gt; [39] dbplyr_2.1.0                               </span>
+<span class="co">#&gt; [40] fastmap_1.1.0                              </span>
+<span class="co">#&gt; [41] highr_0.8                                  </span>
+<span class="co">#&gt; [42] rlang_0.4.10                               </span>
+<span class="co">#&gt; [43] RSQLite_2.2.3                              </span>
+<span class="co">#&gt; [44] TxDb.Scerevisiae.UCSC.sacCer3.sgdGene_3.2.2</span>
+<span class="co">#&gt; [45] farver_2.0.3                               </span>
+<span class="co">#&gt; [46] generics_0.1.0                             </span>
+<span class="co">#&gt; [47] zoo_1.8-8                                  </span>
+<span class="co">#&gt; [48] BiocParallel_1.24.1                        </span>
+<span class="co">#&gt; [49] dplyr_1.0.4                                </span>
+<span class="co">#&gt; [50] RCurl_1.98-1.2                             </span>
+<span class="co">#&gt; [51] GenomeInfoDbData_1.2.4                     </span>
+<span class="co">#&gt; [52] Matrix_1.2-18                              </span>
+<span class="co">#&gt; [53] Rcpp_1.0.6                                 </span>
+<span class="co">#&gt; [54] munsell_0.5.0                              </span>
+<span class="co">#&gt; [55] lifecycle_0.2.0                            </span>
+<span class="co">#&gt; [56] stringi_1.5.3                              </span>
+<span class="co">#&gt; [57] yaml_2.2.1                                 </span>
+<span class="co">#&gt; [58] SummarizedExperiment_1.20.0                </span>
+<span class="co">#&gt; [59] zlibbioc_1.36.0                            </span>
+<span class="co">#&gt; [60] plyr_1.8.6                                 </span>
+<span class="co">#&gt; [61] BiocFileCache_1.14.0                       </span>
+<span class="co">#&gt; [62] grid_4.0.3                                 </span>
+<span class="co">#&gt; [63] blob_1.2.1                                 </span>
+<span class="co">#&gt; [64] crayon_1.4.0                               </span>
+<span class="co">#&gt; [65] lattice_0.20-41                            </span>
+<span class="co">#&gt; [66] Biostrings_2.58.0                          </span>
+<span class="co">#&gt; [67] cowplot_1.1.1                              </span>
+<span class="co">#&gt; [68] GenomicFeatures_1.42.1                     </span>
+<span class="co">#&gt; [69] hms_1.0.0                                  </span>
+<span class="co">#&gt; [70] knitr_1.31                                 </span>
+<span class="co">#&gt; [71] pillar_1.4.7                               </span>
+<span class="co">#&gt; [72] reshape2_1.4.4                             </span>
+<span class="co">#&gt; [73] biomaRt_2.46.2                             </span>
+<span class="co">#&gt; [74] XML_3.99-0.5                               </span>
+<span class="co">#&gt; [75] glue_1.4.2                                 </span>
+<span class="co">#&gt; [76] evaluate_0.14                              </span>
+<span class="co">#&gt; [77] vctrs_0.3.6                                </span>
+<span class="co">#&gt; [78] gtable_0.3.0                               </span>
+<span class="co">#&gt; [79] openssl_1.4.3                              </span>
+<span class="co">#&gt; [80] purrr_0.3.4                                </span>
+<span class="co">#&gt; [81] assertthat_0.2.1                           </span>
+<span class="co">#&gt; [82] cachem_1.0.3                               </span>
+<span class="co">#&gt; [83] xfun_0.20                                  </span>
+<span class="co">#&gt; [84] ragg_0.4.1                                 </span>
+<span class="co">#&gt; [85] tibble_3.0.6                               </span>
+<span class="co">#&gt; [86] GenomicAlignments_1.26.0                   </span>
+<span class="co">#&gt; [87] AnnotationDbi_1.52.0                       </span>
+<span class="co">#&gt; [88] memoise_2.0.0                              </span>
+<span class="co">#&gt; [89] ellipsis_0.3.1</span></code></pre></div>
 </div>
   </div>
 
@@ -656,7 +672,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -81,7 +81,7 @@ Note: Can be quite lengthy for .bam files with 5+ millions fragments." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VplotR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -89,7 +89,7 @@ Note: Can be quite lengthy for .bam files with 5+ millions fragments." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -106,7 +106,7 @@ Note: Can be quite lengthy for .bam files with 5+ millions fragments." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/js2264/VplotR/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -134,15 +134,15 @@ objects.
 Note: Can be quite lengthy for .bam files with 5+ millions fragments.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>importPEBamFiles</span>(
-  <span class='no'>files</span>,
-  <span class='kw'>genome</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>where</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>max_insert_size</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-  <span class='kw'>shift_ATAC_fragments</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>importPEBamFiles</span><span class='op'>(</span>
+  <span class='va'>files</span>,
+  genome <span class='op'>=</span> <span class='cn'>NULL</span>,
+  where <span class='op'>=</span> <span class='cn'>NULL</span>,
+  max_insert_size <span class='op'>=</span> <span class='fl'>1000</span>,
+  shift_ATAC_fragments <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  cores <span class='op'>=</span> <span class='fl'>10</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -187,11 +187,13 @@ from ATAC-seq, one might want to shift the extremities by +5 / -4 bp.</p></td>
     <p>A GRanges object containing fragments from the input .bam file.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>bamfile</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"ex1.bam"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"Rsamtools"</span>)
-<span class='no'>fragments</span> <span class='kw'>&lt;-</span> <span class='fu'>importPEBamFiles</span>(
-    <span class='no'>bamfile</span>,
-    <span class='kw'>shift_ATAC_fragments</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</div><div class='output co'>#&gt; <span class='message'>&gt; Importing /home/travis/R/Library/Rsamtools/extdata/ex1.bam ...</span></div><div class='output co'>#&gt; <span class='message'>&gt; Filtering /home/travis/R/Library/Rsamtools/extdata/ex1.bam ...</span></div><div class='output co'>#&gt; <span class='message'>&gt; Shifting /home/travis/R/Library/Rsamtools/extdata/ex1.bam ...</span></div><div class='output co'>#&gt; <span class='message'>&gt; /home/travis/R/Library/Rsamtools/extdata/ex1.bam import completed.</span></div><div class='input'><span class='no'>fragments</span></div><div class='output co'>#&gt; GRanges object with 1572 ranges and 0 metadata columns:
+    <pre class="examples"><div class='input'><span class='va'>bamfile</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"ex1.bam"</span>, package <span class='op'>=</span> <span class='st'>"Rsamtools"</span><span class='op'>)</span>
+<span class='va'>fragments</span> <span class='op'>&lt;-</span> <span class='fu'>importPEBamFiles</span><span class='op'>(</span>
+    <span class='va'>bamfile</span>, 
+    shift_ATAC_fragments <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>&gt; Importing /Users/runner/work/_temp/Library/Rsamtools/extdata/ex1.bam ...</span></div><div class='output co'>#&gt; <span class='message'>&gt; Filtering /Users/runner/work/_temp/Library/Rsamtools/extdata/ex1.bam ...</span></div><div class='output co'>#&gt; <span class='message'>&gt; Shifting /Users/runner/work/_temp/Library/Rsamtools/extdata/ex1.bam ...</span></div><div class='output co'>#&gt; <span class='message'>&gt; /Users/runner/work/_temp/Library/Rsamtools/extdata/ex1.bam import completed.</span></div><div class='input'><span class='va'>fragments</span>
+</div><div class='output co'>#&gt; GRanges object with 1572 ranges and 0 metadata columns:
 #&gt;          seqnames    ranges strand
 #&gt;             &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
 #&gt;      [1]     seq1    41-215      +
@@ -222,7 +224,7 @@ from ATAC-seq, one might want to shift the extremities by +5 / -4 bp.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
