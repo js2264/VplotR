@@ -74,13 +74,16 @@ data(MNase_sacCer3_Henikoff2011)
 The distribution of fragment sizes can be obtained with `getFragmentsDistribution()` and plotted using `ggplot2` (\autoref{fig:fragsize}):
 
 ```r
-### The one-dimensional distribution of fragment sizes is obtained using the getFragmentsDistribution() function:
+### The one-dimensional distribution of fragment 
+### sizes is obtained using the 
+### getFragmentsDistribution() function:
 dist <- getFragmentsDistribution(
     MNase_sacCer3_Henikoff2011, 
     ABF1_sacCer3
 )
 
-### The resulting data frame can be plotted with ggplot2 (see Figure 2)
+### The resulting data frame can be plotted 
+### with ggplot2 (see Figure 2)
 ggplot(dist, aes(x = x, y = y)) +
     geom_line() +
     theme_ggplot2() +
