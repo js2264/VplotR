@@ -146,6 +146,7 @@ VplotR requires <code>R &gt;= 4.0</code> and is available from Bioconductor (rel
     x <span class="op">=</span> <span class="va">MNase_sacCer3_Henikoff2011</span>, 
     granges <span class="op">=</span> <span class="va">ABF1_sacCer3</span>
 <span class="op">)</span></code></pre></div>
+<p><img src="inst/figures/vplot.png" alt="vplot"></p>
 </div>
 <div id="importing-sequencing-fragments-are-granges" class="section level3">
 <h3 class="hasAnchor">
@@ -158,13 +159,31 @@ VplotR requires <code>R &gt;= 4.0</code> and is available from Bioconductor (rel
 <span class="va">fragments</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/importPEBamFiles.html">importPEBamFiles</a></span><span class="op">(</span>
     <span class="va">bamfile</span>,
     shift_ATAC_fragments <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+<span class="op">)</span>
+<span class="va">fragments</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">##   GRanges object with 1572 ranges and 0 metadata columns:</span>
+<span class="co">##            seqnames    ranges strand</span>
+<span class="co">##               &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span>
+<span class="co">##        [1]     seq1    41-215      +</span>
+<span class="co">##        [2]     seq1    54-255      +</span>
+<span class="co">##        [3]     seq1    56-258      +</span>
+<span class="co">##        [4]     seq1    65-255      +</span>
+<span class="co">##        [5]     seq1    65-265      +</span>
+<span class="co">##        ...      ...       ...    ...</span>
+<span class="co">##     [1568]     seq2 1326-1542      -</span>
+<span class="co">##     [1569]     seq2 1336-1544      -</span>
+<span class="co">##     [1570]     seq2 1358-1550      -</span>
+<span class="co">##     [1571]     seq2 1380-1557      -</span>
+<span class="co">##     [1572]     seq2 1353-1562      -</span>
+<span class="co">##     -------</span>
+<span class="co">##     seqinfo: 2 sequences from an unspecified genome; no seqlengths</span></code></pre></div>
 </div>
 <div id="plotting-fragment-size-distribution" class="section level3">
 <h3 class="hasAnchor">
 <a href="#plotting-fragment-size-distribution" class="anchor"></a>Plotting fragment size distribution</h3>
 <p>The distribution of fragment sizes can be computed with the <code><a href="reference/getFragmentsDistribution.html">getFragmentsDistribution()</a></code> function:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/js2264/VplotR">VplotR</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">MNase_sacCer3_Henikoff2011</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">ABF1_sacCer3</span><span class="op">)</span>
@@ -174,7 +193,9 @@ VplotR requires <code>R &gt;= 4.0</code> and is available from Bioconductor (rel
 <span class="op">)</span>
 <span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
-    <span class="fu"><a href="reference/theme_ggplot2.html">theme_ggplot2</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+    <span class="fu"><a href="reference/theme_ggplot2.html">theme_ggplot2</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Fragment size"</span>, y <span class="op">=</span> <span class="st">"# of fragments"</span><span class="op">)</span></code></pre></div>
+<p><img src="inst/figures/fragment_size_distribution.png" alt="fragment_size_distribution"></p>
 </div>
 <div id="datasets-provided-in-vplotr" class="section level3">
 <h3 class="hasAnchor">
@@ -183,21 +204,92 @@ VplotR requires <code>R &gt;= 4.0</code> and is available from Bioconductor (rel
 <ul>
 <li>A set of tissue-specific ATAC-seq experiments in young adult <em>C. elegans</em> (Serizay et al., 2020):</li>
 </ul>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/js2264/VplotR">VplotR</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">ATAC_ce11_Serizay2020</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">ATAC_ce11_Serizay2020</span><span class="op">)</span>
+<span class="va">ATAC_ce11_Serizay2020</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">##   $Germline</span>
+<span class="co">##   GRanges object with 462371 ranges and 0 metadata columns:</span>
+<span class="co">##              seqnames            ranges strand</span>
+<span class="co">##                 &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt;</span>
+<span class="co">##          [1]     chrI           426-514      +</span>
+<span class="co">##          [2]     chrI         3588-3854      +</span>
+<span class="co">##          [3]     chrI         3640-3798      +</span>
+<span class="co">##          [4]     chrI         3650-3694      +</span>
+<span class="co">##          [5]     chrI         3732-3863      +</span>
+<span class="co">##          ...      ...               ...    ...</span>
+<span class="co">##     [462367]     chrX 17712277-17712469      -</span>
+<span class="co">##     [462368]     chrX 17712279-17712342      -</span>
+<span class="co">##     [462369]     chrX 17712282-17712565      -</span>
+<span class="co">##     [462370]     chrX 17712285-17712384      -</span>
+<span class="co">##     [462371]     chrX 17712287-17712576      -</span>
+<span class="co">##     -------</span>
+<span class="co">##     seqinfo: 7 sequences from an unspecified genome; no seqlengths</span>
+<span class="co">##   </span>
+<span class="co">##   $Neurons</span>
+<span class="co">##   GRanges object with 367935 ranges and 0 metadata columns:</span>
+<span class="co">##              seqnames            ranges strand</span>
+<span class="co">##                 &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt;</span>
+<span class="co">##          [1]     chrI         4011-4241      +</span>
+<span class="co">##          [2]     chrI         7397-7614      +</span>
+<span class="co">##          [3]     chrI       11279-11502      +</span>
+<span class="co">##          [4]     chrI       12744-12819      +</span>
+<span class="co">##          [5]     chrI       14381-14433      +</span>
+<span class="co">##          ...      ...               ...    ...</span>
+<span class="co">##     [367931]     chrX 17687948-17687982      -</span>
+<span class="co">##     [367932]     chrX 17699614-17699853      -</span>
+<span class="co">##     [367933]     chrX 17706798-17706923      -</span>
+<span class="co">##     [367934]     chrX 17708264-17708347      -</span>
+<span class="co">##     [367935]     chrX 17709920-17710007      -</span>
+<span class="co">##     -------</span>
+<span class="co">##     seqinfo: 7 sequences from an unspecified genome; no seqlengths</span></code></pre></div>
 <ul>
 <li>An MNase-seq experiment in yeast (Henikoff et al., 2011) and associated ABF1 binding sites:</li>
 </ul>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/js2264/VplotR">VplotR</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">MNase_sacCer3_Henikoff2011</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">##   GRanges object with 400000 ranges and 0 metadata columns:</span>
+<span class="co">##              seqnames        ranges strand</span>
+<span class="co">##                 &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt;</span>
+<span class="co">##          [1]     chrI         2-116      +</span>
+<span class="co">##          [2]     chrI         14-66      +</span>
+<span class="co">##          [3]     chrI        15-134      +</span>
+<span class="co">##          [4]     chrI        54-167      +</span>
+<span class="co">##          [5]     chrI        66-104      +</span>
+<span class="co">##          ...      ...           ...    ...</span>
+<span class="co">##     [399996]   chrXVI 920439-920471      -</span>
+<span class="co">##     [399997]   chrXVI 920439-920486      -</span>
+<span class="co">##     [399998]   chrXVI 920439-920528      -</span>
+<span class="co">##     [399999]   chrXVI 920442-920659      -</span>
+<span class="co">##     [400000]   chrXVI 920454-920683      -</span>
+<span class="co">##     -------</span>
+<span class="co">##     seqinfo: 17 sequences from an unspecified genome</span></code></pre></div>
 <ul>
 <li>A <code>.bam</code> file sample containing 100,000 reads mapped to <em>C. elegans</em>:</li>
 </ul>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/js2264/VplotR">VplotR</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">bam_test</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">##   GRanges object with 100000 ranges and 0 metadata columns:</span>
+<span class="co">##              seqnames        ranges strand</span>
+<span class="co">##                 &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt;</span>
+<span class="co">##          [1]     chrI       425-554      +</span>
+<span class="co">##          [2]     chrI       426-555      +</span>
+<span class="co">##          [3]     chrI       459-604      +</span>
+<span class="co">##          [4]     chrI       459-604      +</span>
+<span class="co">##          [5]     chrI       504-634      +</span>
+<span class="co">##          ...      ...           ...    ...</span>
+<span class="co">##      [99996]     chrI 355817-355907      -</span>
+<span class="co">##      [99997]     chrI 355863-356018      +</span>
+<span class="co">##      [99998]     chrI 355864-355975      +</span>
+<span class="co">##      [99999]     chrI 355880-355917      +</span>
+<span class="co">##     [100000]     chrI 355883-355988      +</span>
+<span class="co">##     -------</span>
+<span class="co">##     seqinfo: 7 sequences from an unspecified genome; no seqlengths</span></code></pre></div>
 <p>For a full list of the data available in this package, please go to the <a href="https://jserizay.com/VplotR/reference/index.html#section-data">reference page</a>.</p>
 </div>
 </div>
@@ -215,7 +307,7 @@ Feel free to reach out to <a href="mailto:jacquesserizay@gmail.com">J. Serizay</
 <div id="code-of-conduct" class="section level2">
 <h2 class="hasAnchor">
 <a href="#code-of-conduct" class="anchor"></a>Code of Conduct</h2>
-<p>Please note that <code>VplotR</code> is released with a (Contributor Code of Conduct)[<a href="https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html" class="uri">https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html</a>].<br>
+<p>Please note that <code>VplotR</code> is released with a <a href="https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>.<br>
 By contributing to this project, you agree to abide by its terms.</p>
 </div>
 </div>
