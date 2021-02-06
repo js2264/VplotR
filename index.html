@@ -96,6 +96,14 @@
 VplotR aim is to streamline the process of generating V-plots. It contains wrapping functions to import paired-end sequencing bam files and generate V-plots around genomic loci of interest.<br>
 VplotR is designed around <a href="https://ggplot2.tidyverse.org/">ggplot2</a> and makes full use of its potential. As such, it is easy to generate V-plots in batches and combine them with other plots to make publication-ready figures.</p>
 </div>
+<div id="v-plots-what-they-are-and-how-to-interpret-them" class="section level2">
+<h2 class="hasAnchor">
+<a href="#v-plots-what-they-are-and-how-to-interpret-them" class="anchor"></a>V-plots: what they are and how to interpret them</h2>
+<p>V-plots are two-dimensional plots of paired-end sequencing fragments from chromatin accessibility assays (e.g. ATAC-seq, MNase-seq or DNAse-seq) of from chromatin immunoprecipitation assays (i.e. ChIP-seq).</p>
+<p>The x axis represents the distance between sequencing fragments and genomic loci of interest (e.g. nucleosome-depleted regions, or NDR), while the y axis indicates the length of the sequenced fragments. The color scale indicates the density of fragments mapping over aggregated genomic loci of interest.</p>
+<p><img src="inst/figures/concept.png" alt="concept"></p>
+<p>Thus, V-plots can reveal where protein bound to DNA (e.g. nucleosomes) protect it from digestion.</p>
+</div>
 <div id="system-requirements" class="section level2">
 <h2 class="hasAnchor">
 <a href="#system-requirements" class="anchor"></a>System requirements</h2>
