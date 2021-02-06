@@ -152,7 +152,7 @@ Code contributions, bug reports, fixes and feature requests are most welcome.
 Please make any pull requests against the master branch at 
 https://github.com/js2264/VplotR
 and file issues at https://github.com/js2264/VplotR/issues.  
-Feel free to reach out to (J. Serizay)[mailto:jacquesserizay@gmail.com] for any 
+Feel free to reach out to [J. Serizay](mailto:jacquesserizay@gmail.com) for any 
 query. 
 
 ## License 
