@@ -26,6 +26,22 @@ makes full use of its potential. As such, it is easy to generate V-plots
 in batches and combine them with other plots to make 
 publication-ready figures.  
 
+## V-plots: what they are and how to interpret them
+
+V-plots are two-dimensional plots of paired-end sequencing fragments from 
+chromatin accessibility assays (e.g. ATAC-seq, MNase-seq or DNAse-seq) of 
+from chromatin immunoprecipitation assays (i.e. ChIP-seq).  
+
+The x axis represents the distance between sequencing fragments and genomic 
+loci of interest (e.g. nucleosome-depleted regions, or NDR), while the y axis 
+indicates the length of the sequenced fragments. The color scale indicates 
+the density of fragments mapping over aggregated genomic loci of interest.  
+
+![concept](inst/figures/concept.png)
+
+Thus, V-plots can reveal where protein bound to DNA (e.g. nucleosomes) 
+protect it from digestion. 
+
 ## System requirements 
 
 VplotR has been tested on Mac OS (`>= 10.13`), Ubuntu (`>= 18.04`) and Windows Server (`2012`).  
