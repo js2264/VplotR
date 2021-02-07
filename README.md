@@ -26,6 +26,15 @@ makes full use of its potential. As such, it is easy to generate V-plots
 in batches and combine them with other plots to make 
 publication-ready figures.  
 
+## VplotR documentation 
+
+VplotR documentation is available [here](https://jserizay.com/VplotR/articles/VplotR.html)
+or directly within R: 
+
+```r
+vignette("VplotR")
+```
+
 ## V-plots: what they are and how to interpret them
 
 V-plots are two-dimensional plots of paired-end sequencing fragments from 
@@ -84,7 +93,7 @@ the [reference](https://jserizay.com/VplotR/reference/index.html)
 for a full description of each function, a list of the available data 
 provided in the package and examples of use cases.
 
-## Get started with VplotR 
+## Getting started with VplotR 
 
 ### Plotting a V-plot
 
@@ -97,11 +106,12 @@ p <- plotVmat(
     x = MNase_sacCer3_Henikoff2011, 
     granges = ABF1_sacCer3
 )
+p
 ```
 
 ![vplot](inst/figures/vplot.png)
 
-### Importing sequencing fragments are `GRanges`
+### Importing sequencing fragments as `GRanges`
 
 Paired-end `.bam` files are imported using the `importPEBamFiles()` 
 function as follows:
@@ -148,10 +158,11 @@ df <- getFragmentsDistribution(
     MNase_sacCer3_Henikoff2011,
     ABF1_sacCer3
 )
-ggplot(df, aes(x = x, y = y)) + 
+p <- ggplot(df, aes(x = x, y = y)) + 
     geom_line() + 
     theme_ggplot2() + 
     labs(x = "Fragment size", y = "# of fragments")
+p
 ```
 
 ![fragment_size_distribution](inst/figures/fragment_size_distribution.png)
