@@ -96,6 +96,13 @@
 VplotR aim is to streamline the process of generating V-plots. It contains wrapping functions to import paired-end sequencing bam files and generate V-plots around genomic loci of interest.<br>
 VplotR is designed around <a href="https://ggplot2.tidyverse.org/">ggplot2</a> and makes full use of its potential. As such, it is easy to generate V-plots in batches and combine them with other plots to make publication-ready figures.</p>
 </div>
+<div id="vplotr-documentation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#vplotr-documentation" class="anchor"></a>VplotR documentation</h2>
+<p>VplotR documentation is available <a href="https://jserizay.com/VplotR/articles/VplotR.html">here</a> or directly within R:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html">vignette</a></span><span class="op">(</span><span class="st">"VplotR"</span><span class="op">)</span></code></pre></div>
+</div>
 <div id="v-plots-what-they-are-and-how-to-interpret-them" class="section level2">
 <h2 class="hasAnchor">
 <a href="#v-plots-what-they-are-and-how-to-interpret-them" class="anchor"></a>V-plots: what they are and how to interpret them</h2>
@@ -114,13 +121,13 @@ VplotR requires <code>R &gt;= 4.0</code> and is available from Bioconductor (rel
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>VplotR and all its dependencies can be installed from Bioconductor:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
     <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span>
 <span class="fu">BiocManager</span><span class="fu">::</span><span class="fu">install</span><span class="op">(</span><span class="st">"VplotR"</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/js2264/VplotR">"VplotR"</a></span><span class="op">)</span></code></pre></div>
 <p>VplotR developpment version can be installed from Github as follows:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"js2264/VplotR"</span><span class="op">)</span></code></pre></div>
 </div>
@@ -140,28 +147,29 @@ VplotR requires <code>R &gt;= 4.0</code> and is available from Bioconductor (rel
 </ul>
 <p>See the <a href="https://jserizay.com/VplotR/articles/VplotR.html">package vignette</a> for an in-depth introduction to the package functionalities and the <a href="https://jserizay.com/VplotR/reference/index.html">reference</a> for a full description of each function, a list of the available data provided in the package and examples of use cases.</p>
 </div>
-<div id="get-started-with-vplotr" class="section level2">
+<div id="getting-started-with-vplotr" class="section level2">
 <h2 class="hasAnchor">
-<a href="#get-started-with-vplotr" class="anchor"></a>Get started with VplotR</h2>
+<a href="#getting-started-with-vplotr" class="anchor"></a>Getting started with VplotR</h2>
 <div id="plotting-a-v-plot" class="section level3">
 <h3 class="hasAnchor">
 <a href="#plotting-a-v-plot" class="anchor"></a>Plotting a V-plot</h3>
 <p>V-plots can be generated using the <code><a href="reference/plotVmat.html">plotVmat()</a></code> function:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">MNase_sacCer3_Henikoff2011</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">ABF1_sacCer3</span><span class="op">)</span>
 <span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plotVmat.html">plotVmat</a></span><span class="op">(</span>
     x <span class="op">=</span> <span class="va">MNase_sacCer3_Henikoff2011</span>, 
     granges <span class="op">=</span> <span class="va">ABF1_sacCer3</span>
-<span class="op">)</span></code></pre></div>
+<span class="op">)</span>
+<span class="va">p</span></code></pre></div>
 <p><img src="inst/figures/vplot.png" alt="vplot"></p>
 </div>
-<div id="importing-sequencing-fragments-are-granges" class="section level3">
+<div id="importing-sequencing-fragments-as-granges" class="section level3">
 <h3 class="hasAnchor">
-<a href="#importing-sequencing-fragments-are-granges" class="anchor"></a>Importing sequencing fragments are <code>GRanges</code>
+<a href="#importing-sequencing-fragments-as-granges" class="anchor"></a>Importing sequencing fragments as <code>GRanges</code>
 </h3>
 <p>Paired-end <code>.bam</code> files are imported using the <code><a href="reference/importPEBamFiles.html">importPEBamFiles()</a></code> function as follows:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/js2264/VplotR">VplotR</a></span><span class="op">)</span>
 <span class="va">bamfile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"ex1.bam"</span>, package <span class="op">=</span> <span class="st">"Rsamtools"</span><span class="op">)</span>
 <span class="va">fragments</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/importPEBamFiles.html">importPEBamFiles</a></span><span class="op">(</span>
@@ -169,7 +177,7 @@ VplotR requires <code>R &gt;= 4.0</code> and is available from Bioconductor (rel
     shift_ATAC_fragments <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span>
 <span class="va">fragments</span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">##   GRanges object with 1572 ranges and 0 metadata columns:</span>
 <span class="co">##            seqnames    ranges strand</span>
 <span class="co">##               &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span>
@@ -191,7 +199,7 @@ VplotR requires <code>R &gt;= 4.0</code> and is available from Bioconductor (rel
 <h3 class="hasAnchor">
 <a href="#plotting-fragment-size-distribution" class="anchor"></a>Plotting fragment size distribution</h3>
 <p>The distribution of fragment sizes can be computed with the <code><a href="reference/getFragmentsDistribution.html">getFragmentsDistribution()</a></code> function:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/js2264/VplotR">VplotR</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">MNase_sacCer3_Henikoff2011</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">ABF1_sacCer3</span><span class="op">)</span>
@@ -199,10 +207,11 @@ VplotR requires <code>R &gt;= 4.0</code> and is available from Bioconductor (rel
     <span class="va">MNase_sacCer3_Henikoff2011</span>,
     <span class="va">ABF1_sacCer3</span>
 <span class="op">)</span>
-<span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+<span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu"><a href="reference/theme_ggplot2.html">theme_ggplot2</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
-    <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Fragment size"</span>, y <span class="op">=</span> <span class="st">"# of fragments"</span><span class="op">)</span></code></pre></div>
+    <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Fragment size"</span>, y <span class="op">=</span> <span class="st">"# of fragments"</span><span class="op">)</span>
+<span class="va">p</span></code></pre></div>
 <p><img src="inst/figures/fragment_size_distribution.png" alt="fragment_size_distribution"></p>
 </div>
 <div id="datasets-provided-in-vplotr" class="section level3">
@@ -212,11 +221,11 @@ VplotR requires <code>R &gt;= 4.0</code> and is available from Bioconductor (rel
 <ul>
 <li>A set of tissue-specific ATAC-seq experiments in young adult <em>C. elegans</em> (Serizay et al., 2020):</li>
 </ul>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/js2264/VplotR">VplotR</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">ATAC_ce11_Serizay2020</span><span class="op">)</span>
 <span class="va">ATAC_ce11_Serizay2020</span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">##   $Germline</span>
 <span class="co">##   GRanges object with 462371 ranges and 0 metadata columns:</span>
 <span class="co">##              seqnames            ranges strand</span>
@@ -255,10 +264,10 @@ VplotR requires <code>R &gt;= 4.0</code> and is available from Bioconductor (rel
 <ul>
 <li>An MNase-seq experiment in yeast (Henikoff et al., 2011) and associated ABF1 binding sites:</li>
 </ul>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/js2264/VplotR">VplotR</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">MNase_sacCer3_Henikoff2011</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">##   GRanges object with 400000 ranges and 0 metadata columns:</span>
 <span class="co">##              seqnames        ranges strand</span>
 <span class="co">##                 &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt;</span>
@@ -278,10 +287,10 @@ VplotR requires <code>R &gt;= 4.0</code> and is available from Bioconductor (rel
 <ul>
 <li>A <code>.bam</code> file sample containing 100,000 reads mapped to <em>C. elegans</em>:</li>
 </ul>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/js2264/VplotR">VplotR</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">bam_test</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">##   GRanges object with 100000 ranges and 0 metadata columns:</span>
 <span class="co">##              seqnames        ranges strand</span>
 <span class="co">##                 &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt;</span>
@@ -343,8 +352,7 @@ By contributing to this project, you agree to abide by its terms.</p>
 <div class="license">
 <h2>License</h2>
 <ul class="list-unstyled">
-<li><a href="LICENSE.html">Full license</a></li>
-<li><small>GPL (&gt;= 3)</small></li>
+<li>GPL (&gt;= 3)</li>
 </ul>
 </div>
 <div class="community">
