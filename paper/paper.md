@@ -27,13 +27,13 @@ VplotR is an R package facilitating the generation of V-plots, i.e. two-dimensio
 
 VplotR provides functions to import paired-end sequencing bam files from any type of DNA accessibility experiments (e.g. ATAC-seq, DNA-seq, MNase-seq) and can produce V-plots and one-dimensional footprint profiles over single or aggregated genomic loci of interest. The R package is well integrated within the Bioconductor environment and easily fits in standard genomic analysis workflows. Integrating V-plots into existing analytical frameworks has already brought new insights in chromatin organization [@Serizay2020Oct].  
 
-![Interpretation of V-plots. A- Sequenced fragments (for instance obtained from ATAC-seq) mapping to a locus of interest can originate from either nucleosomal DNA (in pink) or from nucleosome-free DNA (for instance from NDRs, in blue). B- The fragments can be embedded in a two-dimension graph. The horizontal coordinate represents the distance from the center of a fragment to the center of a locus of interest (for instance the NDR). The vertical coordinate represents the length of the fragment. C- When this projection is done over hundreds of loci, it results in a fragment density plot, i.e. a matrix which can be visualized as a heatmap, with the color gradient representing the density of fragments at each set of coordinates.\label{fig:example}](figures/figures_example.png)
+![Interpretation of V-plots. A- Sequenced fragments (for instance obtained from ATAC-seq) mapping to a locus of interest can originate from either nucleosomal DNA (in pink) or from nucleosome-free DNA (for instance from nucleosome-depleted regions (NDRs), in blue). B- The fragments can be embedded in a two-dimension graph. The horizontal coordinate represents the distance from the center of a fragment to the center of a locus of interest (for instance the NDR). The vertical coordinate represents the length of the fragment. C- When this projection is done over hundreds of loci, it results in a fragment density plot, i.e. a matrix which can be visualized as a heatmap, with the color gradient representing the density of fragments at each set of coordinates.\label{fig:example}](figures/figures_example.png)
 
 # Availability 
 
-VplotR is available as an R package and can be readily installed from Bioconductor. The developmental release can be found on Github. Package dependencies and system requirements are documented at https://js2264.github.io/VplotR/. VplotR has been tested using R (version 3.5 and later) on Mac OS (versions 10.11 and later), Ubuntu 18.04.2 and Windows machines.  
+VplotR is available as an R package and can be readily installed from Bioconductor. The development version can be found on GitHub. Package dependencies and system requirements are documented at https://js2264.github.io/VplotR/. VplotR has been tested using R (version 3.5 and later) on macOS (versions 10.11 and later), Ubuntu 18.04.2 and Windows machines.  
 
-To ensure stability, VplotR includes unit tests for most functions and supports continuous integration using Travis CI platform. Code contributions, bug reports, fixes and feature requests are most welcome by opening issues and pull requests at https://js2264.github.io/VplotR/.  
+To ensure stability, VplotR includes unit tests for most functions and supports continuous integration using the Travis CI platform. Code contributions, bug reports, fixes and feature requests are most welcome by opening issues and pull requests at https://js2264.github.io/VplotR/.  
 
 # Implementation
 
@@ -115,7 +115,7 @@ for more information).
 
 ## Plotting DNA accessibility footprint
 
-Observations from V-plots can be further investigated by plotting DNA accessibility footprints over these loci. `plotFootprint()` function can be leveraged to plot these footprint profiles (\autoref{fig:footprint}). 
+Observations from V-plots can be further investigated by plotting DNA accessibility footprints over these loci. The `plotFootprint()` function can be leveraged to plot these footprint profiles (\autoref{fig:footprint}). 
 
 ```r
 plotFootprint(
