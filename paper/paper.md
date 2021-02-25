@@ -146,7 +146,7 @@ plotProfile(
 
 ![Distribution of MNase-seq fragments over ABF1 binding sites in Yeast at a locus on chrXV (186 kb).\label{fig:locus}](figures/figures_locus.png)
 
-The paired-end fragments overlapping a locus of interest (e.g., binding sites, provided in the `loci` argument) are shown in red while the remaining fragments mapping to the genomic window are displayed in black. Marginal curves are also plotted on the side of the distribution plot. Furthermore, genomic features provided in the `annots` arguments are displayed as horizontal bars on top of the plots. Here, the distribution of yeast MNase paired-end fragments over the bi-directional promoter regulating two divergent genes clearly reveals the ABF1 binding site (in red) located in the nucleosome-depleted region (NDR). 
+The paired-end fragments overlapping a locus of interest (e.g., binding sites, provided in the `loci` argument) are shown in red while the remaining fragments mapping to the genomic window are displayed in black. Marginal curves are also plotted on the side of the distribution plot; they highlight the smoothed distribution of the position of paired-end fragment midpoints (top) or of the paired-end fragment length (right). Furthermore, genomic features provided in the `annots` arguments are displayed as horizontal bars on top of the plots. Here, the distribution of yeast MNase paired-end fragments over the bi-directional promoter regulating two divergent genes clearly reveals the ABF1 binding site (in red) located in the nucleosome-depleted region (NDR). 
 
 # Research using VplotR
 

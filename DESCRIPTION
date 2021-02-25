@@ -18,7 +18,7 @@ Description: The pattern of digestion and protection from DNA nucleases such
     over single or aggregated genomic loci of interest.
 URL: https://github.com/js2264/VplotR
 BugReports: https://github.com/js2264/VplotR/issues
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Depends:
     R (>= 4.0),
     GenomicRanges,

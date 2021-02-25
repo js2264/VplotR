@@ -1,5 +1,14 @@
 #' A function to generate a Vplot along chromosome coordinates
 #'
+#' @description
+#' The paired-end fragments overlapping a locus of interest 
+#' (e.g., binding sites, provided in the `loci` argument) are shown in red 
+#' while the remaining fragments mapping to the genomic window are 
+#' displayed in black. 
+#' Marginal curves are also plotted on the side of the distribution plot. 
+#' They highlight the smoothed distribution of the position of paired-end 
+#' fragment midpoints (top) or of the paired-end fragment length (right)
+#' 
 #' @param fragments GRanges
 #' @param window character, chromosome location
 #' @param loci GRanges, optional genomic locus. Fragments overlapping 
