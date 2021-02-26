@@ -23,7 +23,7 @@ Here, we present VplotR, an R package to easily generate V-plots and one-dimensi
 
 # Statement of Need
 
-VplotR is an R package facilitating the generation of V-plots, i.e. two-dimensional paired-end sequencing fragment density plots [@Henikoff2011Nov]. V-plots have been used in the past to elucidate nucleosome positioning and/or transcription factor binding at regulatory elements [@Henikoff2011Nov; @Schep2015Aug] (e.g. \autoref{fig:example}).  
+VplotR is an R package facilitating the generation of V-plots, i.e. two-dimensional paired-end sequencing fragment density plots [@Henikoff2011Nov]. V-plots have been used in the past to elucidate nucleosome positioning and/or transcription factor binding at regulatory elements [@Henikoff2011Nov; @Schep2015Aug] (e.g. \autoref{fig:example}). Only a few tools have been developed that can easily generate V-plots [@Schep2015Aug; @Beati2020], and they are provided as scripts to be used with the command-line interface. Thus, they lack the customization and interaction with other datasets typically available in the wealthy R/Bioconductor environment.  
 
 VplotR provides functions to import paired-end sequencing bam files from any type of DNA accessibility experiments (e.g. ATAC-seq, DNA-seq, MNase-seq) and can produce V-plots and one-dimensional footprint profiles over single or aggregated genomic loci of interest. The R package is well integrated within the Bioconductor environment and easily fits in standard genomic analysis workflows. Integrating V-plots into existing analytical frameworks has already brought new insights in chromatin organization [@Serizay2020Oct].  
 
