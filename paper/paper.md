@@ -8,8 +8,10 @@ authors:
   - name: Jacques Serizay
     orcid: 0000-0002-4295-0624
     affiliation: 1 
+  - name: Julie Ahringer
+    affiliation: 1 
 affiliations:
- - name: Gurdon Institute, University of Cambridge
+ - name: The Gurdon Institute and Department of Genetics, University of Cambridge, Cambridge UK
    index: 1
 date: 28 January 2021
 bibliography: paper.bib
@@ -155,6 +157,15 @@ VplotR was recently leveraged to provide accurate insights into differential org
 # Data availability
 
 Yeast MNase-seq data has been obtained from @Henikoff2011Nov (SRR3193263). ABF1 and REB1 binding motifs in yeast have been annotated in sacCer3 genome using `TFBStools` [@Tan2016May] and `JASPAR2018` [@Khan2018Jan]. The motif occurrences with a relScore >= 0.90 were considered to be real binding sites. 
+
+# Author contributions
+
+J.S.: Conceptualization, Methodology, Software, Formal analysis, Investigation, Data Curation, Writing - Original Draft, Writing - Review & Editing, Visualization. J.A.: Conceptualization, Supervision, Funding acquisition, Project administration.
+
+# Acknowledgments
+
+We would like to thank editors from the Journal of Open Source Software, and notably C. Soneson, for their efforts to ensure a helpful and transparent reviewing procedure. We would also like to thank F. Geier and H. Kironde for their contribution as reviewers. 
+This work was supported by a Wellcome Trust Senior Research Fellowship to J.A. (101863) and a Medical Research Council DTP studentship to J.S..
 
 # References
 
