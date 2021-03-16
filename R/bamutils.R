@@ -6,8 +6,8 @@
 #'
 #' @param files character vector, each element of the vector is the path 
 #' of an individual .bam file.
-#' @param genome character, genome ID (e.g. sacCer3, ce11, dm6, danRer10,
-#' mm10 or hg38).
+#' @param genome character, genome ID (e.g. "sacCer3", "ce11", "dm6", 
+#' "mm10" or "hg38").
 #' @param where GRanges, only import the fragments mapping to the 
 #' input GRanges (can fasten the import process a lot). 
 #' @param max_insert_size Integer, filter out fragments larger 

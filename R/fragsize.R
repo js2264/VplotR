@@ -45,6 +45,11 @@ getFragmentsDistribution <- function(
 ) 
 {
     `%>%` <- magrittr::`%>%` 
+    if (is.null(granges_list)) {
+        granges_list <- GenomicRanges::GRanges(
+            GenomeInfoDb::seqinfo(fragments)
+        )
+    }
     if (methods::is(granges_list, 'GRanges')) {
         granges_list <- list(granges_list)
         names(granges_list) <- 'granges'
