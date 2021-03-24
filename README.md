@@ -1,7 +1,7 @@
-[![](https://img.shields.io/badge/release%20version-1.1.0-orange.svg)](https://www.bioconductor.org/packages/VplotR)
-[![](https://travis-ci.com/js2264/VplotR.svg?branch=master)](https://travis-ci.com/js2264/VplotR)
-[![](https://codecov.io/gh/js2264/VplotR/branch/master/graph/badge.svg)](https://codecov.io/github/js2264/VplotR?branch=master)
-[![](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.03009/status.svg)](https://doi.org/10.21105/joss.03009)
+[![DOI](https://img.shields.io/badge/GR-[DOI]10.1101/gr.265934.120-green.svg)](https://doi.org/10.1101/gr.265934.120)  
+[![](https://img.shields.io/badge/release%20version-1.2.0-orange.svg)](https://www.bioconductor.org/packages/VplotR)
+[![](https://img.shields.io/badge/lifecycle-production-blue.svg)](https://www.tidyverse.org/lifecycle/#production)
 [![](https://img.shields.io/github/languages/code-size/js2264/VplotR.svg)](https://github.com/js2264/VplotR)
 [![](https://img.shields.io/badge/license-GPL--3-orange.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 
@@ -73,6 +73,18 @@ VplotR developpment version can be installed from Github as follows:
 install.packages("devtools")
 devtools::install_github("js2264/VplotR")
 ```
+
+## Citation
+
+If you are using VplotR in your research, please cite: 
+
+> [Generating fragment density plots in R/Bioconductor with VplotR](https://joss.theoj.org/papers/10.21105/joss.03009)  
+> **J. Serizay** & J. Ahringer  
+> Journal of Open Source Software, 2021
+
+> [Distinctive regulatory architectures of germline-active and somatic genes in *C. elegans*](https://genome.cshlp.org/content/early/2020/10/21/gr.265934.120.abstract)  
+> **J. Serizay**, Y. Dong, J. Jänes, M. Chesney, C. Cerrato & J. Ahringer  
+> Genome Research, 2020
 
 ## Main functions 
 
