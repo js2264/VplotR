@@ -4,6 +4,8 @@
 [![](https://img.shields.io/badge/lifecycle-production-blue.svg)](https://www.tidyverse.org/lifecycle/#production)
 [![](https://img.shields.io/github/languages/code-size/js2264/VplotR.svg)](https://github.com/js2264/VplotR)
 [![](https://img.shields.io/badge/license-GPL--3-orange.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
+[![Codecov test coverage](https://codecov.io/gh/js2264/VplotR/branch/master/graph/badge.svg)](https://codecov.io/gh/js2264/VplotR?branch=master)
+[![R-CMD-check](https://github.com/js2264/VplotR/workflows/R-CMD-check/badge.svg)](https://github.com/js2264/VplotR/actions)
 
 # VplotR <img src="inst/figures/logo.png" align="right" alt="" />
 
