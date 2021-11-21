@@ -1,8 +1,8 @@
 Package: VplotR
 Type: Package
 Title: Set of tools to make V-plots and compute footprint profiles
-Version: 1.5.0
-Date: 2020-05-03
+Version: 1.5.1
+Date: 2021-11-21
 Encoding: UTF-8
 Authors@R: 
     c(person(given = "Jacques",
