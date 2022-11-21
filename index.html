@@ -30,6 +30,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -42,18 +44,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">VplotR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.9.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="articles/VplotR.html">Get started</a>
 </li>
@@ -66,7 +62,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/js2264/VplotR/">
+  <a href="https://github.com/js2264/VplotR/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -85,68 +81,65 @@
   <div class="contents col-md-9">
 
 
-<div id="vplotr-" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#vplotr-" class="anchor"></a>VplotR <img src="inst/figures/logo.png" align="right" alt="">
+<div class="section level1">
+<div class="page-header"><h1 id="vplotr-">VplotR <img src="inst/figures/logo.png" align="right" alt=""><a class="anchor" aria-label="anchor" href="#vplotr-"></a>
 </h1></div>
-<div id="introduction" class="section level2">
-<h2 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>Introduction</h2>
-<p>This R package makes the process of generating fragment density plots (also known as “V-plots”) straightforward. V-plots have been introduced <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3215028/">for the first time</a> by the Henikoff lab in 2011. Recently, V-plots have proven to be very instructive to understand the molecular organization of the chromatin. For instance, the <a href="https://genome.cshlp.org/content/early/2015/08/27/gr.192294.115">nucleoATAC</a> package relies on cross-correlation of ATAC-seq fragment density plots to accurately map nucleosome occupancy along the genome.<br>
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
+<p>This R package makes the process of generating fragment density plots (also known as “V-plots”) straightforward. V-plots have been introduced <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3215028/" class="external-link">for the first time</a> by the Henikoff lab in 2011. Recently, V-plots have proven to be very instructive to understand the molecular organization of the chromatin. For instance, the <a href="https://genome.cshlp.org/content/early/2015/08/27/gr.192294.115" class="external-link">nucleoATAC</a> package relies on cross-correlation of ATAC-seq fragment density plots to accurately map nucleosome occupancy along the genome.<br>
 VplotR aim is to streamline the process of generating V-plots. It contains wrapping functions to import paired-end sequencing bam files and generate V-plots around genomic loci of interest.<br>
-VplotR is designed around <a href="https://ggplot2.tidyverse.org/">ggplot2</a> and makes full use of its potential. As such, it is easy to generate V-plots in batches and combine them with other plots to make publication-ready figures.</p>
+VplotR is designed around <a href="https://ggplot2.tidyverse.org/" class="external-link">ggplot2</a> and makes full use of its potential. As such, it is easy to generate V-plots in batches and combine them with other plots to make publication-ready figures.</p>
 </div>
-<div id="vplotr-documentation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#vplotr-documentation" class="anchor"></a>VplotR documentation</h2>
-<p>VplotR documentation is available <a href="https://jserizay.com/VplotR/articles/VplotR.html">here</a> or directly within R:</p>
+<div class="section level2">
+<h2 id="vplotr-documentation">VplotR documentation<a class="anchor" aria-label="anchor" href="#vplotr-documentation"></a>
+</h2>
+<p>VplotR documentation is available <a href="https://jserizay.com/VplotR/articles/VplotR.html" class="external-link">here</a> or directly within R:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html">vignette</a></span><span class="op">(</span><span class="st">"VplotR"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span><span class="st">"VplotR"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="v-plots-what-they-are-and-how-to-interpret-them" class="section level2">
-<h2 class="hasAnchor">
-<a href="#v-plots-what-they-are-and-how-to-interpret-them" class="anchor"></a>V-plots: what they are and how to interpret them</h2>
+<div class="section level2">
+<h2 id="v-plots-what-they-are-and-how-to-interpret-them">V-plots: what they are and how to interpret them<a class="anchor" aria-label="anchor" href="#v-plots-what-they-are-and-how-to-interpret-them"></a>
+</h2>
 <p>V-plots are two-dimensional plots of paired-end sequencing fragments from chromatin accessibility assays (e.g. ATAC-seq, MNase-seq or DNAse-seq) of from chromatin immunoprecipitation assays (i.e. ChIP-seq).</p>
 <p>The x axis represents the distance between sequencing fragments and genomic loci of interest (e.g. nucleosome-depleted regions, or NDR), while the y axis indicates the length of the sequenced fragments. The color scale indicates the density of fragments mapping over aggregated genomic loci of interest.</p>
-<p><img src="inst/figures/concept.png" alt="concept"></p>
+<div class="figure">
+<img src="inst/figures/concept.png" alt=""><p class="caption">concept</p>
+</div>
 <p>Thus, V-plots can reveal where protein bound to DNA (e.g. nucleosomes) protect it from digestion.</p>
 </div>
-<div id="system-requirements" class="section level2">
-<h2 class="hasAnchor">
-<a href="#system-requirements" class="anchor"></a>System requirements</h2>
+<div class="section level2">
+<h2 id="system-requirements">System requirements<a class="anchor" aria-label="anchor" href="#system-requirements"></a>
+</h2>
 <p>VplotR has been tested on Mac OS (<code>&gt;= 10.13</code>), Ubuntu (<code>&gt;= 18.04</code>) and Windows Server (<code>2012</code>).<br>
 VplotR requires <code>R &gt;= 4.0</code> and is available from Bioconductor (release <code>&gt; 3.12</code>).</p>
 </div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <p>VplotR and all its dependencies can be installed from Bioconductor:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
-    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span>
-<span class="fu">BiocManager</span><span class="fu">::</span><span class="fu">install</span><span class="op">(</span><span class="st">"VplotR"</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/js2264/VplotR">"VplotR"</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
+<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu">install</span><span class="op">(</span><span class="st">"VplotR"</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/js2264/VplotR" class="external-link">"VplotR"</a></span><span class="op">)</span></span></code></pre></div>
 <p>VplotR developpment version can be installed from Github as follows:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"js2264/VplotR"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"js2264/VplotR"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="citation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#citation" class="anchor"></a>Citation</h2>
+<div class="section level2">
+<h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
+</h2>
 <p>If you are using VplotR in your research, please cite:</p>
-<blockquote>
-<p><a href="https://joss.theoj.org/papers/10.21105/joss.03009">Generating fragment density plots in R/Bioconductor with VplotR</a><br><strong>J. Serizay</strong> &amp; J. Ahringer<br>
-Journal of Open Source Software, 2021</p>
-</blockquote>
-<blockquote>
-<p><a href="https://genome.cshlp.org/content/early/2020/10/21/gr.265934.120.abstract">Distinctive regulatory architectures of germline-active and somatic genes in <em>C. elegans</em></a><br><strong>J. Serizay</strong>, Y. Dong, J. Jänes, M. Chesney, C. Cerrato &amp; J. Ahringer<br>
-Genome Research, 2020</p>
-</blockquote>
+<blockquote><p><a href="https://joss.theoj.org/papers/10.21105/joss.03009" class="external-link">Generating fragment density plots in R/Bioconductor with VplotR</a><br><strong>J. Serizay</strong> &amp; J. Ahringer<br>
+Journal of Open Source Software, 2021</p></blockquote>
+<blockquote><p><a href="https://genome.cshlp.org/content/early/2020/10/21/gr.265934.120.abstract" class="external-link">Distinctive regulatory architectures of germline-active and somatic genes in <em>C. elegans</em></a><br><strong>J. Serizay</strong>, Y. Dong, J. Jänes, M. Chesney, C. Cerrato &amp; J. Ahringer<br>
+Genome Research, 2020</p></blockquote>
 </div>
-<div id="main-functions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#main-functions" class="anchor"></a>Main functions</h2>
+<div class="section level2">
+<h2 id="main-functions">Main functions<a class="anchor" aria-label="anchor" href="#main-functions"></a>
+</h2>
 <p>The main user-level functions of VplotR are <code><a href="reference/getFragmentsDistribution.html">getFragmentsDistribution()</a></code>, <code><a href="reference/plotVmat.html">plotVmat()</a></code>, <code><a href="reference/plotFootprint.html">plotFootprint()</a></code> and <code><a href="reference/plotProfile.html">plotProfile()</a></code>.</p>
 <ul>
 <li>
@@ -158,186 +151,184 @@ Genome Research, 2020</p>
 <li>
 <code><a href="reference/plotProfile.html">plotProfile()</a></code> is used to plot the distribution of paired-end fragments at a single locus of interest.</li>
 </ul>
-<p>See the <a href="https://jserizay.com/VplotR/articles/VplotR.html">package vignette</a> for an in-depth introduction to the package functionalities and the <a href="https://jserizay.com/VplotR/reference/index.html">reference</a> for a full description of each function, a list of the available data provided in the package and examples of use cases.</p>
+<p>See the <a href="https://jserizay.com/VplotR/articles/VplotR.html" class="external-link">package vignette</a> for an in-depth introduction to the package functionalities and the <a href="https://jserizay.com/VplotR/reference/index.html" class="external-link">reference</a> for a full description of each function, a list of the available data provided in the package and examples of use cases.</p>
 </div>
-<div id="getting-started-with-vplotr" class="section level2">
-<h2 class="hasAnchor">
-<a href="#getting-started-with-vplotr" class="anchor"></a>Getting started with VplotR</h2>
-<div id="plotting-a-v-plot" class="section level3">
-<h3 class="hasAnchor">
-<a href="#plotting-a-v-plot" class="anchor"></a>Plotting a V-plot</h3>
+<div class="section level2">
+<h2 id="getting-started-with-vplotr">Getting started with VplotR<a class="anchor" aria-label="anchor" href="#getting-started-with-vplotr"></a>
+</h2>
+<div class="section level3">
+<h3 id="plotting-a-v-plot">Plotting a V-plot<a class="anchor" aria-label="anchor" href="#plotting-a-v-plot"></a>
+</h3>
 <p>V-plots can be generated using the <code><a href="reference/plotVmat.html">plotVmat()</a></code> function:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">MNase_sacCer3_Henikoff2011</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">ABF1_sacCer3</span><span class="op">)</span>
-<span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plotVmat.html">plotVmat</a></span><span class="op">(</span>
-    x <span class="op">=</span> <span class="va">MNase_sacCer3_Henikoff2011</span>, 
-    granges <span class="op">=</span> <span class="va">ABF1_sacCer3</span>
-<span class="op">)</span>
-<span class="va">p</span></code></pre></div>
-<p><img src="inst/figures/vplot.png" alt="vplot"></p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">MNase_sacCer3_Henikoff2011</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ABF1_sacCer3</span><span class="op">)</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plotVmat.html">plotVmat</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="va">MNase_sacCer3_Henikoff2011</span>, </span>
+<span>    granges <span class="op">=</span> <span class="va">ABF1_sacCer3</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">p</span></span></code></pre></div>
+<div class="figure">
+<img src="inst/figures/vplot.png" alt=""><p class="caption">vplot</p>
 </div>
-<div id="importing-sequencing-fragments-as-granges" class="section level3">
-<h3 class="hasAnchor">
-<a href="#importing-sequencing-fragments-as-granges" class="anchor"></a>Importing sequencing fragments as <code>GRanges</code>
+</div>
+<div class="section level3">
+<h3 id="importing-sequencing-fragments-as-granges">Importing sequencing fragments as <code>GRanges</code>
+<a class="anchor" aria-label="anchor" href="#importing-sequencing-fragments-as-granges"></a>
 </h3>
 <p>Paired-end <code>.bam</code> files are imported using the <code><a href="reference/importPEBamFiles.html">importPEBamFiles()</a></code> function as follows:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/js2264/VplotR">VplotR</a></span><span class="op">)</span>
-<span class="va">bamfile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"ex1.bam"</span>, package <span class="op">=</span> <span class="st">"Rsamtools"</span><span class="op">)</span>
-<span class="va">fragments</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/importPEBamFiles.html">importPEBamFiles</a></span><span class="op">(</span>
-    <span class="va">bamfile</span>,
-    shift_ATAC_fragments <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span>
-<span class="va">fragments</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/js2264/VplotR" class="external-link">VplotR</a></span><span class="op">)</span></span>
+<span><span class="va">bamfile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"ex1.bam"</span>, package <span class="op">=</span> <span class="st">"Rsamtools"</span><span class="op">)</span></span>
+<span><span class="va">fragments</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/importPEBamFiles.html">importPEBamFiles</a></span><span class="op">(</span></span>
+<span>    <span class="va">bamfile</span>,</span>
+<span>    shift_ATAC_fragments <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">fragments</span></span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">##   GRanges object with 1572 ranges and 0 metadata columns:</span>
-<span class="co">##            seqnames    ranges strand</span>
-<span class="co">##               &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span>
-<span class="co">##        [1]     seq1    41-215      +</span>
-<span class="co">##        [2]     seq1    54-255      +</span>
-<span class="co">##        [3]     seq1    56-258      +</span>
-<span class="co">##        [4]     seq1    65-255      +</span>
-<span class="co">##        [5]     seq1    65-265      +</span>
-<span class="co">##        ...      ...       ...    ...</span>
-<span class="co">##     [1568]     seq2 1326-1542      -</span>
-<span class="co">##     [1569]     seq2 1336-1544      -</span>
-<span class="co">##     [1570]     seq2 1358-1550      -</span>
-<span class="co">##     [1571]     seq2 1380-1557      -</span>
-<span class="co">##     [1572]     seq2 1353-1562      -</span>
-<span class="co">##     -------</span>
-<span class="co">##     seqinfo: 2 sequences from an unspecified genome; no seqlengths</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">##   GRanges object with 1572 ranges and 0 metadata columns:</span></span>
+<span><span class="co">##            seqnames    ranges strand</span></span>
+<span><span class="co">##               &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span></span>
+<span><span class="co">##        [1]     seq1    41-215      +</span></span>
+<span><span class="co">##        [2]     seq1    54-255      +</span></span>
+<span><span class="co">##        [3]     seq1    56-258      +</span></span>
+<span><span class="co">##        [4]     seq1    65-255      +</span></span>
+<span><span class="co">##        [5]     seq1    65-265      +</span></span>
+<span><span class="co">##        ...      ...       ...    ...</span></span>
+<span><span class="co">##     [1568]     seq2 1326-1542      -</span></span>
+<span><span class="co">##     [1569]     seq2 1336-1544      -</span></span>
+<span><span class="co">##     [1570]     seq2 1358-1550      -</span></span>
+<span><span class="co">##     [1571]     seq2 1380-1557      -</span></span>
+<span><span class="co">##     [1572]     seq2 1353-1562      -</span></span>
+<span><span class="co">##     -------</span></span>
+<span><span class="co">##     seqinfo: 2 sequences from an unspecified genome; no seqlengths</span></span></code></pre></div>
 </div>
-<div id="plotting-fragment-size-distribution" class="section level3">
-<h3 class="hasAnchor">
-<a href="#plotting-fragment-size-distribution" class="anchor"></a>Plotting fragment size distribution</h3>
+<div class="section level3">
+<h3 id="plotting-fragment-size-distribution">Plotting fragment size distribution<a class="anchor" aria-label="anchor" href="#plotting-fragment-size-distribution"></a>
+</h3>
 <p>The distribution of fragment sizes can be computed with the <code><a href="reference/getFragmentsDistribution.html">getFragmentsDistribution()</a></code> function:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/js2264/VplotR">VplotR</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">MNase_sacCer3_Henikoff2011</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">ABF1_sacCer3</span><span class="op">)</span>
-<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/getFragmentsDistribution.html">getFragmentsDistribution</a></span><span class="op">(</span>
-    <span class="va">MNase_sacCer3_Henikoff2011</span>,
-    <span class="va">ABF1_sacCer3</span>
-<span class="op">)</span>
-<span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">df</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-    <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
-    <span class="fu"><a href="reference/theme_ggplot2.html">theme_ggplot2</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
-    <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Fragment size"</span>, y <span class="op">=</span> <span class="st">"# of fragments"</span><span class="op">)</span>
-<span class="va">p</span></code></pre></div>
-<p><img src="inst/figures/fragment_size_distribution.png" alt="fragment_size_distribution"></p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/js2264/VplotR" class="external-link">VplotR</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">MNase_sacCer3_Henikoff2011</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ABF1_sacCer3</span><span class="op">)</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/getFragmentsDistribution.html">getFragmentsDistribution</a></span><span class="op">(</span></span>
+<span>    <span class="va">MNase_sacCer3_Henikoff2011</span>,</span>
+<span>    <span class="va">ABF1_sacCer3</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>    <span class="fu"><a href="reference/theme_ggplot2.html">theme_ggplot2</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Fragment size"</span>, y <span class="op">=</span> <span class="st">"# of fragments"</span><span class="op">)</span></span>
+<span><span class="va">p</span></span></code></pre></div>
+<div class="figure">
+<img src="inst/figures/fragment_size_distribution.png" alt=""><p class="caption">fragment_size_distribution</p>
 </div>
-<div id="datasets-provided-in-vplotr" class="section level3">
-<h3 class="hasAnchor">
-<a href="#datasets-provided-in-vplotr" class="anchor"></a>Datasets provided in VplotR</h3>
+</div>
+<div class="section level3">
+<h3 id="datasets-provided-in-vplotr">Datasets provided in VplotR<a class="anchor" aria-label="anchor" href="#datasets-provided-in-vplotr"></a>
+</h3>
 <p>Several dataset samples are provided as <code>GRanges</code> object in this package:</p>
-<ul>
-<li>A set of tissue-specific ATAC-seq experiments in young adult <em>C. elegans</em> (Serizay et al., 2020):</li>
-</ul>
+<ul><li>A set of tissue-specific ATAC-seq experiments in young adult <em>C. elegans</em> (Serizay et al., 2020):</li></ul>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/js2264/VplotR">VplotR</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">ATAC_ce11_Serizay2020</span><span class="op">)</span>
-<span class="va">ATAC_ce11_Serizay2020</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/js2264/VplotR" class="external-link">VplotR</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ATAC_ce11_Serizay2020</span><span class="op">)</span></span>
+<span><span class="va">ATAC_ce11_Serizay2020</span></span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">##   $Germline</span>
-<span class="co">##   GRanges object with 462371 ranges and 0 metadata columns:</span>
-<span class="co">##              seqnames            ranges strand</span>
-<span class="co">##                 &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt;</span>
-<span class="co">##          [1]     chrI           426-514      +</span>
-<span class="co">##          [2]     chrI         3588-3854      +</span>
-<span class="co">##          [3]     chrI         3640-3798      +</span>
-<span class="co">##          [4]     chrI         3650-3694      +</span>
-<span class="co">##          [5]     chrI         3732-3863      +</span>
-<span class="co">##          ...      ...               ...    ...</span>
-<span class="co">##     [462367]     chrX 17712277-17712469      -</span>
-<span class="co">##     [462368]     chrX 17712279-17712342      -</span>
-<span class="co">##     [462369]     chrX 17712282-17712565      -</span>
-<span class="co">##     [462370]     chrX 17712285-17712384      -</span>
-<span class="co">##     [462371]     chrX 17712287-17712576      -</span>
-<span class="co">##     -------</span>
-<span class="co">##     seqinfo: 7 sequences from an unspecified genome; no seqlengths</span>
-<span class="co">##   </span>
-<span class="co">##   $Neurons</span>
-<span class="co">##   GRanges object with 367935 ranges and 0 metadata columns:</span>
-<span class="co">##              seqnames            ranges strand</span>
-<span class="co">##                 &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt;</span>
-<span class="co">##          [1]     chrI         4011-4241      +</span>
-<span class="co">##          [2]     chrI         7397-7614      +</span>
-<span class="co">##          [3]     chrI       11279-11502      +</span>
-<span class="co">##          [4]     chrI       12744-12819      +</span>
-<span class="co">##          [5]     chrI       14381-14433      +</span>
-<span class="co">##          ...      ...               ...    ...</span>
-<span class="co">##     [367931]     chrX 17687948-17687982      -</span>
-<span class="co">##     [367932]     chrX 17699614-17699853      -</span>
-<span class="co">##     [367933]     chrX 17706798-17706923      -</span>
-<span class="co">##     [367934]     chrX 17708264-17708347      -</span>
-<span class="co">##     [367935]     chrX 17709920-17710007      -</span>
-<span class="co">##     -------</span>
-<span class="co">##     seqinfo: 7 sequences from an unspecified genome; no seqlengths</span></code></pre></div>
-<ul>
-<li>An MNase-seq experiment in yeast (Henikoff et al., 2011) and associated ABF1 binding sites:</li>
-</ul>
+<code class="sourceCode R"><span><span class="co">##   $Germline</span></span>
+<span><span class="co">##   GRanges object with 462371 ranges and 0 metadata columns:</span></span>
+<span><span class="co">##              seqnames            ranges strand</span></span>
+<span><span class="co">##                 &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt;</span></span>
+<span><span class="co">##          [1]     chrI           426-514      +</span></span>
+<span><span class="co">##          [2]     chrI         3588-3854      +</span></span>
+<span><span class="co">##          [3]     chrI         3640-3798      +</span></span>
+<span><span class="co">##          [4]     chrI         3650-3694      +</span></span>
+<span><span class="co">##          [5]     chrI         3732-3863      +</span></span>
+<span><span class="co">##          ...      ...               ...    ...</span></span>
+<span><span class="co">##     [462367]     chrX 17712277-17712469      -</span></span>
+<span><span class="co">##     [462368]     chrX 17712279-17712342      -</span></span>
+<span><span class="co">##     [462369]     chrX 17712282-17712565      -</span></span>
+<span><span class="co">##     [462370]     chrX 17712285-17712384      -</span></span>
+<span><span class="co">##     [462371]     chrX 17712287-17712576      -</span></span>
+<span><span class="co">##     -------</span></span>
+<span><span class="co">##     seqinfo: 7 sequences from an unspecified genome; no seqlengths</span></span>
+<span><span class="co">##   </span></span>
+<span><span class="co">##   $Neurons</span></span>
+<span><span class="co">##   GRanges object with 367935 ranges and 0 metadata columns:</span></span>
+<span><span class="co">##              seqnames            ranges strand</span></span>
+<span><span class="co">##                 &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt;</span></span>
+<span><span class="co">##          [1]     chrI         4011-4241      +</span></span>
+<span><span class="co">##          [2]     chrI         7397-7614      +</span></span>
+<span><span class="co">##          [3]     chrI       11279-11502      +</span></span>
+<span><span class="co">##          [4]     chrI       12744-12819      +</span></span>
+<span><span class="co">##          [5]     chrI       14381-14433      +</span></span>
+<span><span class="co">##          ...      ...               ...    ...</span></span>
+<span><span class="co">##     [367931]     chrX 17687948-17687982      -</span></span>
+<span><span class="co">##     [367932]     chrX 17699614-17699853      -</span></span>
+<span><span class="co">##     [367933]     chrX 17706798-17706923      -</span></span>
+<span><span class="co">##     [367934]     chrX 17708264-17708347      -</span></span>
+<span><span class="co">##     [367935]     chrX 17709920-17710007      -</span></span>
+<span><span class="co">##     -------</span></span>
+<span><span class="co">##     seqinfo: 7 sequences from an unspecified genome; no seqlengths</span></span></code></pre></div>
+<ul><li>An MNase-seq experiment in yeast (Henikoff et al., 2011) and associated ABF1 binding sites:</li></ul>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/js2264/VplotR">VplotR</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">MNase_sacCer3_Henikoff2011</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/js2264/VplotR" class="external-link">VplotR</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">MNase_sacCer3_Henikoff2011</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">##   GRanges object with 400000 ranges and 0 metadata columns:</span>
-<span class="co">##              seqnames        ranges strand</span>
-<span class="co">##                 &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt;</span>
-<span class="co">##          [1]     chrI         2-116      +</span>
-<span class="co">##          [2]     chrI         14-66      +</span>
-<span class="co">##          [3]     chrI        15-134      +</span>
-<span class="co">##          [4]     chrI        54-167      +</span>
-<span class="co">##          [5]     chrI        66-104      +</span>
-<span class="co">##          ...      ...           ...    ...</span>
-<span class="co">##     [399996]   chrXVI 920439-920471      -</span>
-<span class="co">##     [399997]   chrXVI 920439-920486      -</span>
-<span class="co">##     [399998]   chrXVI 920439-920528      -</span>
-<span class="co">##     [399999]   chrXVI 920442-920659      -</span>
-<span class="co">##     [400000]   chrXVI 920454-920683      -</span>
-<span class="co">##     -------</span>
-<span class="co">##     seqinfo: 17 sequences from an unspecified genome</span></code></pre></div>
-<ul>
-<li>A <code>.bam</code> file sample containing 100,000 reads mapped to <em>C. elegans</em>:</li>
-</ul>
+<code class="sourceCode R"><span><span class="co">##   GRanges object with 400000 ranges and 0 metadata columns:</span></span>
+<span><span class="co">##              seqnames        ranges strand</span></span>
+<span><span class="co">##                 &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt;</span></span>
+<span><span class="co">##          [1]     chrI         2-116      +</span></span>
+<span><span class="co">##          [2]     chrI         14-66      +</span></span>
+<span><span class="co">##          [3]     chrI        15-134      +</span></span>
+<span><span class="co">##          [4]     chrI        54-167      +</span></span>
+<span><span class="co">##          [5]     chrI        66-104      +</span></span>
+<span><span class="co">##          ...      ...           ...    ...</span></span>
+<span><span class="co">##     [399996]   chrXVI 920439-920471      -</span></span>
+<span><span class="co">##     [399997]   chrXVI 920439-920486      -</span></span>
+<span><span class="co">##     [399998]   chrXVI 920439-920528      -</span></span>
+<span><span class="co">##     [399999]   chrXVI 920442-920659      -</span></span>
+<span><span class="co">##     [400000]   chrXVI 920454-920683      -</span></span>
+<span><span class="co">##     -------</span></span>
+<span><span class="co">##     seqinfo: 17 sequences from an unspecified genome</span></span></code></pre></div>
+<ul><li>A <code>.bam</code> file sample containing 100,000 reads mapped to <em>C. elegans</em>:</li></ul>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/js2264/VplotR">VplotR</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">bam_test</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/js2264/VplotR" class="external-link">VplotR</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">bam_test</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">##   GRanges object with 100000 ranges and 0 metadata columns:</span>
-<span class="co">##              seqnames        ranges strand</span>
-<span class="co">##                 &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt;</span>
-<span class="co">##          [1]     chrI       425-554      +</span>
-<span class="co">##          [2]     chrI       426-555      +</span>
-<span class="co">##          [3]     chrI       459-604      +</span>
-<span class="co">##          [4]     chrI       459-604      +</span>
-<span class="co">##          [5]     chrI       504-634      +</span>
-<span class="co">##          ...      ...           ...    ...</span>
-<span class="co">##      [99996]     chrI 355817-355907      -</span>
-<span class="co">##      [99997]     chrI 355863-356018      +</span>
-<span class="co">##      [99998]     chrI 355864-355975      +</span>
-<span class="co">##      [99999]     chrI 355880-355917      +</span>
-<span class="co">##     [100000]     chrI 355883-355988      +</span>
-<span class="co">##     -------</span>
-<span class="co">##     seqinfo: 7 sequences from an unspecified genome; no seqlengths</span></code></pre></div>
-<p>For a full list of the data available in this package, please go to the <a href="https://jserizay.com/VplotR/reference/index.html#section-data">reference page</a>.</p>
+<code class="sourceCode R"><span><span class="co">##   GRanges object with 100000 ranges and 0 metadata columns:</span></span>
+<span><span class="co">##              seqnames        ranges strand</span></span>
+<span><span class="co">##                 &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt;</span></span>
+<span><span class="co">##          [1]     chrI       425-554      +</span></span>
+<span><span class="co">##          [2]     chrI       426-555      +</span></span>
+<span><span class="co">##          [3]     chrI       459-604      +</span></span>
+<span><span class="co">##          [4]     chrI       459-604      +</span></span>
+<span><span class="co">##          [5]     chrI       504-634      +</span></span>
+<span><span class="co">##          ...      ...           ...    ...</span></span>
+<span><span class="co">##      [99996]     chrI 355817-355907      -</span></span>
+<span><span class="co">##      [99997]     chrI 355863-356018      +</span></span>
+<span><span class="co">##      [99998]     chrI 355864-355975      +</span></span>
+<span><span class="co">##      [99999]     chrI 355880-355917      +</span></span>
+<span><span class="co">##     [100000]     chrI 355883-355988      +</span></span>
+<span><span class="co">##     -------</span></span>
+<span><span class="co">##     seqinfo: 7 sequences from an unspecified genome; no seqlengths</span></span></code></pre></div>
+<p>For a full list of the data available in this package, please go to the <a href="https://jserizay.com/VplotR/reference/index.html#section-data" class="external-link">reference page</a>.</p>
 </div>
 </div>
-<div id="contributions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#contributions" class="anchor"></a>Contributions</h2>
-<p>Code contributions, bug reports, fixes and feature requests are most welcome. Please make any pull requests against the master branch at <a href="https://github.com/js2264/VplotR" class="uri">https://github.com/js2264/VplotR</a> and file issues at <a href="https://github.com/js2264/VplotR/issues" class="uri">https://github.com/js2264/VplotR/issues</a>.<br>
+<div class="section level2">
+<h2 id="contributions">Contributions<a class="anchor" aria-label="anchor" href="#contributions"></a>
+</h2>
+<p>Code contributions, bug reports, fixes and feature requests are most welcome. Please make any pull requests against the master branch at <a href="https://github.com/js2264/VplotR" class="external-link uri">https://github.com/js2264/VplotR</a> and file issues at <a href="https://github.com/js2264/VplotR/issues" class="external-link uri">https://github.com/js2264/VplotR/issues</a>.<br>
 Feel free to reach out to <a href="mailto:jacquesserizay@gmail.com">J. Serizay</a> for any query.</p>
 </div>
-<div id="license" class="section level2">
-<h2 class="hasAnchor">
-<a href="#license" class="anchor"></a>License</h2>
+<div class="section level2">
+<h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
+</h2>
 <p><strong>VplotR</strong> is licensed under the GPL-3 license.</p>
 </div>
-<div id="code-of-conduct" class="section level2">
-<h2 class="hasAnchor">
-<a href="#code-of-conduct" class="anchor"></a>Code of Conduct</h2>
-<p>Please note that <code>VplotR</code> is released with a <a href="https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>.<br>
+<div class="section level2">
+<h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
+</h2>
+<p>Please note that <code>VplotR</code> is released with a <a href="https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html" class="external-link">Contributor Code of Conduct</a>.<br>
 By contributing to this project, you agree to abide by its terms.</p>
 </div>
 </div>
@@ -346,65 +337,72 @@ By contributing to this project, you agree to abide by its terms.</p>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from BIOC at <br><a href="https://www.bioconductor.org/packages/VplotR">https://​www.bioconductor.org/​packages/​VplotR</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/js2264/VplotR/">https://​github.com/​js2264/​VplotR/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/js2264/VplotR/issues">https://​github.com/​js2264/​VplotR/​issues</a>
-</li>
-<li>Contact the author at at <br><a href="https://js2264.github.io/">https://​js2264.github.io/​</a>
-</li>
-<li>Browse source code at at <br><a href="https://github.com/js2264/VplotR/">https://​github.com/​js2264/​VplotR/​</a>
-</li>
-<li>Read vignette at at <br><a href="https://github.com/js2264/VplotR/blob/master/vignettes/VplotR.Rmd">https://​github.com/​js2264/​VplotR/​blob/​master/​vignettes/​VplotR.Rmd</a>
-</li>
+<li><a href="https://www.bioconductor.org/packages/VplotR" class="external-link">View on Bioconductor</a></li>
+<li><a href="https://github.com/js2264/VplotR/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/js2264/VplotR/issues" class="external-link">Report a bug</a></li>
+<li><a href="https://js2264.github.io/" class="external-link">Contact the author at</a></li>
+<li><a href="https://github.com/js2264/VplotR/" class="external-link">Browse source code at</a></li>
+<li><a href="https://github.com/js2264/VplotR/blob/master/vignettes/VplotR.Rmd" class="external-link">Read vignette at</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li>GPL (&gt;= 3)</li>
 </ul>
 </div>
+
 <div class="community">
-<h2>Community</h2>
+<h2 data-toc-skip>Community</h2>
 <ul class="list-unstyled">
 <li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
 </ul>
 </div>
-<div class="developers">
-<h2>Developers</h2>
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li>
-<a href="https://js2264.github.io/">Jacques Serizay</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-4295-0624" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="authors.html#citation">Citing VplotR</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li><a href="https://doi.org/10.21105/joss.03009"><img src="https://joss.theoj.org/papers/10.21105/joss.03009/status.svg" alt="DOI"></a></li>
-<li><a href="https://doi.org/10.1101/gr.265934.120"><img src="https://img.shields.io/badge/GR-%5BDOI%5D10.1101/gr.265934.120-green.svg" alt="DOI"></a></li>
-<li><a href="https://www.bioconductor.org/packages/VplotR"><img src="https://img.shields.io/badge/release%20version-1.2.0-orange.svg"></a></li>
-<li><a href="https://www.tidyverse.org/lifecycle/#production"><img src="https://img.shields.io/badge/lifecycle-production-blue.svg"></a></li>
-<li><a href="https://github.com/js2264/VplotR"><img src="https://img.shields.io/github/languages/code-size/js2264/VplotR.svg"></a></li>
-<li><a href="https://www.gnu.org/licenses/gpl-3.0.en.html"><img src="https://img.shields.io/badge/license-GPL--3-orange.svg"></a></li>
-<li><a href="https://codecov.io/gh/js2264/VplotR?branch=master"><img src="https://codecov.io/gh/js2264/VplotR/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
-<li><a href="https://github.com/js2264/VplotR/actions"><img src="https://github.com/js2264/VplotR/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
+<li>
+<a href="https://js2264.github.io/" class="external-link">Jacques Serizay</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-4295-0624" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 </ul>
 </div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://doi.org/10.21105/joss.03009" class="external-link"><img src="https://joss.theoj.org/papers/10.21105/joss.03009/status.svg" alt="DOI"></a></li>
+<li><a href="https://doi.org/10.1101/gr.265934.120" class="external-link"><img src="https://img.shields.io/badge/GR-%5BDOI%5D10.1101/gr.265934.120-green.svg" alt="DOI"></a></li>
+<li><a href="https://www.bioconductor.org/packages/VplotR" class="external-link"><img src="https://img.shields.io/badge/release%20version-1.2.0-orange.svg"></a></li>
+<li><a href="https://www.tidyverse.org/lifecycle/#production" class="external-link"><img src="https://img.shields.io/badge/lifecycle-production-blue.svg"></a></li>
+<li><a href="https://github.com/js2264/VplotR" class="external-link"><img src="https://img.shields.io/github/languages/code-size/js2264/VplotR.svg"></a></li>
+<li><a href="https://www.gnu.org/licenses/gpl-3.0.en.html" class="external-link"><img src="https://img.shields.io/badge/license-GPL--3-orange.svg"></a></li>
+<li><a href="https://codecov.io/gh/js2264/VplotR?branch=master" class="external-link"><img src="https://codecov.io/gh/js2264/VplotR/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://github.com/js2264/VplotR/actions" class="external-link"><img src="https://github.com/js2264/VplotR/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
+</ul>
 </div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://js2264.github.io/">Jacques Serizay</a>.</p>
+  <p></p>
+<p>Developed by <a href="https://js2264.github.io/" class="external-link">Jacques Serizay</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -412,6 +410,8 @@ By contributing to this project, you agree to abide by its terms.</p>
 
   
 
+
+  
 
   </body>
 </html>
