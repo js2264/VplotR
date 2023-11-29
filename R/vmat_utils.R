@@ -12,7 +12,6 @@
 #' @param ylims The y limits of the computed Vmat
 #' @return A table object
 #' 
-#' @import magrittr
 #' @import S4Vectors
 #' @import GenomicRanges
 #' @import IRanges
