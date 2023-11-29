@@ -15,10 +15,10 @@
 #' fragment size distribution
 #' @return A list of tbl, one for each .bam file.
 #' 
-#' @import magrittr
 #' @import parallel
 #' @import IRanges
 #' @import GenomicRanges
+#' @importFrom magrittr `%>%`
 #' @importFrom zoo rollmean
 #' @importFrom methods is
 #' @importFrom graphics hist

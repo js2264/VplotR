@@ -17,7 +17,6 @@ knitr::opts_chunk$set(
 suppressPackageStartupMessages({
     library(GenomicRanges)
     library(ggplot2)
-    library(magrittr)
     library(VplotR)
 })
 ```

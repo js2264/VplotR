@@ -18,8 +18,8 @@ importPEBamFiles(
 \item{files}{character vector, each element of the vector is the path 
 of an individual .bam file.}
 
-\item{genome}{character, genome ID (e.g. sacCer3, ce11, dm6, danRer10,
-mm10 or hg38).}
+\item{genome}{character, genome ID (e.g. "sacCer3", "ce11", "dm6", 
+"mm10" or "hg38").}
 
 \item{where}{GRanges, only import the fragments mapping to the 
 input GRanges (can fasten the import process a lot).}
