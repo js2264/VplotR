@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">VplotR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.12.0</span>
       </span>
     </div>
 
@@ -103,8 +103,8 @@ VplotR is designed around <a href="https://ggplot2.tidyverse.org/" class="extern
 </h2>
 <p>V-plots are two-dimensional plots of paired-end sequencing fragments from chromatin accessibility assays (e.g. ATAC-seq, MNase-seq or DNAse-seq) of from chromatin immunoprecipitation assays (i.e. ChIP-seq).</p>
 <p>The x axis represents the distance between sequencing fragments and genomic loci of interest (e.g. nucleosome-depleted regions, or NDR), while the y axis indicates the length of the sequenced fragments. The color scale indicates the density of fragments mapping over aggregated genomic loci of interest.</p>
-<div class="figure">
-<img src="inst/figures/concept.png" alt=""><p class="caption">concept</p>
+<div class="float">
+<img src="inst/figures/concept.png" alt="concept"><div class="figcaption">concept</div>
 </div>
 <p>Thus, V-plots can reveal where protein bound to DNA (e.g. nucleosomes) protect it from digestion.</p>
 </div>
@@ -121,21 +121,25 @@ VplotR requires <code>R &gt;= 4.0</code> and is available from Bioconductor (rel
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
-<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu">install</span><span class="op">(</span><span class="st">"VplotR"</span><span class="op">)</span></span>
+<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"VplotR"</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/js2264/VplotR" class="external-link">"VplotR"</a></span><span class="op">)</span></span></code></pre></div>
 <p>VplotR developpment version can be installed from Github as follows:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"js2264/VplotR"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"js2264/VplotR"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
 </h2>
 <p>If you are using VplotR in your research, please cite:</p>
-<blockquote><p><a href="https://joss.theoj.org/papers/10.21105/joss.03009" class="external-link">Generating fragment density plots in R/Bioconductor with VplotR</a><br><strong>J. Serizay</strong> &amp; J. Ahringer<br>
-Journal of Open Source Software, 2021</p></blockquote>
-<blockquote><p><a href="https://genome.cshlp.org/content/early/2020/10/21/gr.265934.120.abstract" class="external-link">Distinctive regulatory architectures of germline-active and somatic genes in <em>C. elegans</em></a><br><strong>J. Serizay</strong>, Y. Dong, J. Jänes, M. Chesney, C. Cerrato &amp; J. Ahringer<br>
-Genome Research, 2020</p></blockquote>
+<blockquote>
+<p><a href="https://joss.theoj.org/papers/10.21105/joss.03009" class="external-link">Generating fragment density plots in R/Bioconductor with VplotR</a><br><strong>J. Serizay</strong> &amp; J. Ahringer<br>
+Journal of Open Source Software, 2021</p>
+</blockquote>
+<blockquote>
+<p><a href="https://genome.cshlp.org/content/early/2020/10/21/gr.265934.120.abstract" class="external-link">Distinctive regulatory architectures of germline-active and somatic genes in <em>C. elegans</em></a><br><strong>J. Serizay</strong>, Y. Dong, J. Jänes, M. Chesney, C. Cerrato &amp; J. Ahringer<br>
+Genome Research, 2020</p>
+</blockquote>
 </div>
 <div class="section level2">
 <h2 id="main-functions">Main functions<a class="anchor" aria-label="anchor" href="#main-functions"></a>
@@ -168,8 +172,8 @@ Genome Research, 2020</p></blockquote>
 <span>    granges <span class="op">=</span> <span class="va">ABF1_sacCer3</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">p</span></span></code></pre></div>
-<div class="figure">
-<img src="inst/figures/vplot.png" alt=""><p class="caption">vplot</p>
+<div class="float">
+<img src="inst/figures/vplot.png" alt="vplot"><div class="figcaption">vplot</div>
 </div>
 </div>
 <div class="section level3">
@@ -220,15 +224,17 @@ Genome Research, 2020</p></blockquote>
 <span>    <span class="fu"><a href="reference/theme_ggplot2.html">theme_ggplot2</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Fragment size"</span>, y <span class="op">=</span> <span class="st">"# of fragments"</span><span class="op">)</span></span>
 <span><span class="va">p</span></span></code></pre></div>
-<div class="figure">
-<img src="inst/figures/fragment_size_distribution.png" alt=""><p class="caption">fragment_size_distribution</p>
+<div class="float">
+<img src="inst/figures/fragment_size_distribution.png" alt="fragment_size_distribution"><div class="figcaption">fragment_size_distribution</div>
 </div>
 </div>
 <div class="section level3">
 <h3 id="datasets-provided-in-vplotr">Datasets provided in VplotR<a class="anchor" aria-label="anchor" href="#datasets-provided-in-vplotr"></a>
 </h3>
 <p>Several dataset samples are provided as <code>GRanges</code> object in this package:</p>
-<ul><li>A set of tissue-specific ATAC-seq experiments in young adult <em>C. elegans</em> (Serizay et al., 2020):</li></ul>
+<ul>
+<li>A set of tissue-specific ATAC-seq experiments in young adult <em>C. elegans</em> (Serizay et al., 2020):</li>
+</ul>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/js2264/VplotR" class="external-link">VplotR</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ATAC_ce11_Serizay2020</span><span class="op">)</span></span>
@@ -269,7 +275,9 @@ Genome Research, 2020</p></blockquote>
 <span><span class="co">##     [367935]     chrX 17709920-17710007      -</span></span>
 <span><span class="co">##     -------</span></span>
 <span><span class="co">##     seqinfo: 7 sequences from an unspecified genome; no seqlengths</span></span></code></pre></div>
-<ul><li>An MNase-seq experiment in yeast (Henikoff et al., 2011) and associated ABF1 binding sites:</li></ul>
+<ul>
+<li>An MNase-seq experiment in yeast (Henikoff et al., 2011) and associated ABF1 binding sites:</li>
+</ul>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/js2264/VplotR" class="external-link">VplotR</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">MNase_sacCer3_Henikoff2011</span><span class="op">)</span></span></code></pre></div>
@@ -290,7 +298,9 @@ Genome Research, 2020</p></blockquote>
 <span><span class="co">##     [400000]   chrXVI 920454-920683      -</span></span>
 <span><span class="co">##     -------</span></span>
 <span><span class="co">##     seqinfo: 17 sequences from an unspecified genome</span></span></code></pre></div>
-<ul><li>A <code>.bam</code> file sample containing 100,000 reads mapped to <em>C. elegans</em>:</li></ul>
+<ul>
+<li>A <code>.bam</code> file sample containing 100,000 reads mapped to <em>C. elegans</em>:</li>
+</ul>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/js2264/VplotR" class="external-link">VplotR</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">bam_test</span><span class="op">)</span></span></code></pre></div>
@@ -402,7 +412,7 @@ By contributing to this project, you agree to abide by its terms.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

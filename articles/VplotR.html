@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VplotR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.12.0</span>
       </span>
     </div>
 
@@ -72,13 +72,14 @@
 
       
 
-      </header><script src="VplotR_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>VplotR</h1>
-                        <h4 data-toc-skip class="author">Jacques Serizay</h4>
+                        <h4 data-toc-skip class="author">Jacques
+Serizay</h4>
             
-            <h4 data-toc-skip class="date">2022-11-21</h4>
+            <h4 data-toc-skip class="date">2023-11-29</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/js2264/VplotR/blob/HEAD/vignettes/VplotR.Rmd" class="external-link"><code>vignettes/VplotR.Rmd</code></a></small>
       <div class="hidden name"><code>VplotR.Rmd</code></div>
@@ -96,13 +97,16 @@
 </ul>
 </li>
 <li>
-<a href="#importing-sequencing-datasets">Importing sequencing datasets</a>
+<a href="#importing-sequencing-datasets">Importing sequencing
+datasets</a>
 <ul>
-<li><a href="#using-importpebamfiles-function">Using <code>importPEBamFiles()</code> function</a></li>
+<li><a href="#using-importpebamfiles-function">Using
+<code>importPEBamFiles()</code> function</a></li>
 <li><a href="#provided-datasets">Provided datasets</a></li>
 </ul>
 </li>
-<li><a href="#fragment-size-distribution">Fragment size distribution</a></li>
+<li><a href="#fragment-size-distribution">Fragment size
+distribution</a></li>
 <li>
 <a href="#vplots">Vplot(s)</a>
 <ul>
@@ -112,7 +116,8 @@
 </ul>
 </li>
 <li><a href="#footprints">Footprints</a></li>
-<li><a href="#local-fragment-distribution">Local fragment distribution</a></li>
+<li><a href="#local-fragment-distribution">Local fragment
+distribution</a></li>
 <li><a href="#session-info">Session Info</a></li>
 </ul>
 <div class="section level2">
@@ -121,17 +126,32 @@
 <div class="section level3">
 <h3 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h3>
-<p>VplotR is an R package streamlining the process of generating V-plots, i.e. two-dimensional paired-end fragment density plots. It contains functions to import paired-end sequencing bam files from any type of DNA accessibility experiments (e.g. ATAC-seq, DNA-seq, MNase-seq) and can produce V-plots and one-dimensional footprint profiles over single or aggregated genomic loci of interest. The R package is well integrated within the Bioconductor environment and easily fits in standard genomic analysis workflows. Integrating V-plots into existing analytical frameworks has already brought additional insights in chromatin organization (Serizay et al., 2020).</p>
-<p>The main user-level functions of VplotR are <code><a href="../reference/getFragmentsDistribution.html">getFragmentsDistribution()</a></code>, <code><a href="../reference/plotVmat.html">plotVmat()</a></code>, <code><a href="../reference/plotFootprint.html">plotFootprint()</a></code> and <code><a href="../reference/plotProfile.html">plotProfile()</a></code>.</p>
+<p>VplotR is an R package streamlining the process of generating
+V-plots, i.e. two-dimensional paired-end fragment density plots. It
+contains functions to import paired-end sequencing bam files from any
+type of DNA accessibility experiments (e.g. ATAC-seq, DNA-seq,
+MNase-seq) and can produce V-plots and one-dimensional footprint
+profiles over single or aggregated genomic loci of interest. The R
+package is well integrated within the Bioconductor environment and
+easily fits in standard genomic analysis workflows. Integrating V-plots
+into existing analytical frameworks has already brought additional
+insights in chromatin organization (Serizay et al., 2020).</p>
+<p>The main user-level functions of VplotR are
+<code><a href="../reference/getFragmentsDistribution.html">getFragmentsDistribution()</a></code>, <code><a href="../reference/plotVmat.html">plotVmat()</a></code>,
+<code><a href="../reference/plotFootprint.html">plotFootprint()</a></code> and <code><a href="../reference/plotProfile.html">plotProfile()</a></code>.</p>
 <ul>
 <li>
-<code><a href="../reference/getFragmentsDistribution.html">getFragmentsDistribution()</a></code> computes the distribution of fragment sizes over sets of genomic ranges;</li>
+<code><a href="../reference/getFragmentsDistribution.html">getFragmentsDistribution()</a></code> computes the distribution of
+fragment sizes over sets of genomic ranges;</li>
 <li>
-<code><a href="../reference/plotVmat.html">plotVmat()</a></code> is used to compute fragment density and generate V-plots;</li>
+<code><a href="../reference/plotVmat.html">plotVmat()</a></code> is used to compute fragment density and
+generate V-plots;</li>
 <li>
-<code><a href="../reference/plotFootprint.html">plotFootprint()</a></code> generates the MNase-seq or ATAC-seq footprint at a set of genomic ranges.</li>
+<code><a href="../reference/plotFootprint.html">plotFootprint()</a></code> generates the MNase-seq or ATAC-seq
+footprint at a set of genomic ranges.</li>
 <li>
-<code><a href="../reference/plotProfile.html">plotProfile()</a></code> is used to plot the distribution of paired-end fragments at a single locus of interest.</li>
+<code><a href="../reference/plotProfile.html">plotProfile()</a></code> is used to plot the distribution of
+paired-end fragments at a single locus of interest.</li>
 </ul>
 </div>
 <div class="section level3">
@@ -141,7 +161,7 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
-<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu">install</span><span class="op">(</span><span class="st">"VplotR"</span><span class="op">)</span></span>
+<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"VplotR"</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/js2264/VplotR" class="external-link">"VplotR"</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
@@ -151,7 +171,8 @@
 <div class="section level3">
 <h3 id="using-importpebamfiles-function">Using <code>importPEBamFiles()</code> function<a class="anchor" aria-label="anchor" href="#using-importpebamfiles-function"></a>
 </h3>
-<p>Paired-end .bam files are imported using the <code><a href="../reference/importPEBamFiles.html">importPEBamFiles()</a></code> function as follows:</p>
+<p>Paired-end .bam files are imported using the
+<code><a href="../reference/importPEBamFiles.html">importPEBamFiles()</a></code> function as follows:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/js2264/VplotR" class="external-link">VplotR</a></span><span class="op">)</span></span>
 <span><span class="va">bamfile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"ex1.bam"</span>, package <span class="op">=</span> <span class="st">"Rsamtools"</span><span class="op">)</span></span>
@@ -159,10 +180,10 @@
 <span>    <span class="va">bamfile</span>, </span>
 <span>    shift_ATAC_fragments <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; &gt; Importing /Users/runner/work/_temp/Library/Rsamtools/extdata/ex1.bam ...</span></span>
-<span><span class="co">#&gt; &gt; Filtering /Users/runner/work/_temp/Library/Rsamtools/extdata/ex1.bam ...</span></span>
-<span><span class="co">#&gt; &gt; Shifting /Users/runner/work/_temp/Library/Rsamtools/extdata/ex1.bam ...</span></span>
-<span><span class="co">#&gt; &gt; /Users/runner/work/_temp/Library/Rsamtools/extdata/ex1.bam import completed.</span></span>
+<span><span class="co">#&gt; &gt; Importing /__w/_temp/Library/Rsamtools/extdata/ex1.bam ...</span></span>
+<span><span class="co">#&gt; &gt; Filtering /__w/_temp/Library/Rsamtools/extdata/ex1.bam ...</span></span>
+<span><span class="co">#&gt; &gt; Shifting /__w/_temp/Library/Rsamtools/extdata/ex1.bam ...</span></span>
+<span><span class="co">#&gt; &gt; /__w/_temp/Library/Rsamtools/extdata/ex1.bam import completed.</span></span>
 <span><span class="va">fragments</span></span>
 <span><span class="co">#&gt; GRanges object with 1572 ranges and 0 metadata columns:</span></span>
 <span><span class="co">#&gt;          seqnames    ranges strand</span></span>
@@ -186,7 +207,8 @@
 </h3>
 <p>Several datasets are available for this package:</p>
 <ul>
-<li>Sets of tissue-specific ATAC-seq experiments in young adult C. elegans (Serizay et al., 2020):</li>
+<li>Sets of tissue-specific ATAC-seq experiments in young adult C.
+elegans (Serizay et al., 2020):</li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ce11_proms</span><span class="op">)</span></span>
@@ -245,7 +267,8 @@
 <span><span class="co">#&gt;   -------</span></span>
 <span><span class="co">#&gt;   seqinfo: 7 sequences from an unspecified genome; no seqlengths</span></span></code></pre></div>
 <ul>
-<li>MNase-seq experiment in yeast (Henikoff et al., 2011) and ABF1 binding sites:</li>
+<li>MNase-seq experiment in yeast (Henikoff et al., 2011) and ABF1
+binding sites:</li>
 </ul>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ABF1_sacCer3</span><span class="op">)</span></span>
@@ -289,7 +312,9 @@
 <div class="section level2">
 <h2 id="fragment-size-distribution">Fragment size distribution<a class="anchor" aria-label="anchor" href="#fragment-size-distribution"></a>
 </h2>
-<p>A preliminary control to check the distribution of fragment sizes (regardless of their location relative to genomic loci) can be performed using the <code><a href="../reference/getFragmentsDistribution.html">getFragmentsDistribution()</a></code> function.</p>
+<p>A preliminary control to check the distribution of fragment sizes
+(regardless of their location relative to genomic loci) can be performed
+using the <code><a href="../reference/getFragmentsDistribution.html">getFragmentsDistribution()</a></code> function.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getFragmentsDistribution.html">getFragmentsDistribution</a></span><span class="op">(</span></span>
 <span>    <span class="va">MNase_sacCer3_Henikoff2011</span>, </span>
@@ -311,7 +336,8 @@
 <div class="section level3">
 <h3 id="single-vplot">Single Vplot<a class="anchor" aria-label="anchor" href="#single-vplot"></a>
 </h3>
-<p>Once data is imported, a V-plot of paired-end fragments over loci of interest is generated using the <code><a href="../reference/plotVmat.html">plotVmat()</a></code> function:</p>
+<p>Once data is imported, a V-plot of paired-end fragments over loci of
+interest is generated using the <code><a href="../reference/plotVmat.html">plotVmat()</a></code> function:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotVmat.html">plotVmat</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">MNase_sacCer3_Henikoff2011</span>, granges <span class="op">=</span> <span class="va">ABF1_sacCer3</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Computing V-mat</span></span>
@@ -324,7 +350,8 @@
 <div class="section level3">
 <h3 id="multiple-vplots">Multiple Vplots<a class="anchor" aria-label="anchor" href="#multiple-vplots"></a>
 </h3>
-<p>The generation of multiple V-plots can be parallelized using a list of parameters:</p>
+<p>The generation of multiple V-plots can be parallelized using a list
+of parameters:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">list_params</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    <span class="st">"MNase\n@ ABF1"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">MNase_sacCer3_Henikoff2011</span>, <span class="va">ABF1_sacCer3</span><span class="op">)</span>, </span>
@@ -340,7 +367,9 @@
 <span><span class="co">#&gt; - Processing sample 2/2</span></span>
 <span><span class="va">p</span></span></code></pre></div>
 <p><img src="VplotR_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
-<p>For instance, ATAC-seq fragment density can be visualized at different classes of ubiquitous and tissue-specific promoters in <em>C. elegans</em>.</p>
+<p>For instance, ATAC-seq fragment density can be visualized at
+different classes of ubiquitous and tissue-specific promoters in <em>C.
+elegans</em>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">list_params</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    <span class="st">"Germline ATACseq\n@ Ubiq. proms"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
@@ -375,9 +404,11 @@
 <div class="section level3">
 <h3 id="vplots-normalization">Vplots normalization<a class="anchor" aria-label="anchor" href="#vplots-normalization"></a>
 </h3>
-<p>Different normalization approaches are available using the <code>normFun</code> argument.</p>
+<p>Different normalization approaches are available using the
+<code>normFun</code> argument.</p>
 <ul>
-<li>Un-normalized raw counts can be plotted by specifying <code>normFun = 'none'</code>.</li>
+<li>Un-normalized raw counts can be plotted by specifying
+<code>normFun = 'none'</code>.</li>
 </ul>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># No normalization </span></span>
@@ -407,7 +438,9 @@
 <span><span class="va">p</span></span></code></pre></div>
 <p><img src="VplotR_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 <ul>
-<li>By default, plots are normalized by the library depth of the sequencing run and by the number of loci used to compute fragment density.</li>
+<li>By default, plots are normalized by the library depth of the
+sequencing run and by the number of loci used to compute fragment
+density.</li>
 </ul>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Library depth + number of loci of interest (default)</span></span>
@@ -441,7 +474,8 @@
 <span><span class="va">p</span></span></code></pre></div>
 <p><img src="VplotR_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 <ul>
-<li>Alternatively, heatmaps can be internally z-scored or scaled to a specific quantile.</li>
+<li>Alternatively, heatmaps can be internally z-scored or scaled to a
+specific quantile.</li>
 </ul>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Zscore</span></span>
@@ -495,7 +529,9 @@
 <div class="section level2">
 <h2 id="footprints">Footprints<a class="anchor" aria-label="anchor" href="#footprints"></a>
 </h2>
-<p>VplotR also implements a function to profile the footprint from MNase or ATAC-seq over sets of genomic loci. For instance, CTCF is known for its ~40-bp large footprint at its binding loci.</p>
+<p>VplotR also implements a function to profile the footprint from MNase
+or ATAC-seq over sets of genomic loci. For instance, CTCF is known for
+its ~40-bp large footprint at its binding loci.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotFootprint.html">plotFootprint</a></span><span class="op">(</span></span>
 <span>    <span class="va">MNase_sacCer3_Henikoff2011</span>,</span>
@@ -512,7 +548,8 @@
 <div class="section level2">
 <h2 id="local-fragment-distribution">Local fragment distribution<a class="anchor" aria-label="anchor" href="#local-fragment-distribution"></a>
 </h2>
-<p>VplotR provides a function to plot the distribution of paired-end fragments over an individual genomic window.</p>
+<p>VplotR provides a function to plot the distribution of paired-end
+fragments over an individual genomic window.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">MNase_sacCer3_Henikoff2011_subset</span><span class="op">)</span></span>
 <span><span class="va">genes_sacCer3</span> <span class="op">&lt;-</span> <span class="fu">GenomicFeatures</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/GenomicFeatures/man/transcripts.html" class="external-link">genes</a></span><span class="op">(</span><span class="fu">TxDb.Scerevisiae.UCSC.sacCer3.sgdGene</span><span class="fu">::</span></span>
@@ -540,129 +577,139 @@
 </h2>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; R version 4.2.2 (2022-10-31)</span></span>
-<span><span class="co">#&gt; Platform: x86_64-apple-darwin17.0 (64-bit)</span></span>
-<span><span class="co">#&gt; Running under: macOS Big Sur ... 10.16</span></span>
+<span><span class="co">#&gt; R Under development (unstable) (2023-11-22 r85609)</span></span>
+<span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu</span></span>
+<span><span class="co">#&gt; Running under: Ubuntu 22.04.3 LTS</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Matrix products: default</span></span>
-<span><span class="co">#&gt; BLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib</span></span>
-<span><span class="co">#&gt; LAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib</span></span>
+<span><span class="co">#&gt; BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
+<span><span class="co">#&gt; LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.20.so;  LAPACK version 3.10.0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; locale:</span></span>
-<span><span class="co">#&gt; [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8</span></span>
+<span><span class="co">#&gt;  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              </span></span>
+<span><span class="co">#&gt;  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    </span></span>
+<span><span class="co">#&gt;  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   </span></span>
+<span><span class="co">#&gt;  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 </span></span>
+<span><span class="co">#&gt;  [9] LC_ADDRESS=C               LC_TELEPHONE=C            </span></span>
+<span><span class="co">#&gt; [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; time zone: UTC</span></span>
+<span><span class="co">#&gt; tzcode source: system (glibc)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; attached base packages:</span></span>
 <span><span class="co">#&gt; [1] stats4    stats     graphics  grDevices utils     datasets  methods  </span></span>
 <span><span class="co">#&gt; [8] base     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
-<span><span class="co">#&gt; [1] VplotR_1.9.0         magrittr_2.0.3       ggplot2_3.4.0       </span></span>
-<span><span class="co">#&gt; [4] GenomicRanges_1.50.1 GenomeInfoDb_1.34.3  IRanges_2.32.0      </span></span>
-<span><span class="co">#&gt; [7] S4Vectors_0.36.0     BiocGenerics_0.44.0 </span></span>
+<span><span class="co">#&gt; [1] VplotR_1.12.0        ggplot2_3.4.4        GenomicRanges_1.55.1</span></span>
+<span><span class="co">#&gt; [4] GenomeInfoDb_1.39.1  IRanges_2.37.0       S4Vectors_0.41.2    </span></span>
+<span><span class="co">#&gt; [7] BiocGenerics_0.49.1 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
-<span><span class="co">#&gt;   [1] bitops_1.0-7                               </span></span>
-<span><span class="co">#&gt;   [2] matrixStats_0.63.0                         </span></span>
-<span><span class="co">#&gt;   [3] fs_1.5.2                                   </span></span>
-<span><span class="co">#&gt;   [4] bit64_4.0.5                                </span></span>
-<span><span class="co">#&gt;   [5] filelock_1.0.2                             </span></span>
-<span><span class="co">#&gt;   [6] RColorBrewer_1.1-3                         </span></span>
-<span><span class="co">#&gt;   [7] progress_1.2.2                             </span></span>
-<span><span class="co">#&gt;   [8] httr_1.4.4                                 </span></span>
-<span><span class="co">#&gt;   [9] rprojroot_2.0.3                            </span></span>
-<span><span class="co">#&gt;  [10] tools_4.2.2                                </span></span>
-<span><span class="co">#&gt;  [11] bslib_0.4.1                                </span></span>
-<span><span class="co">#&gt;  [12] utf8_1.2.2                                 </span></span>
-<span><span class="co">#&gt;  [13] R6_2.5.1                                   </span></span>
-<span><span class="co">#&gt;  [14] DBI_1.1.3                                  </span></span>
-<span><span class="co">#&gt;  [15] colorspace_2.0-3                           </span></span>
-<span><span class="co">#&gt;  [16] withr_2.5.0                                </span></span>
-<span><span class="co">#&gt;  [17] prettyunits_1.1.1                          </span></span>
-<span><span class="co">#&gt;  [18] tidyselect_1.2.0                           </span></span>
-<span><span class="co">#&gt;  [19] curl_4.3.3                                 </span></span>
-<span><span class="co">#&gt;  [20] bit_4.0.5                                  </span></span>
-<span><span class="co">#&gt;  [21] compiler_4.2.2                             </span></span>
-<span><span class="co">#&gt;  [22] textshaping_0.3.6                          </span></span>
-<span><span class="co">#&gt;  [23] cli_3.4.1                                  </span></span>
-<span><span class="co">#&gt;  [24] Biobase_2.58.0                             </span></span>
-<span><span class="co">#&gt;  [25] xml2_1.3.3                                 </span></span>
-<span><span class="co">#&gt;  [26] desc_1.4.2                                 </span></span>
-<span><span class="co">#&gt;  [27] DelayedArray_0.24.0                        </span></span>
-<span><span class="co">#&gt;  [28] rtracklayer_1.58.0                         </span></span>
-<span><span class="co">#&gt;  [29] labeling_0.4.2                             </span></span>
-<span><span class="co">#&gt;  [30] sass_0.4.3                                 </span></span>
-<span><span class="co">#&gt;  [31] scales_1.2.1                               </span></span>
-<span><span class="co">#&gt;  [32] rappdirs_0.3.3                             </span></span>
-<span><span class="co">#&gt;  [33] pkgdown_2.0.6                              </span></span>
-<span><span class="co">#&gt;  [34] systemfonts_1.0.4                          </span></span>
-<span><span class="co">#&gt;  [35] stringr_1.4.1                              </span></span>
-<span><span class="co">#&gt;  [36] digest_0.6.30                              </span></span>
-<span><span class="co">#&gt;  [37] Rsamtools_2.14.0                           </span></span>
-<span><span class="co">#&gt;  [38] rmarkdown_2.18                             </span></span>
-<span><span class="co">#&gt;  [39] XVector_0.38.0                             </span></span>
-<span><span class="co">#&gt;  [40] pkgconfig_2.0.3                            </span></span>
-<span><span class="co">#&gt;  [41] htmltools_0.5.3                            </span></span>
-<span><span class="co">#&gt;  [42] MatrixGenerics_1.10.0                      </span></span>
-<span><span class="co">#&gt;  [43] dbplyr_2.2.1                               </span></span>
-<span><span class="co">#&gt;  [44] fastmap_1.1.0                              </span></span>
-<span><span class="co">#&gt;  [45] highr_0.9                                  </span></span>
-<span><span class="co">#&gt;  [46] rlang_1.0.6                                </span></span>
-<span><span class="co">#&gt;  [47] RSQLite_2.2.18                             </span></span>
-<span><span class="co">#&gt;  [48] TxDb.Scerevisiae.UCSC.sacCer3.sgdGene_3.2.2</span></span>
-<span><span class="co">#&gt;  [49] BiocIO_1.8.0                               </span></span>
-<span><span class="co">#&gt;  [50] jquerylib_0.1.4                            </span></span>
-<span><span class="co">#&gt;  [51] farver_2.1.1                               </span></span>
-<span><span class="co">#&gt;  [52] generics_0.1.3                             </span></span>
-<span><span class="co">#&gt;  [53] zoo_1.8-11                                 </span></span>
-<span><span class="co">#&gt;  [54] jsonlite_1.8.3                             </span></span>
-<span><span class="co">#&gt;  [55] BiocParallel_1.32.1                        </span></span>
-<span><span class="co">#&gt;  [56] dplyr_1.0.10                               </span></span>
-<span><span class="co">#&gt;  [57] RCurl_1.98-1.9                             </span></span>
-<span><span class="co">#&gt;  [58] GenomeInfoDbData_1.2.9                     </span></span>
-<span><span class="co">#&gt;  [59] Matrix_1.5-1                               </span></span>
-<span><span class="co">#&gt;  [60] Rcpp_1.0.9                                 </span></span>
-<span><span class="co">#&gt;  [61] munsell_0.5.0                              </span></span>
-<span><span class="co">#&gt;  [62] fansi_1.0.3                                </span></span>
-<span><span class="co">#&gt;  [63] lifecycle_1.0.3                            </span></span>
-<span><span class="co">#&gt;  [64] stringi_1.7.8                              </span></span>
-<span><span class="co">#&gt;  [65] yaml_2.3.6                                 </span></span>
-<span><span class="co">#&gt;  [66] SummarizedExperiment_1.28.0                </span></span>
-<span><span class="co">#&gt;  [67] zlibbioc_1.44.0                            </span></span>
-<span><span class="co">#&gt;  [68] BiocFileCache_2.6.0                        </span></span>
-<span><span class="co">#&gt;  [69] plyr_1.8.8                                 </span></span>
-<span><span class="co">#&gt;  [70] grid_4.2.2                                 </span></span>
-<span><span class="co">#&gt;  [71] blob_1.2.3                                 </span></span>
-<span><span class="co">#&gt;  [72] parallel_4.2.2                             </span></span>
-<span><span class="co">#&gt;  [73] crayon_1.5.2                               </span></span>
-<span><span class="co">#&gt;  [74] lattice_0.20-45                            </span></span>
-<span><span class="co">#&gt;  [75] Biostrings_2.66.0                          </span></span>
-<span><span class="co">#&gt;  [76] cowplot_1.1.1                              </span></span>
-<span><span class="co">#&gt;  [77] GenomicFeatures_1.50.2                     </span></span>
-<span><span class="co">#&gt;  [78] hms_1.1.2                                  </span></span>
-<span><span class="co">#&gt;  [79] KEGGREST_1.38.0                            </span></span>
-<span><span class="co">#&gt;  [80] knitr_1.41                                 </span></span>
-<span><span class="co">#&gt;  [81] pillar_1.8.1                               </span></span>
-<span><span class="co">#&gt;  [82] rjson_0.2.21                               </span></span>
-<span><span class="co">#&gt;  [83] reshape2_1.4.4                             </span></span>
-<span><span class="co">#&gt;  [84] codetools_0.2-18                           </span></span>
-<span><span class="co">#&gt;  [85] biomaRt_2.54.0                             </span></span>
-<span><span class="co">#&gt;  [86] XML_3.99-0.12                              </span></span>
-<span><span class="co">#&gt;  [87] glue_1.6.2                                 </span></span>
-<span><span class="co">#&gt;  [88] evaluate_0.18                              </span></span>
-<span><span class="co">#&gt;  [89] vctrs_0.5.1                                </span></span>
-<span><span class="co">#&gt;  [90] png_0.1-7                                  </span></span>
-<span><span class="co">#&gt;  [91] gtable_0.3.1                               </span></span>
-<span><span class="co">#&gt;  [92] purrr_0.3.5                                </span></span>
-<span><span class="co">#&gt;  [93] assertthat_0.2.1                           </span></span>
-<span><span class="co">#&gt;  [94] cachem_1.0.6                               </span></span>
-<span><span class="co">#&gt;  [95] xfun_0.35                                  </span></span>
-<span><span class="co">#&gt;  [96] restfulr_0.0.15                            </span></span>
-<span><span class="co">#&gt;  [97] ragg_1.2.4                                 </span></span>
-<span><span class="co">#&gt;  [98] tibble_3.1.8                               </span></span>
-<span><span class="co">#&gt;  [99] GenomicAlignments_1.34.0                   </span></span>
-<span><span class="co">#&gt; [100] AnnotationDbi_1.60.0                       </span></span>
-<span><span class="co">#&gt; [101] memoise_2.0.1                              </span></span>
-<span><span class="co">#&gt; [102] ellipsis_0.3.2</span></span></code></pre></div>
+<span><span class="co">#&gt;   [1] DBI_1.1.3                                  </span></span>
+<span><span class="co">#&gt;   [2] bitops_1.0-7                               </span></span>
+<span><span class="co">#&gt;   [3] biomaRt_2.59.0                             </span></span>
+<span><span class="co">#&gt;   [4] rlang_1.1.2                                </span></span>
+<span><span class="co">#&gt;   [5] magrittr_2.0.3                             </span></span>
+<span><span class="co">#&gt;   [6] matrixStats_1.1.0                          </span></span>
+<span><span class="co">#&gt;   [7] compiler_4.4.0                             </span></span>
+<span><span class="co">#&gt;   [8] RSQLite_2.3.3                              </span></span>
+<span><span class="co">#&gt;   [9] GenomicFeatures_1.55.1                     </span></span>
+<span><span class="co">#&gt;  [10] png_0.1-8                                  </span></span>
+<span><span class="co">#&gt;  [11] systemfonts_1.0.5                          </span></span>
+<span><span class="co">#&gt;  [12] vctrs_0.6.4                                </span></span>
+<span><span class="co">#&gt;  [13] reshape2_1.4.4                             </span></span>
+<span><span class="co">#&gt;  [14] stringr_1.5.1                              </span></span>
+<span><span class="co">#&gt;  [15] pkgconfig_2.0.3                            </span></span>
+<span><span class="co">#&gt;  [16] crayon_1.5.2                               </span></span>
+<span><span class="co">#&gt;  [17] fastmap_1.1.1                              </span></span>
+<span><span class="co">#&gt;  [18] dbplyr_2.4.0                               </span></span>
+<span><span class="co">#&gt;  [19] XVector_0.43.0                             </span></span>
+<span><span class="co">#&gt;  [20] labeling_0.4.3                             </span></span>
+<span><span class="co">#&gt;  [21] utf8_1.2.4                                 </span></span>
+<span><span class="co">#&gt;  [22] Rsamtools_2.19.2                           </span></span>
+<span><span class="co">#&gt;  [23] rmarkdown_2.25                             </span></span>
+<span><span class="co">#&gt;  [24] ragg_1.2.6                                 </span></span>
+<span><span class="co">#&gt;  [25] purrr_1.0.2                                </span></span>
+<span><span class="co">#&gt;  [26] bit_4.0.5                                  </span></span>
+<span><span class="co">#&gt;  [27] xfun_0.41                                  </span></span>
+<span><span class="co">#&gt;  [28] zlibbioc_1.49.0                            </span></span>
+<span><span class="co">#&gt;  [29] cachem_1.0.8                               </span></span>
+<span><span class="co">#&gt;  [30] jsonlite_1.8.7                             </span></span>
+<span><span class="co">#&gt;  [31] progress_1.2.2                             </span></span>
+<span><span class="co">#&gt;  [32] blob_1.2.4                                 </span></span>
+<span><span class="co">#&gt;  [33] highr_0.10                                 </span></span>
+<span><span class="co">#&gt;  [34] DelayedArray_0.29.0                        </span></span>
+<span><span class="co">#&gt;  [35] BiocParallel_1.37.0                        </span></span>
+<span><span class="co">#&gt;  [36] parallel_4.4.0                             </span></span>
+<span><span class="co">#&gt;  [37] prettyunits_1.2.0                          </span></span>
+<span><span class="co">#&gt;  [38] R6_2.5.1                                   </span></span>
+<span><span class="co">#&gt;  [39] bslib_0.6.1                                </span></span>
+<span><span class="co">#&gt;  [40] stringi_1.8.2                              </span></span>
+<span><span class="co">#&gt;  [41] RColorBrewer_1.1-3                         </span></span>
+<span><span class="co">#&gt;  [42] rtracklayer_1.63.0                         </span></span>
+<span><span class="co">#&gt;  [43] jquerylib_0.1.4                            </span></span>
+<span><span class="co">#&gt;  [44] Rcpp_1.0.11                                </span></span>
+<span><span class="co">#&gt;  [45] SummarizedExperiment_1.33.0                </span></span>
+<span><span class="co">#&gt;  [46] knitr_1.45                                 </span></span>
+<span><span class="co">#&gt;  [47] zoo_1.8-12                                 </span></span>
+<span><span class="co">#&gt;  [48] Matrix_1.6-3                               </span></span>
+<span><span class="co">#&gt;  [49] tidyselect_1.2.0                           </span></span>
+<span><span class="co">#&gt;  [50] abind_1.4-5                                </span></span>
+<span><span class="co">#&gt;  [51] yaml_2.3.7                                 </span></span>
+<span><span class="co">#&gt;  [52] codetools_0.2-19                           </span></span>
+<span><span class="co">#&gt;  [53] curl_5.1.0                                 </span></span>
+<span><span class="co">#&gt;  [54] lattice_0.22-5                             </span></span>
+<span><span class="co">#&gt;  [55] tibble_3.2.1                               </span></span>
+<span><span class="co">#&gt;  [56] plyr_1.8.9                                 </span></span>
+<span><span class="co">#&gt;  [57] Biobase_2.63.0                             </span></span>
+<span><span class="co">#&gt;  [58] withr_2.5.2                                </span></span>
+<span><span class="co">#&gt;  [59] KEGGREST_1.43.0                            </span></span>
+<span><span class="co">#&gt;  [60] evaluate_0.23                              </span></span>
+<span><span class="co">#&gt;  [61] desc_1.4.2                                 </span></span>
+<span><span class="co">#&gt;  [62] BiocFileCache_2.11.1                       </span></span>
+<span><span class="co">#&gt;  [63] xml2_1.3.5                                 </span></span>
+<span><span class="co">#&gt;  [64] Biostrings_2.71.1                          </span></span>
+<span><span class="co">#&gt;  [65] filelock_1.0.2                             </span></span>
+<span><span class="co">#&gt;  [66] pillar_1.9.0                               </span></span>
+<span><span class="co">#&gt;  [67] MatrixGenerics_1.15.0                      </span></span>
+<span><span class="co">#&gt;  [68] generics_0.1.3                             </span></span>
+<span><span class="co">#&gt;  [69] rprojroot_2.0.4                            </span></span>
+<span><span class="co">#&gt;  [70] RCurl_1.98-1.13                            </span></span>
+<span><span class="co">#&gt;  [71] hms_1.1.3                                  </span></span>
+<span><span class="co">#&gt;  [72] munsell_0.5.0                              </span></span>
+<span><span class="co">#&gt;  [73] scales_1.3.0                               </span></span>
+<span><span class="co">#&gt;  [74] glue_1.6.2                                 </span></span>
+<span><span class="co">#&gt;  [75] tools_4.4.0                                </span></span>
+<span><span class="co">#&gt;  [76] BiocIO_1.13.0                              </span></span>
+<span><span class="co">#&gt;  [77] GenomicAlignments_1.39.0                   </span></span>
+<span><span class="co">#&gt;  [78] fs_1.6.3                                   </span></span>
+<span><span class="co">#&gt;  [79] XML_3.99-0.16                              </span></span>
+<span><span class="co">#&gt;  [80] cowplot_1.1.1                              </span></span>
+<span><span class="co">#&gt;  [81] grid_4.4.0                                 </span></span>
+<span><span class="co">#&gt;  [82] TxDb.Scerevisiae.UCSC.sacCer3.sgdGene_3.2.2</span></span>
+<span><span class="co">#&gt;  [83] AnnotationDbi_1.65.2                       </span></span>
+<span><span class="co">#&gt;  [84] colorspace_2.1-0                           </span></span>
+<span><span class="co">#&gt;  [85] GenomeInfoDbData_1.2.11                    </span></span>
+<span><span class="co">#&gt;  [86] restfulr_0.0.15                            </span></span>
+<span><span class="co">#&gt;  [87] cli_3.6.1                                  </span></span>
+<span><span class="co">#&gt;  [88] rappdirs_0.3.3                             </span></span>
+<span><span class="co">#&gt;  [89] textshaping_0.3.7                          </span></span>
+<span><span class="co">#&gt;  [90] fansi_1.0.5                                </span></span>
+<span><span class="co">#&gt;  [91] S4Arrays_1.3.1                             </span></span>
+<span><span class="co">#&gt;  [92] dplyr_1.1.4                                </span></span>
+<span><span class="co">#&gt;  [93] gtable_0.3.4                               </span></span>
+<span><span class="co">#&gt;  [94] sass_0.4.7                                 </span></span>
+<span><span class="co">#&gt;  [95] digest_0.6.33                              </span></span>
+<span><span class="co">#&gt;  [96] SparseArray_1.3.1                          </span></span>
+<span><span class="co">#&gt;  [97] rjson_0.2.21                               </span></span>
+<span><span class="co">#&gt;  [98] farver_2.1.1                               </span></span>
+<span><span class="co">#&gt;  [99] memoise_2.0.1                              </span></span>
+<span><span class="co">#&gt; [100] htmltools_0.5.7                            </span></span>
+<span><span class="co">#&gt; [101] pkgdown_2.0.7                              </span></span>
+<span><span class="co">#&gt; [102] lifecycle_1.0.4                            </span></span>
+<span><span class="co">#&gt; [103] httr_1.4.7                                 </span></span>
+<span><span class="co">#&gt; [104] bit64_4.0.5</span></span></code></pre></div>
 </div>
   </div>
 
@@ -683,7 +730,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
